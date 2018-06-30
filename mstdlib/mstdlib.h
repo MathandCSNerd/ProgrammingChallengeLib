@@ -17,7 +17,7 @@
  */
 
 /*
- *  mattstdlib.h
+ *  mstdlib.h
  *
  *  Copyright (C) 2018 Matthew Mac Allister
  *

@@ -17,7 +17,7 @@
  */
 
 /*
- *  mattstdlib.cc
+ *  mstdlib.cc
  *
  *  Copyright (C) 2018 Matthew Mac Allister
  *
