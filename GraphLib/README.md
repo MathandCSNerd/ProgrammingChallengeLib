@@ -25,6 +25,7 @@ object file implementation issue. I have thought about changing this
 in the future once I decide on all of the data types I wish to
 accommodate, but for now that's the way it is.
 
+<pre>
 Future addition plans:
   Motion Planning Grid class
   Bellman Ford
@@ -32,5 +33,6 @@ Future addition plans:
   Prims
 
 Future Modifications:
-  create namespace either for entire graph library, or separate parts
+  create namespace either for entire graph library or separate parts
   change "dstra" to better accommodate motion planning
+</pre>
