@@ -242,7 +242,7 @@ bool IsCachePrime(int x) {
   return IsPrime(x);
 }
 
-std::vector<long long> listPrimeSieve(long long MAX_NUM) {
+std::vector<long long> ListPrimeSieve(long long MAX_NUM) {
   std::vector<long long> primeList;
   // 1.15 is due to the maximum error in the approximate prime counting function
   primeList.reserve(1.15 * ((long double)MAX_NUM / logl(MAX_NUM)));
@@ -258,7 +258,7 @@ std::vector<long long> listPrimeSieve(long long MAX_NUM) {
 }
 
 
-bool* arrPrimeSieve(long long MAX_NUM) {
+bool* ArrPrimeSieve(long long MAX_NUM) {
   bool* arr = new bool[MAX_NUM];
   memset(arr, true, MAX_NUM * sizeof(bool));
 
@@ -280,7 +280,7 @@ std::vector<long long> PrimeArrToVec(bool* parr, long long MAX_NUM) {
 }
 
 std::vector<long long> NormalPrimeSieve(long long MAX_NUM) {
-  bool* arr = arrPrimeSieve(MAX_NUM);
+  bool* arr = ArrPrimeSieve(MAX_NUM);
   return std::move(PrimeArrToVec(arr, MAX_NUM));
 }
 

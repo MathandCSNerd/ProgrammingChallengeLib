@@ -87,7 +87,7 @@ bool IsCachePrime(int x);
 std::vector<long long> ListPrimeSieve(long long MAX_NUM);
 // sieve of Eratosthenes
 bool* ArrPrimeSieve(long long MAX_NUM);
-std::vector<long long> PrimeArrToSet(bool* parr, long long MAX_NUM);
+std::vector<long long> PrimeArrToVec(bool* parr, long long MAX_NUM);
 std::vector<long long> NormalPrimeSieve(long long MAX_NUM);
 std::pair<long long, long long> DoFactDiv(long long& x, const long long i);
 std::list<std::pair<long long, long long>> Factor(long long x);
