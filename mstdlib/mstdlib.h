@@ -28,6 +28,7 @@
 #ifndef MATTSTDLIB_MSTDLIB_H
 #define MATTSTDLIB_MSTDLIB_H
 #include <math.h>
+#include <limits.h>
 #include <string.h>
 #include <algorithm>
 #include <iostream>
@@ -47,7 +48,9 @@ long double log(long double base, long double num);
 void PAssign(long long& var1, long long& var2, long long val1, long long val2);
 std::vector<long long> xgcd(long long a, long long b);
 long long InverseMod(long long a, long long b);
+//a higher precision pow function for integers
 long long IntPow(long long base, long long exp);
+long long pow(long long base, long long exp, long long mod);
 
 // simple common functions
 void swap(long long& a, long long& b);
@@ -72,12 +75,14 @@ long long CubeSum(long long n);
 long long SumBy(long long n, long long m);
 
 // primes and factoring
+bool FermatPrimalityTest(long long x);
+bool IsObviousNonPrime(long long x);
 // trial-division based prime checker
-bool LongIsPrime(long long x);
-// prime checker which builds a cache over time, uses LongIsPrime
-bool IsCachePrime(int x);
+bool IsPrime(long long x);
 // checks for x in primeSet
 bool IsPrime(long long x, const std::vector<long long>& primeSet);
+// prime checker which builds a cache over time, uses single-argument IsPrime
+bool IsCachePrime(int x);
 // O(n^1.5) time, O(n/ln(n)) space
 std::vector<long long> ListPrimeSieve(long long MAX_NUM);
 // sieve of Eratosthenes

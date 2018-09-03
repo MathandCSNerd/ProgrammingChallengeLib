@@ -83,10 +83,25 @@ long long InverseMod(long long a, long long b) {
   return l[1];
 }
 
-// TODO: would probably be a better idea to do the ol' sucessive
-// squaring algorithm it would be more accurate at least
 long long IntPow(long long base, long long exp) {
-  return (long long)(floorl(powl(base, exp) + 0.5));
+  //return (long long)(floorl(powl(base, exp) + 0.5));
+  return pow(base, exp, LLONG_MAX);
+}
+
+long long pow(long long base, long long exp, long long mod){
+  if(base < 1)
+    return 0;
+  if(!exp)
+    return 1;
+  long long curr = base, result = 1;
+
+  while(exp){
+    if(exp%2)
+      result = (result*curr)%mod;
+    exp/=2;
+    curr = (curr*curr)%mod;
+  }
+  return result;
 }
 
 //**************************
@@ -169,16 +184,40 @@ long long SumBy(long long n, long long m) { return m * Sum(n / m); }
 //**************************
 // primes and factoring
 //**************************
-bool LongIsPrime(long long x) {
+bool FermatPrimalityTest(long long x){
+  return (pow(2,x-1,x) != 1);
+}
+
+bool IsObviousNonPrime(long long x){
+  return (!(x % 2) || x < 2) || FermatPrimalityTest(x);
+}
+
+bool IsPrime(long long x) {
   if (x == 2)
     return true;
-  else if (!(x % 2) || x < 2)
+  else if(IsObviousNonPrime(x))
     return false;
 
   for (long long i = 3; i <= ceil(sqrt(x)) + 1 && i < x; i += 2)
     if (!(x % i)) return false;
 
   return true;
+}
+
+bool IsPrime(long long x, const std::vector<long long>& primeSet) {
+  if (!(x % 2)) return false;
+
+  auto it = primeSet.end();
+  --it;
+  if (*(it) >= x)
+    return binary_search(primeSet.begin(), primeSet.end(),
+                         x);
+  else {
+    if(IsObviousNonPrime(x))
+      return false;
+    auto l = std::move(PFactor(x, primeSet));
+    return l.size() == 1 and l.begin()->second == 1;
+  }
 }
 
 bool IsCachePrime(int x) {
@@ -195,29 +234,12 @@ bool IsCachePrime(int x) {
   if (x == 2) return true;
   if (x < MAXPSIZE) {
     if (!cPrime[x]) {
-      isPrime[x] = LongIsPrime(x);
+      isPrime[x] = IsPrime(x);
       cPrime[x] = true;
     }
     return isPrime[x];
   }
-  return LongIsPrime(x);
-}
-
-bool IsPrime(long long x, const std::vector<long long>& primeSet) {
-  if (!(x % 2)) return false;
-
-  auto it = primeSet.end();
-  --it;
-  if (*(it) >= x)
-    return binary_search(primeSet.begin(), primeSet.end(),
-                         x);
-  else {
-    //TODO: add the 3 argument pow function from python
-    // if(pow(2,x-1,x) != 1) //fermat primality test
-    //  return false;
-    auto l = std::move(PFactor(x, primeSet));
-    return l.size() == 1 and l.begin()->second == 1;
-  }
+  return IsPrime(x);
 }
 
 std::vector<long long> listPrimeSieve(long long MAX_NUM) {
@@ -305,7 +327,7 @@ long long EulerPhi(std::list<std::pair<long long, long long>>& l) {
   for (auto it = l.begin(); it != l.end(); ++it) {
     a = it->first;
     p = it->second;
-    prod *= (pow(a, p) - pow(a, p - 1));
+    prod *= (std::pow(a, p) - std::pow(a, p - 1));
   }
   return prod;
 }
