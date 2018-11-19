@@ -49,8 +49,8 @@ void PAssign(long long& var1, long long& var2, long long val1, long long val2);
 std::vector<long long> xgcd(long long a, long long b);
 long long InverseMod(long long a, long long b);
 //a higher precision pow function for integers
-long long IntPow(long long base, long long exp);
-long long pow(long long base, long long exp, long long mod);
+unsigned long long IntPow(unsigned long long base, unsigned long long exp);
+unsigned long long pow(unsigned long long base, unsigned long long exp, unsigned long long mod);
 
 // simple common functions
 void swap(long long& a, long long& b);
@@ -99,6 +99,7 @@ long long EulerPhi(std::list<std::pair<long long, long long>>& l);
 long long EulerPhi(long long x);
 std::list<long long> FactorsToDivisors(
     std::list<std::pair<long long, long long>>& l);
+long long DivisorCount(long long x, const std::vector<long long>& primeList);
 long long DivisorCount(long long x);
 long long DivisorSum(long long x, const std::vector<long long>& primeList);
 long long DivisorSum(std::list<std::pair<long long, long long>>& l);
@@ -126,6 +127,7 @@ bool IsSquare(long long i);
 
 // other math functions
 long long DigitSum(long long x);
+long long SquareDigitSum(long long x);
 
 //**********************
 // misc/non-math section
@@ -141,6 +143,13 @@ bool IterateStrin(std::string& str);
 // like IterateBin, but uses $testarr as the upper bound and 0 as the lower
 // bound
 bool IterateArr(long long* myarrbegin, long long* myarrend, long long* testarr);
+
+//function for selecting n items from a group of k without replacement
+//n = arr.size(), k = maxNum
+//begining array is numbers 0 to k-1 in descending order
+//ex, for choosin 3 from 5
+//ChooseNFromK({2,1,0}, 5)
+bool ChooseNFromK(std::vector<int>& arr, int maxNum);
 
 // takes an array, converts it to number
 long long MkNum(int start, int end, int* myarr);
@@ -173,6 +182,9 @@ std::vector<bool> GetBinaryString(long long x, bool pad = false,
 // return number represented by binary string
 long long FromBinaryString(const std::vector<bool>& binstr);
 
+//here purely out of convinience
+//probably going to make this a template
+bool IsInSet(long long x, std::set<long long>& mySet);
 
 } // namespace mstdlib
 

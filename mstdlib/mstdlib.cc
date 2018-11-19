@@ -83,17 +83,17 @@ long long InverseMod(long long a, long long b) {
   return l[1];
 }
 
-long long IntPow(long long base, long long exp) {
+unsigned long long IntPow(unsigned long long base, unsigned long long exp) {
   //return (long long)(floorl(powl(base, exp) + 0.5));
-  return pow(base, exp, LLONG_MAX);
+  return pow(base, exp, ULLONG_MAX);
 }
 
-long long pow(long long base, long long exp, long long mod){
+unsigned long long pow(unsigned long long base, unsigned long long exp, unsigned long long mod){
   if(base < 1)
     return 0;
   if(!exp)
     return 1;
-  long long curr = base, result = 1;
+  unsigned long long curr = base, result = 1;
 
   while(exp){
     if(exp%2)
@@ -135,12 +135,17 @@ long long Factorial(int x) {
 }
 
 long long NChoosek(long long n, long long k) {
+  if(n < k)
+    swap(n,k);
   return Factorial(n) / (Factorial(n - k) * Factorial(k));
 }
 
 long long NPermk(long long n, long long k) { return Factorial(n) / (Factorial(n - k)); }
 
 long long PrecisenChoosek(long long n, long long k) {
+  if(n < k)
+    swap(n,k);
+
   long long m;
   if (k < n - k)
     m = (n - k);
@@ -451,6 +456,16 @@ long long DigitSum(long long x) {
   return sum;
 }
 
+long long SquareDigitSum(long long x) {
+  long long sum = 0;
+  while (x) {
+    sum += (x % 10)*(x % 10);
+    x /= 10;
+  }
+  return sum;
+}
+
+
 //**************************
 // non math functions
 //**************************
@@ -471,6 +486,7 @@ bool IterateBin(bool* myarrbegin, bool* myarrend) {
   return true;
 }
 
+
 bool IterateStrin(std::string& str) {
   size_t i;
 
@@ -490,6 +506,7 @@ bool IterateStrin(std::string& str) {
   return true;
 }
 
+
 bool IterateArr(long long* myarrbegin, long long* myarrend,
                 long long* testarr) {
   long long* i;
@@ -506,6 +523,28 @@ bool IterateArr(long long* myarrbegin, long long* myarrend,
   }
   return true;
 }
+
+
+bool ChooseNFromK(std::vector<int>& arr, int maxNum) {
+  size_t i;
+
+  for (i = 0; i < arr.size() && (arr[i] >= (maxNum-i-1)); ++i)
+    ;
+
+  if (i == arr.size())
+    return false;
+
+  else {
+    ++arr[i];
+    if (i) {
+      for (--i; i >= 1; --i) arr[i] = arr[i+1]+1;
+      if(arr.size() > 1)
+        arr[0] = arr[1]+1;
+    }
+  }
+  return true;
+}
+
 
 long long MkNum(int start, int end, int* myarr) {
   long long num = 0;
@@ -594,6 +633,10 @@ long long FromBinaryString(const std::vector<bool>& binstr) {
     retval += it;
   }
   return retval;
+}
+
+bool IsInSet(long long x, std::set<long long>& mySet){
+  return mySet.find(x) != mySet.end();
 }
 
 } // namespace mstdlib
