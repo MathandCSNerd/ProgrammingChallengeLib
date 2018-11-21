@@ -73,5 +73,7 @@ int main(){
     cout << it->Weight();
   cout << endl;
 
+  //check whether or not the graph we're using is Directed
+  cout << g.Directed() << endl;
   return 0;
 }

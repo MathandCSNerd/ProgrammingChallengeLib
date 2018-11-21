@@ -49,11 +49,10 @@ class DirectedGraph {
   void SortEdge(int x);  // do nothing if array
   void SortAllEdges();   // do nothing if array
   void SetDirected(bool x);
-  bool Directed() const;
+  virtual bool Directed() const {return true;};
   void PrintGraph() const;
 
  protected:
-  bool directed;
   containerType<weightType> myContainer;
   weightType defaultVal;
 };
@@ -67,28 +66,35 @@ class UndirectedGraph : public DirectedGraph<containerType, weightType> {
   void AddConnection(int x, int y);
   void AddConnection(int x, int y, const weightType& val);
   void RmConnection(int x, int y);
+  bool Directed() const {return false;}
 };
 
 // arr graphs
 template <class weightType>
-class UndirectedArrGraph : public DirectedGraph<TriangularArray, weightType> {};
-template <class weightType>
 class DirectedArrGraph : public DirectedGraph<SquareArray, weightType> {};
+template <class weightType>
+class UndirectedArrGraph : public DirectedGraph<TriangularArray, weightType> {
+ public:
+  bool Directed() const {return false;}
+};
 
 // stl container graphs
 template <class weightType>
-class UndirectedListGraph : public UndirectedGraph<EdgeList, weightType> {};
-template <class weightType>
 class DirectedListGraph : public DirectedGraph<EdgeList, weightType> {};
+template <class weightType>
+class UndirectedListGraph : public UndirectedGraph<EdgeList, weightType> {
+ public:
+  bool Directed() const {return false;}
+};
 
-using UnweightedDirectedArrGraph = DirectedArrGraph<EmptyClass>;
-using UnweightedUndirectedArrGraph = UndirectedArrGraph<EmptyClass>;
+using NonweightedDirectedArrGraph = DirectedArrGraph<EmptyClass>;
+using NonweightedUndirectedArrGraph = UndirectedArrGraph<EmptyClass>;
 
 
 //functions definitions:
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>::DirectedGraph()
-    : directed(true), myContainer() {}
+    : myContainer() {}
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>::~DirectedGraph() {}
@@ -96,13 +102,12 @@ DirectedGraph<containerType, weightType>::~DirectedGraph() {}
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>::DirectedGraph(
     const DirectedGraph<containerType, weightType>& that)
-    : directed(that.directed), myContainer(that.myContainer) {}
+    : myContainer(that.myContainer) {}
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>&
 DirectedGraph<containerType, weightType>::operator=(
     const DirectedGraph<containerType, weightType>& that) {
-  directed = that.directed;
   myContainer = that.myContainer;
   return *this;
 }
