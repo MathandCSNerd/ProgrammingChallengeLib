@@ -16,15 +16,6 @@
  * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- *  mstdlib.h
- *
- *  Copyright (C) 2018 Matthew Mac Allister
- *
- *  This file contains declarations for some standard math functions
- *  as well as a couple others.
- */
-
 #ifndef MATTSTDLIB_MSTDLIB_H
 #define MATTSTDLIB_MSTDLIB_H
 #include <math.h>

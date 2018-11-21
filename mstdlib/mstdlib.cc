@@ -16,15 +16,6 @@
  * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- *  mstdlib.cc
- *
- *  Copyright (C) 2018 Matthew Mac Allister
- *
- *  This file contains definitions for some standard math functions
- *  as well as a couple others.
- */
-
 #include "mstdlib.h"
 
 namespace mstdlib{
