@@ -16,9 +16,6 @@
  * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//#########################
-// DSTRA IMPLEMENTATION
-//#########################
 #ifndef DSTRA
 #define DSTRA
 

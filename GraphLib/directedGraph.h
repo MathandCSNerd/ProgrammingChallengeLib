@@ -177,16 +177,4 @@ class DirectedGraph<containerType, weightType>::iterator
       : containerType<weightType>::iterator(it) {}
 };
 
-// once I've finally determined each data type I wish to use this with, I will
-// list them here  that way I don't have to recompile this file all the time
-/*
-template class DirectedGraph<TriangularArray,int>;
-template class DirectedGraph<TriangularArray,long long>;
-template class DirectedGraph<TriangularArray,long double>;
-
-template class DirectedGraph<SquareArray,int>;
-template class DirectedGraph<SquareArray,long long>;
-template class DirectedGraph<SquareArray,long double>;
-*/
-
 #endif
