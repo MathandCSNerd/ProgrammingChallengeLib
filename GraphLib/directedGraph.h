@@ -52,7 +52,7 @@ class DirectedGraph {
   bool Directed() const;
   void PrintGraph() const;
 
- private:
+ protected:
   bool directed;
   containerType<weightType> myContainer;
   weightType defaultVal;
@@ -66,6 +66,7 @@ class UndirectedGraph : public DirectedGraph<containerType, weightType> {
  public:
   void AddConnection(int x, int y);
   void AddConnection(int x, int y, const weightType& val);
+  void RmConnection(int x, int y);
 };
 
 // arr graphs
@@ -83,6 +84,8 @@ class DirectedListGraph : public DirectedGraph<EdgeList, weightType> {};
 using UnweightedDirectedArrGraph = DirectedArrGraph<EmptyClass>;
 using UnweightedUndirectedArrGraph = UndirectedArrGraph<EmptyClass>;
 
+
+//functions definitions:
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>::DirectedGraph()
     : directed(true), myContainer() {}
@@ -172,5 +175,29 @@ class DirectedGraph<containerType, weightType>::iterator
   iterator(const typename containerType<weightType>::iterator& it)
       : containerType<weightType>::iterator(it) {}
 };
+
+template <template <class weightType> class containerType, class weightType>
+void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y){
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+    this->myContainer.Set(x, y, this->defaultVal);
+    this->myContainer.Set(y, x, this->defaultVal);
+  }
+}
+
+template <template <class weightType> class containerType, class weightType>
+void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y, const weightType& val){
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+    this->myContainer.Set(x, y, val);
+    this->myContainer.Set(y, x, val);
+  }
+}
+
+template <template <class weightType> class containerType, class weightType>
+void UndirectedGraph<containerType, weightType>::RmConnection(int x, int y) {
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+    this->myContainer.Unset(x, y);
+    this->myContainer.Unset(y, x);
+  }
+}
 
 #endif
