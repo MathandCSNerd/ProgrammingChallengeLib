@@ -16,56 +16,68 @@
  * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//#########################
-//GRAPH TEST CODE
-//#########################
+//this file demonstrates how to use the graph class on an SSSP problem
+//input is read from stdin
 
 /*INPUT FORMAT:
  *
  * nodes edges queries source
- * edge1_node1 edge1_node2
- * edge2_node1 edge2_node2
+ * edge1_node1 edge1_node2 weight1
+ * edge2_node1 edge2_node2 weight2
  * ...
  * query1
  * query2
  * ...
- * source
+ * nodes edges queries source
+ * ...
  *
  * ex:
  * 4 3 4 0  #4 nodes, 3 edges, 4 queries, source is 0
  * 0 2 6    #first edge goes from 0 to 2 with weight 6
  * 2 1 3    #next edge goes from 2 to 1 with weight 3
  * 0 3 2    #next edge goes from 0 to 3 with weight 2
- * 0        #first query is length of path to 0
- * 1        #query 2
- * 2        #query 3
- * 3        #query 4
+ * 0        #query 1 is length of path from 0->0
+ * 1        #query 2 is length of path from 0->1
+ * 2        #query 3 is length of path from 0->2
+ * 3        #query 4 is length of path from 0->3
  * 0 0 0 0  #end input
  */
 
-#include "directedGraph.h"
-#include "dstra.h"
+#include "../directedGraph.h"
+#include "../dstra.h"
 #include <iostream>
 
 using namespace std;
 
-template <class weightType>
-using mgraph = DirectedListGraph<weightType>;
-
 void DoCase(long long n, long long m, long q, long long s){
-  mgraph<long long> g;
+  DirectedListGraph<long long> g;
+
   long long x,y,z,tmp;
 
+  //this changes the size of the graph to n nodes
   g.ChangeSize(n);
+
+  //this loop adds all the connection information
   for(long long i = 0; i < m; ++i){
     cin >> x >> y >> z;
     g.AddConnection(x,y,z);
   }
+
+  //This is the initial call to the SSSP solver
+  //this is required for intilization purposes and
+  //must be called any time one wants to switch source
+  //nodes.
   Dstra(s,s,g);
 
+
+  //this loop iterates through the queries
   for(long long i = 0; i < q; ++i){
     cin >> x;
+
+    //This calls the SSSP solver from the previously defined source
+    //node, to node x, with graph object g.
     tmp = Dstra(-1,x,g);
+
     if(tmp < 0)
       cout << "Impossible" << endl;
     else
@@ -76,41 +88,13 @@ void DoCase(long long n, long long m, long q, long long s){
 int main(){
   using namespace std;
 
-  //test for basic graph functionality
-  {
-  /*int arr[5][5]={
-  {1,1,2,3,4},
-  {0,0,2,3,4},
-  {0,0,1,0,0},
-  {0,0,0,3,4},
-  {0,0,0,0,4}
-  };
-  const int s =5;
-  mgraph<int> g;
-  g.SetDirected(0);
-  g.ChangeSize(5);
-  for(int i = 0; i < s; ++i)
-    for(int i2 = 0; i2 < s; ++i2)
-      if(arr[i][i2])
-        //g.AddConnection(i,i2);
-        g.AddConnection(i,i2,arr[i][i2]);
-  g.PrintGraph();
-
-  cout << endl;
-  for(auto it = g.Begin(1); it != g.End(1); ++it)
-    it->Print();
-  cout << endl;*/
-  }
-
-  //test for sssp, non-negative weights
-  {
+  //this is an input loop for the first line of each case
   long long n,m,q,s;
   cin >> n >> m >> q >> s;
   while(n || m || q || s){
     DoCase(n,m,q,s);
     cin >> n >> m >> q >> s;
     cout << endl;
-  }
   }
 
   return 0;
