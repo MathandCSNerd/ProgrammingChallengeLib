@@ -8,4 +8,6 @@ I am aware many of the functions and classes I will be putting in here have alre
 
 I mostly stick to the [Google Style Guide](https://google.github.io/styleguide/cppguide.html) and I run clang-format on my code to help ensure compliance. There are some places where I differ due to the scope as well as intended usage of the project.
 
+I also plan to add implementations of most parts of this library in Python3 as well, but I'm first focusing on C++.
+
 I'm hosting this library on github in order to share it with friends, collegues, etc.
