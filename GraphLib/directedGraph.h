@@ -68,10 +68,6 @@ class UndirectedGraph : public DirectedGraph<containerType, weightType> {
   void AddConnection(int x, int y, const weightType& val);
 };
 
-// some may find it strange that I used template classes for this while I used
-// C++11 alias declarations for things later, but this was done for
-// simplification of other methods as well as simplification of use.
-
 // arr graphs
 template <class weightType>
 class UndirectedArrGraph : public DirectedGraph<TriangularArray, weightType> {};
