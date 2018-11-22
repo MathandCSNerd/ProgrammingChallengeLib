@@ -54,7 +54,10 @@ int main() {
 
   // sorts v with std::sort
   sort(v.begin(), v.end());
-  // sorts v2 with CountingSort
+  // sorts v2 with CountingSort using aunt as the function for
+  // returning the integer representation of our vector elements.
+  // This is a redundant example to be sure, but it's just a
+  // demonstration.
   CountingSort(v2.begin(), v2.end(), aunt);
 
   // creates and sorts a new vector v3 of mytype with 5 items
