@@ -17,8 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DSTRA
-#define DSTRA
+#ifndef DijkstraSSSP
+#define DijkstraSSSP
 
 #include <queue>
 #include <set>
