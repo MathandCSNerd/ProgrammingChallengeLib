@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,15 +13,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifdef DIRECTED_GRAPH_CLASS
 
-//functions definitions:
+// functions definitions:
 template <template <class weightType> class containerType, class weightType>
-DirectedGraph<containerType, weightType>::DirectedGraph()
-    : myContainer() {}
+DirectedGraph<containerType, weightType>::DirectedGraph() : myContainer() {}
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType>::~DirectedGraph() {}
@@ -109,16 +109,17 @@ class DirectedGraph<containerType, weightType>::iterator
 };
 
 template <template <class weightType> class containerType, class weightType>
-void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y){
-  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y) {
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()) {
     this->myContainer.Set(x, y, this->defaultVal);
     this->myContainer.Set(y, x, this->defaultVal);
   }
 }
 
 template <template <class weightType> class containerType, class weightType>
-void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y, const weightType& val){
-  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+void UndirectedGraph<containerType, weightType>::AddConnection(
+    int x, int y, const weightType& val) {
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()) {
     this->myContainer.Set(x, y, val);
     this->myContainer.Set(y, x, val);
   }
@@ -126,7 +127,7 @@ void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y, con
 
 template <template <class weightType> class containerType, class weightType>
 void UndirectedGraph<containerType, weightType>::RmConnection(int x, int y) {
-  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()){
+  if (x >= 0 and x < this->Size() and y >= 0 and y < this->Size()) {
     this->myContainer.Unset(x, y);
     this->myContainer.Unset(y, x);
   }

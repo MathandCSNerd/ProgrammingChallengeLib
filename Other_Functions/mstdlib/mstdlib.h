@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,13 +13,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef MATTSTDLIB_MSTDLIB_H
 #define MATTSTDLIB_MSTDLIB_H
-#include <math.h>
 #include <limits.h>
+#include <math.h>
 #include <string.h>
 #include <algorithm>
 #include <iostream>
@@ -28,8 +29,7 @@
 #include <set>
 #include <vector>
 
-namespace mstdlib{
-
+namespace mstdlib {
 
 // simple math functions
 long long gcd(long long a, long long b);
@@ -39,9 +39,10 @@ long double log(long double base, long double num);
 void PAssign(long long& var1, long long& var2, long long val1, long long val2);
 std::vector<long long> xgcd(long long a, long long b);
 long long InverseMod(long long a, long long b);
-//a higher precision pow function for integers
+// a higher precision pow function for integers
 unsigned long long IntPow(unsigned long long base, unsigned long long exp);
-unsigned long long pow(unsigned long long base, unsigned long long exp, unsigned long long mod);
+unsigned long long pow(unsigned long long base, unsigned long long exp,
+                       unsigned long long mod);
 
 // simple common functions
 void swap(long long& a, long long& b);
@@ -53,7 +54,7 @@ int CountDigits(unsigned long long i);
 long long Factorial(int x);
 long long NChoosek(long long n, long long k);
 long long NPermk(long long n, long long k);
-//less naive counting functions, which can be used on higher values
+// less naive counting functions, which can be used on higher values
 long long PrecisenChoosek(long long n, long long k);
 long long PrecisenPermk(long long n, long long k);
 // binomial dist pmf
@@ -135,11 +136,11 @@ bool IterateStrin(std::string& str);
 // bound
 bool IterateArr(long long* myarrbegin, long long* myarrend, long long* testarr);
 
-//function for selecting n items from a group of k without replacement
-//n = arr.size(), k = maxNum
-//begining array is numbers 0 to k-1 in descending order
-//ex, for choosin 3 from 5
-//ChooseNFromK({2,1,0}, 5)
+// function for selecting n items from a group of k without replacement
+// n = arr.size(), k = maxNum
+// begining array is numbers 0 to k-1 in descending order
+// ex, for choosin 3 from 5
+// ChooseNFromK({2,1,0}, 5)
 bool ChooseNFromK(std::vector<int>& arr, int maxNum);
 
 // takes an array, converts it to number
@@ -173,10 +174,10 @@ std::vector<bool> GetBinaryString(long long x, bool pad = false,
 // return number represented by binary string
 long long FromBinaryString(const std::vector<bool>& binstr);
 
-//here purely out of convinience
-//probably going to make this a template
+// here purely out of convinience
+// probably going to make this a template
 bool IsInSet(long long x, std::set<long long>& mySet);
 
-} // namespace mstdlib
+}  // namespace mstdlib
 
 #endif

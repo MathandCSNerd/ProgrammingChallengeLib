@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,12 +13,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #include "mstdlib.h"
 
-namespace mstdlib{
+namespace mstdlib {
 
 //**************************
 // simple math functions
@@ -75,22 +76,20 @@ long long InverseMod(long long a, long long b) {
 }
 
 unsigned long long IntPow(unsigned long long base, unsigned long long exp) {
-  //return (long long)(floorl(powl(base, exp) + 0.5));
+  // return (long long)(floorl(powl(base, exp) + 0.5));
   return pow(base, exp, ULLONG_MAX);
 }
 
-unsigned long long pow(unsigned long long base, unsigned long long exp, unsigned long long mod){
-  if(base < 1)
-    return 0;
-  if(!exp)
-    return 1;
+unsigned long long pow(unsigned long long base, unsigned long long exp,
+                       unsigned long long mod) {
+  if (base < 1) return 0;
+  if (!exp) return 1;
   unsigned long long curr = base, result = 1;
 
-  while(exp){
-    if(exp%2)
-      result = (result*curr)%mod;
-    exp/=2;
-    curr = (curr*curr)%mod;
+  while (exp) {
+    if (exp % 2) result = (result * curr) % mod;
+    exp /= 2;
+    curr = (curr * curr) % mod;
   }
   return result;
 }
@@ -126,16 +125,16 @@ long long Factorial(int x) {
 }
 
 long long NChoosek(long long n, long long k) {
-  if(n < k)
-    swap(n,k);
+  if (n < k) swap(n, k);
   return Factorial(n) / (Factorial(n - k) * Factorial(k));
 }
 
-long long NPermk(long long n, long long k) { return Factorial(n) / (Factorial(n - k)); }
+long long NPermk(long long n, long long k) {
+  return Factorial(n) / (Factorial(n - k));
+}
 
 long long PrecisenChoosek(long long n, long long k) {
-  if(n < k)
-    swap(n,k);
+  if (n < k) swap(n, k);
 
   long long m;
   if (k < n - k)
@@ -180,18 +179,16 @@ long long SumBy(long long n, long long m) { return m * Sum(n / m); }
 //**************************
 // primes and factoring
 //**************************
-bool FermatPrimalityTest(long long x){
-  return (pow(2,x-1,x) != 1);
-}
+bool FermatPrimalityTest(long long x) { return (pow(2, x - 1, x) != 1); }
 
-bool IsObviousNonPrime(long long x){
+bool IsObviousNonPrime(long long x) {
   return (!(x % 2) || x < 2) || FermatPrimalityTest(x);
 }
 
 bool IsPrime(long long x) {
   if (x == 2)
     return true;
-  else if(IsObviousNonPrime(x))
+  else if (IsObviousNonPrime(x))
     return false;
 
   for (long long i = 3; i <= ceil(sqrt(x)) + 1 && i < x; i += 2)
@@ -206,11 +203,9 @@ bool IsPrime(long long x, const std::vector<long long>& primeSet) {
   auto it = primeSet.end();
   --it;
   if (*(it) >= x)
-    return binary_search(primeSet.begin(), primeSet.end(),
-                         x);
+    return binary_search(primeSet.begin(), primeSet.end(), x);
   else {
-    if(IsObviousNonPrime(x))
-      return false;
+    if (IsObviousNonPrime(x)) return false;
     auto l = std::move(PFactor(x, primeSet));
     return l.size() == 1 and l.begin()->second == 1;
   }
@@ -252,7 +247,6 @@ std::vector<long long> ListPrimeSieve(long long MAX_NUM) {
   }
   return primeList;
 }
-
 
 bool* ArrPrimeSieve(long long MAX_NUM) {
   bool* arr = new bool[MAX_NUM];
@@ -385,7 +379,7 @@ long long DivisorSum(long long x, const std::vector<long long>& primeList) {
   return prod;
 }
 
-long long DivisorSum(std::list<std::pair<long long, long long>>& l){
+long long DivisorSum(std::list<std::pair<long long, long long>>& l) {
   long long prod = 1;
   for (auto it : l)
     prod *= ((powl(it.first, it.second + 1) - 1) / (it.first - 1));
@@ -450,12 +444,11 @@ long long DigitSum(long long x) {
 long long SquareDigitSum(long long x) {
   long long sum = 0;
   while (x) {
-    sum += (x % 10)*(x % 10);
+    sum += (x % 10) * (x % 10);
     x /= 10;
   }
   return sum;
 }
-
 
 //**************************
 // non math functions
@@ -477,7 +470,6 @@ bool IterateBin(bool* myarrbegin, bool* myarrend) {
   return true;
 }
 
-
 bool IterateStrin(std::string& str) {
   size_t i;
 
@@ -497,7 +489,6 @@ bool IterateStrin(std::string& str) {
   return true;
 }
 
-
 bool IterateArr(long long* myarrbegin, long long* myarrend,
                 long long* testarr) {
   long long* i;
@@ -515,11 +506,10 @@ bool IterateArr(long long* myarrbegin, long long* myarrend,
   return true;
 }
 
-
 bool ChooseNFromK(std::vector<int>& arr, int maxNum) {
   size_t i;
 
-  for (i = 0; i < arr.size() && (arr[i] >= (maxNum-i-1)); ++i)
+  for (i = 0; i < arr.size() && (arr[i] >= (maxNum - i - 1)); ++i)
     ;
 
   if (i == arr.size())
@@ -528,14 +518,12 @@ bool ChooseNFromK(std::vector<int>& arr, int maxNum) {
   else {
     ++arr[i];
     if (i) {
-      for (--i; i >= 1; --i) arr[i] = arr[i+1]+1;
-      if(arr.size() > 1)
-        arr[0] = arr[1]+1;
+      for (--i; i >= 1; --i) arr[i] = arr[i + 1] + 1;
+      if (arr.size() > 1) arr[0] = arr[1] + 1;
     }
   }
   return true;
 }
-
 
 long long MkNum(int start, int end, int* myarr) {
   long long num = 0;
@@ -626,8 +614,8 @@ long long FromBinaryString(const std::vector<bool>& binstr) {
   return retval;
 }
 
-bool IsInSet(long long x, std::set<long long>& mySet){
+bool IsInSet(long long x, std::set<long long>& mySet) {
   return mySet.find(x) != mySet.end();
 }
 
-} // namespace mstdlib
+}  // namespace mstdlib

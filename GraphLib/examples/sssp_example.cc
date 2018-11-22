@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,11 +13,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
-//this file demonstrates how to use the graph class on an SSSP problem
-//input is read from stdin
+// this file demonstrates how to use the graph class on an SSSP problem
+// input is read from stdin
 
 /*INPUT FORMAT:
  *
@@ -43,56 +44,55 @@
  * 0 0 0 0  #end input
  */
 
+#include <iostream>
 #include "../directedGraph.h"
 #include "../dstra.h"
-#include <iostream>
 
 using namespace std;
 
-void DoCase(long long n, long long m, long q, long long s){
+void DoCase(long long n, long long m, long q, long long s) {
   DirectedListGraph<long long> g;
 
-  long long x,y,z,tmp;
+  long long x, y, z, tmp;
 
-  //this changes the size of the graph to n nodes
+  // this changes the size of the graph to n nodes
   g.ChangeSize(n);
 
-  //this loop adds all the connection information
-  for(long long i = 0; i < m; ++i){
+  // this loop adds all the connection information
+  for (long long i = 0; i < m; ++i) {
     cin >> x >> y >> z;
-    g.AddConnection(x,y,z);
+    g.AddConnection(x, y, z);
   }
 
-  //This is the initial call to the SSSP solver
-  //this is required for intilization purposes and
-  //must be called any time one wants to switch source
-  //nodes.
-  Dstra(s,s,g);
+  // This is the initial call to the SSSP solver
+  // this is required for intilization purposes and
+  // must be called any time one wants to switch source
+  // nodes.
+  Dstra(s, s, g);
 
-
-  //this loop iterates through the queries
-  for(long long i = 0; i < q; ++i){
+  // this loop iterates through the queries
+  for (long long i = 0; i < q; ++i) {
     cin >> x;
 
-    //This calls the SSSP solver from the previously defined source
-    //node, to node x, with graph object g.
-    tmp = Dstra(-1,x,g);
+    // This calls the SSSP solver from the previously defined source
+    // node, to node x, with graph object g.
+    tmp = Dstra(-1, x, g);
 
-    if(tmp < 0)
+    if (tmp < 0)
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
   }
 }
 
-int main(){
+int main() {
   using namespace std;
 
-  //this is an input loop for the first line of each case
-  long long n,m,q,s;
+  // this is an input loop for the first line of each case
+  long long n, m, q, s;
   cin >> n >> m >> q >> s;
-  while(n || m || q || s){
-    DoCase(n,m,q,s);
+  while (n || m || q || s) {
+    DoCase(n, m, q, s);
     cin >> n >> m >> q >> s;
     cout << endl;
   }
