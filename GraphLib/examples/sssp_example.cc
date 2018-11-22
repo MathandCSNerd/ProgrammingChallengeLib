@@ -46,7 +46,7 @@
 
 #include <iostream>
 #include "../directedGraph.h"
-#include "../dstra.h"
+#include "../dijkstraSSSP.h"
 
 using namespace std;
 
@@ -68,7 +68,7 @@ void DoCase(long long n, long long m, long q, long long s) {
   // this is required for intilization purposes and
   // must be called any time one wants to switch source
   // nodes.
-  Dstra(s, s, g);
+  DijkstraSSSP(s, s, g);
 
   // this loop iterates through the queries
   for (long long i = 0; i < q; ++i) {
@@ -76,7 +76,7 @@ void DoCase(long long n, long long m, long q, long long s) {
 
     // This calls the SSSP solver from the previously defined source
     // node, to node x, with graph object g.
-    tmp = Dstra(-1, x, g);
+    tmp = DijkstraSSSP(-1, x, g);
 
     if (tmp < 0)
       cout << "Impossible" << endl;

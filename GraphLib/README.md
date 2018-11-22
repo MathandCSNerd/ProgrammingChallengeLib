@@ -26,6 +26,4 @@ Future Modifications:
   Change "dstra" to better accommodate motion planning
   Rewrite the interface for "dstra" and Bellman Ford to be the same
     to allow to more generic calls to SSSP algorithms.
-  Change the name of "dstra" to "DijkstraSSSP" to be more explicit
-    with what it is.
 </pre>

@@ -25,20 +25,20 @@
 #include "directedGraph.h"
 
 template <class weightType>
-class DstraNode {
+class DijkstraSSSPNode {
  public:
-  DstraNode(const long long& newNode) : node(newNode) {}
+  DijkstraSSSPNode(const long long& newNode) : node(newNode) {}
 
-  DstraNode(const long long& newNode, const weightType& newWeight)
+  DijkstraSSSPNode(const long long& newNode, const weightType& newWeight)
       : node(newNode), weight(newWeight) {}
 
-  DstraNode(const long long& newNode, const weightType& newWeight,
+  DijkstraSSSPNode(const long long& newNode, const weightType& newWeight,
             const long long& newPredecessor)
       : node(newNode), weight(newWeight), predecessor(newPredecessor) {}
 
-  bool operator<(const DstraNode& that) const { return that.weight < weight; }
+  bool operator<(const DijkstraSSSPNode& that) const { return that.weight < weight; }
 
-  DstraNode& operator=(const DstraNode& that) {
+  DijkstraSSSPNode& operator=(const DijkstraSSSPNode& that) {
     node = that.node;
     weight = that.weight;
     predecessor = that.predecessor;
@@ -57,19 +57,19 @@ class DstraNode {
 // comparator used for causing the set of searched nodes to be sorted by node
 // rather than weight
 template <class weightType>
-auto cmp = [](const DstraNode<weightType>& a, const DstraNode<weightType>& b) {
+auto cmp = [](const DijkstraSSSPNode<weightType>& a, const DijkstraSSSPNode<weightType>& b) {
   return a.Node() < b.Node();
 };
 
 template <class weightType>
 const std::list<long long> GetPath(
-    const DstraNode<weightType>& node,
-    typename std::set<DstraNode<weightType>, decltype(cmp<weightType>)>&
+    const DijkstraSSSPNode<weightType>& node,
+    typename std::set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)>&
         myset) {
   std::list<long long> nodeList;
   nodeList.push_front(node.Node());
 
-  DstraNode<weightType> curnode = *myset.find(node.Predecessor());
+  DijkstraSSSPNode<weightType> curnode = *myset.find(node.Predecessor());
 
   while (curnode.Predecessor() != curnode.Node()) {
     nodeList.push_front(curnode.Node());
@@ -80,13 +80,13 @@ const std::list<long long> GetPath(
 }
 
 template <class weightType>
-void ResetDstraState(
+void ResetDijkstraSSSPState(
     long long& start,
-    typename std::set<DstraNode<weightType>, decltype(cmp<weightType>)>& myset,
-    typename std::priority_queue<DstraNode<weightType>>& pq) {
+    typename std::set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)>& myset,
+    typename std::priority_queue<DijkstraSSSPNode<weightType>>& pq) {
   myset.clear();
   while (pq.size()) pq.pop();
-  pq.push(DstraNode<weightType>(start, weightType(0), start));
+  pq.push(DijkstraSSSPNode<weightType>(start, weightType(0), start));
 }
 
 // I decided the decision of retrieving path and returning
@@ -96,26 +96,29 @@ void ResetDstraState(
 // The reason a reference couldn't achieve this task is due to
 // lack of ability to use a default argument.
 template <template <class weightType> class GraphLikeClass, class weightType>
-weightType Dstra(long long start, long long end,
+weightType DijkstraSSSP(long long start, long long end,
                  const GraphLikeClass<weightType>& g,
                  std::list<long long>* path = nullptr);
 
-// TODO: change dstra to have arbitrary node-label-type and
+// TODO: change DijkstraSSSP to have arbitrary node-label-type and
 // MotionPlanningGrid::iterator::Node() to return an int pair
 //
-// the arbitrary node label type can be done using a class as
-// a stand-in for long long which sets default values just like
+// The arbitrary node label type can be done using a class as
+// a stand-in for long long which sets default values
+//
+// Also change return type to InfNumClass<weightType> so that
+// the approach is not as hacky.
 template <template <class weightType> class GraphLikeClass, class weightType>
-weightType Dstra(long long start, long long end,
+weightType DijkstraSSSP(long long start, long long end,
                  const GraphLikeClass<weightType>& g,
                  std::list<long long>* path) {
   using namespace std;
   static weightType currWeight;
-  static set<DstraNode<weightType>, decltype(cmp<weightType>)> myset(
+  static set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)> myset(
       cmp<weightType>);
-  static priority_queue<DstraNode<weightType>> pq;
+  static priority_queue<DijkstraSSSPNode<weightType>> pq;
   if (start >= 0) {
-    ResetDstraState(start, myset, pq);
+    ResetDijkstraSSSPState(start, myset, pq);
     if (path != nullptr) return 0;
   }
 
@@ -139,7 +142,7 @@ weightType Dstra(long long start, long long end,
 
       for (auto it = g.begin(currIndex); it != g.end(currIndex); ++it) {
         if ((myset.find(it->Node()) == myset.end())) {
-          DstraNode<weightType> newNode(it->Node(), currWeight + it->Weight(),
+          DijkstraSSSPNode<weightType> newNode(it->Node(), currWeight + it->Weight(),
                                         tmpnode.Node());
           pq.push(newNode);
         }
