@@ -22,6 +22,10 @@ Future addition plans:
   Prims
 
 Future Modifications:
-  create namespace either for entire graph library or separate parts
-  change "dstra" to better accommodate motion planning
+  Create namespace either for entire graph library or separate parts
+  Change "dstra" to better accommodate motion planning
+  Rewrite the interface for "dstra" and Bellman Ford to be the same
+    to allow to more generic calls to SSSP algorithms.
+  Change the name of "dstra" to "DijkstraSSSP" to be more explicit
+    with what it is.
 </pre>
