@@ -174,8 +174,8 @@ void DijkstraSSSPInstance<GraphLikeClass, weightType>::CalcShortestPath(
       currWeight = tmpnode.Weight();
       currIndex = tmpnode.Node();
 
-      for (auto it = graphPointer->begin(currIndex);
-           it != graphPointer->end(currIndex); ++it) {
+      for (auto it = (*graphPointer).begin(currIndex);
+           it != (*graphPointer).end(currIndex); ++it) {
         if ((myset.find(it->Node()) == myset.end())) {
           DijkstraSSSPNode<weightType> newNode(
               it->Node(), currWeight + it->Weight(), tmpnode.Node());

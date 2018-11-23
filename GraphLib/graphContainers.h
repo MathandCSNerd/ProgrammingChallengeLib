@@ -92,6 +92,14 @@ class UndirectedListGraph : public UndirectedGraph<EdgeList, weightType> {
 using NonweightedDirectedArrGraph = DirectedArrGraph<EmptyClass>;
 using NonweightedUndirectedArrGraph = UndirectedArrGraph<EmptyClass>;
 
+template <template <class weightType> class containerType, class weightType>
+class DirectedGraph<containerType, weightType>::iterator
+    : public containerType<weightType>::iterator {
+ public:
+  iterator(const typename containerType<weightType>::iterator& it)
+      : containerType<weightType>::iterator(it) {}
+};
+
 // file with most implementation details
 #include "graphContainers.tcc"
 

@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifdef DIRECTED_GRAPH_CLASS
+#ifdef GRAPH_CONTAINERS
 
 // functions definitions:
 template <template <class weightType> class containerType, class weightType>
@@ -99,14 +99,6 @@ template <template <class weightType> class containerType, class weightType>
 void DirectedGraph<containerType, weightType>::PrintGraph() const {
   myContainer.Output();
 }
-
-template <template <class weightType> class containerType, class weightType>
-class DirectedGraph<containerType, weightType>::iterator
-    : public containerType<weightType>::iterator {
- public:
-  iterator(const typename containerType<weightType>::iterator& it)
-      : containerType<weightType>::iterator(it) {}
-};
 
 template <template <class weightType> class containerType, class weightType>
 void UndirectedGraph<containerType, weightType>::AddConnection(int x, int y) {
