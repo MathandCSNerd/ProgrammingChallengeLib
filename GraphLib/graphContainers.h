@@ -17,8 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DIRECTED_GRAPH_CLASS
-#define DIRECTED_GRAPH_CLASS
+#ifndef GRAPH_CONTAINERS
+#define GRAPH_CONTAINERS
 
 // only included for the PrintStats function
 #include <iostream>
