@@ -22,6 +22,7 @@
 
 #include <queue>
 #include <set>
+#include "containers/infNumClass.h"
 #include "directedGraph.h"
 
 template <class weightType>
@@ -33,10 +34,12 @@ class DijkstraSSSPNode {
       : node(newNode), weight(newWeight) {}
 
   DijkstraSSSPNode(const long long& newNode, const weightType& newWeight,
-            const long long& newPredecessor)
+                   const long long& newPredecessor)
       : node(newNode), weight(newWeight), predecessor(newPredecessor) {}
 
-  bool operator<(const DijkstraSSSPNode& that) const { return that.weight < weight; }
+  bool operator<(const DijkstraSSSPNode& that) const {
+    return that.weight < weight;
+  }
 
   DijkstraSSSPNode& operator=(const DijkstraSSSPNode& that) {
     node = that.node;
@@ -54,19 +57,79 @@ class DijkstraSSSPNode {
   long long predecessor;
 };
 
-// comparator used for causing the set of searched nodes to be sorted by node
-// rather than weight
+// Comparator used for causing the set of searched nodes to be sorted by node
+// rather than weight. This is to ensure the criterea for checking if a node
+// is in the set is simply whether or the Node label matches.
 template <class weightType>
-auto cmp = [](const DijkstraSSSPNode<weightType>& a, const DijkstraSSSPNode<weightType>& b) {
-  return a.Node() < b.Node();
+struct cmpByNodeFunctor {
+  bool operator()(const DijkstraSSSPNode<weightType>& a,
+                  const DijkstraSSSPNode<weightType>& b) {
+    return a.Node() < b.Node();
+  }
 };
 
-template <class weightType>
-const std::list<long long> GetPath(
-    const DijkstraSSSPNode<weightType>& node,
-    typename std::set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)>&
-        myset) {
+// TODO: change DijkstraSSSP to have arbitrary node-label-type and
+// MotionPlanningGrid::iterator::Node() to return an int pair
+//
+// Also change return type to InfNumClass<weightType> so that
+// the approach is not as hacky.
+template <template <class weightType> class GraphLikeClass, class weightType>
+class DijkstraSSSPInstance {
+ public:
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g)
+      : graphPointer(&g), source(0) {
+    ResetState();
+  }
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g, long long mysource)
+      : graphPointer(&g), source(mysource) {
+    ResetState();
+  }
+  void CalcShortestPath(long long end);
+
+  // todo: make const versions of the following
+  //      which make no calls to CalcShortestPath
+  InfNum<weightType> ShortestPathCost(long long end);
+  std::list<long long> ShortestPath(long long end);
+
+  void ResetState();
+  void SetSource(long long newSource) { source = newSource; }
+
+ private:
+  DijkstraSSSPInstance();
+
+  GraphLikeClass<weightType> const* graphPointer;
+  long long source;
+  std::set<DijkstraSSSPNode<weightType>, cmpByNodeFunctor<weightType>> myset;
+  std::priority_queue<DijkstraSSSPNode<weightType>> pq;
+};
+
+template <template <class weightType> class GraphLikeClass, class weightType>
+InfNum<weightType>
+DijkstraSSSPInstance<GraphLikeClass, weightType>::ShortestPathCost(
+    long long end) {
+  using namespace std;
+  CalcShortestPath(end);
+
+  InfNum<weightType> retVal;
+  retVal.MarkInfinite();  // mark infinite in case node is not found
+
+  auto node = myset.find(end);
+  if (node != myset.end()) retVal = node->Weight();
+
+  return retVal;
+}
+
+template <template <class weightType> class GraphLikeClass, class weightType>
+std::list<long long>
+DijkstraSSSPInstance<GraphLikeClass, weightType>::ShortestPath(long long end) {
   std::list<long long> nodeList;
+
+  CalcShortestPath(end);
+
+  auto node = myset.find(end);
+  if (node == myset.end())  // we don't have that node
+    return nodeList;        // so return an empty list
+
   nodeList.push_front(node.Node());
 
   DijkstraSSSPNode<weightType> curnode = *myset.find(node.Predecessor());
@@ -79,54 +142,26 @@ const std::list<long long> GetPath(
   return nodeList;
 }
 
-template <class weightType>
-void ResetDijkstraSSSPState(
-    long long& start,
-    typename std::set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)>& myset,
-    typename std::priority_queue<DijkstraSSSPNode<weightType>>& pq) {
+template <template <class weightType> class GraphLikeClass, class weightType>
+void DijkstraSSSPInstance<GraphLikeClass, weightType>::ResetState() {
   myset.clear();
   while (pq.size()) pq.pop();
-  pq.push(DijkstraSSSPNode<weightType>(start, weightType(0), start));
+  pq.push(DijkstraSSSPNode<weightType>(source, weightType(0), source));
 }
 
-// I decided the decision of retrieving path and returning
-// of path can be done with the same var
-// This way it's simpler and less likely to run into user-error.
-// The best way I could think of to do that is using a pointer.
-// The reason a reference couldn't achieve this task is due to
-// lack of ability to use a default argument.
 template <template <class weightType> class GraphLikeClass, class weightType>
-weightType DijkstraSSSP(long long start, long long end,
-                 const GraphLikeClass<weightType>& g,
-                 std::list<long long>* path = nullptr);
-
-// TODO: change DijkstraSSSP to have arbitrary node-label-type and
-// MotionPlanningGrid::iterator::Node() to return an int pair
-//
-// The arbitrary node label type can be done using a class as
-// a stand-in for long long which sets default values
-//
-// Also change return type to InfNumClass<weightType> so that
-// the approach is not as hacky.
-template <template <class weightType> class GraphLikeClass, class weightType>
-weightType DijkstraSSSP(long long start, long long end,
-                 const GraphLikeClass<weightType>& g,
-                 std::list<long long>* path) {
-  using namespace std;
-  static weightType currWeight;
-  static set<DijkstraSSSPNode<weightType>, decltype(cmp<weightType>)> myset(
-      cmp<weightType>);
-  static priority_queue<DijkstraSSSPNode<weightType>> pq;
-  if (start >= 0) {
-    ResetDijkstraSSSPState(start, myset, pq);
-    if (path != nullptr) return 0;
-  }
+void DijkstraSSSPInstance<GraphLikeClass, weightType>::CalcShortestPath(
+    long long end) {
+  weightType currWeight;
 
   auto tmpit = myset.find(end);
-  if ((myset.find(end)) != myset.end()) {
-    if (path != nullptr) (*path) = (GetPath(*tmpit, myset));
-    return tmpit->Weight();
-  }
+  if ((myset.find(end)) != myset.end()) return;
+  // we have already visited the node
+
+  // TODO: possibly add the following functionality to underlying classes
+  /*if(end > graphPointer->MaxPossibleNode() or end <
+    graphPointer->LeastPossibleNode())
+    return; //the node isn't in the graph, no sense in looking for it*/
 
   auto tmpnode = pq.top();
   long long currIndex;
@@ -140,23 +175,22 @@ weightType DijkstraSSSP(long long start, long long end,
       currWeight = tmpnode.Weight();
       currIndex = tmpnode.Node();
 
-      for (auto it = g.begin(currIndex); it != g.end(currIndex); ++it) {
+      for (auto it = graphPointer->begin(currIndex);
+           it != graphPointer->end(currIndex); ++it) {
         if ((myset.find(it->Node()) == myset.end())) {
-          DijkstraSSSPNode<weightType> newNode(it->Node(), currWeight + it->Weight(),
-                                        tmpnode.Node());
+          DijkstraSSSPNode<weightType> newNode(
+              it->Node(), currWeight + it->Weight(), tmpnode.Node());
           pq.push(newNode);
         }
       }
     }
   }
+}
 
-  if (myset.find(end) == myset.end())
-    return -1;
-  else {
-    if (path != nullptr) (*path) = ((GetPath(*myset.find(end), myset)));
-
-    return myset.find(end)->Weight();
-  }
+template <template <class weightType> class GraphLikeClass, class weightType>
+DijkstraSSSPInstance<GraphLikeClass, weightType> NewDijkstraSSSPInstance(
+    const GraphLikeClass<weightType>& g, long long source) {
+  return DijkstraSSSPInstance<GraphLikeClass, weightType>(g, source);
 }
 
 #endif

@@ -46,14 +46,18 @@
 
 #include <iostream>
 #include "../directedGraph.h"
-#include "../dijkstraSSSP.h"
+#include "../classyDijkstraSSSP.h"
 
 using namespace std;
 
 void DoCase(long long n, long long m, long q, long long s) {
   DirectedListGraph<long long> g;
 
-  long long x, y, z, tmp;
+  //dostra is type DijkstraSSSPInstance<DirectedListGraph, long long>
+  auto dostra = NewDijkstraSSSPInstance(g,s);
+
+  long long x, y, z;
+  InfNum<long long> tmp;
 
   // this changes the size of the graph to n nodes
   g.ChangeSize(n);
@@ -64,21 +68,15 @@ void DoCase(long long n, long long m, long q, long long s) {
     g.AddConnection(x, y, z);
   }
 
-  // This is the initial call to the SSSP solver
-  // this is required for intilization purposes and
-  // must be called any time one wants to switch source
-  // nodes.
-  DijkstraSSSP(s, s, g);
-
   // this loop iterates through the queries
   for (long long i = 0; i < q; ++i) {
     cin >> x;
 
     // This calls the SSSP solver from the previously defined source
     // node, to node x, with graph object g.
-    tmp = DijkstraSSSP(-1, x, g);
+    tmp = dostra.ShortestPathCost(x); //DijkstraSSSP(-1, x, g);
 
-    if (tmp < 0)
+    if (!tmp.IsFinite())
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
