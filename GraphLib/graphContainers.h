@@ -93,6 +93,6 @@ using NonweightedDirectedArrGraph = DirectedArrGraph<EmptyClass>;
 using NonweightedUndirectedArrGraph = UndirectedArrGraph<EmptyClass>;
 
 // file with most implementation details
-#include "directedGraph.tcc"
+#include "graphContainers.tcc"
 
 #endif

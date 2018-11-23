@@ -23,7 +23,6 @@
 #include <queue>
 #include <set>
 #include "containers/infNumClass.h"
-#include "directedGraph.h"
 
 template <class weightType>
 class DijkstraSSSPNode {

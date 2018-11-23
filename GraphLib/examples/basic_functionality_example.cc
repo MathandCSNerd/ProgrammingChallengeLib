@@ -21,7 +21,7 @@
  */
 
 #include <iostream>
-#include "../directedGraph.h"
+#include "../graphContainers.h"
 
 using namespace std;
 

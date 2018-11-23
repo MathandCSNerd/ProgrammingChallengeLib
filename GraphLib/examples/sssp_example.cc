@@ -45,8 +45,8 @@
  */
 
 #include <iostream>
-#include "../directedGraph.h"
-#include "../classyDijkstraSSSP.h"
+#include "../graphContainers.h"
+#include "../dijkstraSSSP.h"
 
 using namespace std;
 
