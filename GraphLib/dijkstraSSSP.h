@@ -17,8 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DijkstraSSSP
-#define DijkstraSSSP
+#ifndef GRAPHLIB_DIJKSTRA_SSSP
+#define GRAPHLIB_DIJKSTRA_SSSP
 
 #include <queue>
 #include <set>
