@@ -24,16 +24,16 @@
 #include <set>
 #include "containers/infNumClass.h"
 
-template <class weightType>
+template <class weightType, class nodeLabelType>
 class DijkstraSSSPNode {
  public:
-  DijkstraSSSPNode(const long long& newNode) : node(newNode) {}
+  DijkstraSSSPNode(const nodeLabelType& newNode) : node(newNode) {}
 
-  DijkstraSSSPNode(const long long& newNode, const weightType& newWeight)
+  DijkstraSSSPNode(const nodeLabelType& newNode, const weightType& newWeight)
       : node(newNode), weight(newWeight) {}
 
-  DijkstraSSSPNode(const long long& newNode, const weightType& newWeight,
-                   const long long& newPredecessor)
+  DijkstraSSSPNode(const nodeLabelType& newNode, const weightType& newWeight,
+                   const nodeLabelType& newPredecessor)
       : node(newNode), weight(newWeight), predecessor(newPredecessor) {}
 
   bool operator<(const DijkstraSSSPNode& that) const {
@@ -46,66 +46,67 @@ class DijkstraSSSPNode {
     predecessor = that.predecessor;
     return *this;
   }
-  long long Node() const { return node; }
+  nodeLabelType Node() const { return node; }
   weightType Weight() const { return weight; }
-  long long Predecessor() const { return predecessor; }
+  nodeLabelType Predecessor() const { return predecessor; }
 
  private:
-  long long node;
+  nodeLabelType node;
   weightType weight;
-  long long predecessor;
+  nodeLabelType predecessor;
 };
 
 // Comparator used for causing the set of searched nodes to be sorted by node
 // rather than weight. This is to ensure the criterea for checking if a node
 // is in the set is simply whether or the Node label matches.
-template <class weightType>
+template <class weightType, class nodeLabelType>
 struct cmpByNodeFunctor {
-  bool operator()(const DijkstraSSSPNode<weightType>& a,
-                  const DijkstraSSSPNode<weightType>& b) {
+  bool operator()(const DijkstraSSSPNode<weightType, nodeLabelType>& a,
+                  const DijkstraSSSPNode<weightType, nodeLabelType>& b) {
     return a.Node() < b.Node();
   }
 };
 
-// TODO: change DijkstraSSSP to have arbitrary node-label-type and
-// MotionPlanningGrid::iterator::Node() to return an int pair
-//
-// Also change return type to InfNumClass<weightType> so that
-// the approach is not as hacky.
-template <template <class weightType> class GraphLikeClass, class weightType>
+template <template <class weightType> class GraphLikeClass, class weightType,
+          class nodeLabelType>
 class DijkstraSSSPInstance {
  public:
   DijkstraSSSPInstance(const GraphLikeClass<weightType>& g)
       : graphPointer(&g), source(0) {
     ResetState();
   }
-  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g, long long mysource)
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
+                       nodeLabelType mysource)
       : graphPointer(&g), source(mysource) {
     ResetState();
   }
-  void CalcShortestPath(long long end);
+  void CalcShortestPath(nodeLabelType end);
 
   // todo: make const versions of the following
   //      which make no calls to CalcShortestPath
-  InfNum<weightType> ShortestPathCost(long long end);
-  std::list<long long> ShortestPath(long long end);
+  InfNum<weightType> ShortestPathCost(nodeLabelType end);
+  std::list<nodeLabelType> ShortestPath(nodeLabelType end);
 
   void ResetState();
-  void SetSource(long long newSource) { source = newSource; }
+  void SetSource(nodeLabelType newSource) { source = newSource; }
 
  private:
   DijkstraSSSPInstance();
 
   GraphLikeClass<weightType> const* graphPointer;
-  long long source;
-  std::set<DijkstraSSSPNode<weightType>, cmpByNodeFunctor<weightType>> myset;
-  std::priority_queue<DijkstraSSSPNode<weightType>> pq;
+  nodeLabelType source;
+  std::set<DijkstraSSSPNode<weightType, nodeLabelType>,
+           cmpByNodeFunctor<weightType, nodeLabelType>>
+      myset;
+  std::priority_queue<DijkstraSSSPNode<weightType, nodeLabelType>> pq;
 };
 
-/*template <template <class weightType> class GraphLikeClass, class weightType>
-DijkstraSSSPInstance<GraphLikeClass, weightType> NewDijkstraSSSPInstance(
-    const GraphLikeClass<weightType>& g, long long source);
-*/
+template <template <class weightType> class GraphLikeClass, class weightType,
+          class nodeLabelType>
+DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>
+NewDijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
+                        nodeLabelType source);
+
 #include "dijkstraSSSP.tcc"
 
 #endif
