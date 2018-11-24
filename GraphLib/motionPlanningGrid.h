@@ -22,11 +22,6 @@
 #include "coords.h"
 
 // TODO: expand to have an arbitrary number of dimensions
-// TODO: change the maze type to InfNum<weightType> so it  can
-//       store infinites
-//       Set all coords infinite at first until set is called.
-//       This avoids the problem of garbage in coords and is
-//       sensible.
 template <class weightType>
 class MotionPlanningGrid {
  public:
@@ -55,8 +50,6 @@ class MotionPlanningGrid {
 };
 
 
-// TODO: rewrite MotionPlanningGrid::iterator::Node() to return an int pair
-//
 // TODO: expand this to allow diagonal directions as well
 //       maybe also a SetDiagonal(true/false) function?
 template <class weightType>
