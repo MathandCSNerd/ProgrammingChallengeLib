@@ -24,4 +24,7 @@ Future Modifications:
   Create namespace either for entire graph library or separate parts
   Rewrite the interface for "dstra" and Bellman Ford to be the same
     to allow to more generic calls to SSSP algorithms.
+
+Potential Additions:
+  Multigraphs
 </pre>

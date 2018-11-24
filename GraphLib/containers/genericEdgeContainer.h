@@ -17,6 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+// TODO: make set,unset,exists all pure virtual
+// make 3 child classes for set, vector, and list
+// make a second version for multigraph with the list type
+//  use set insert
+//  ensure the vector is constantly sorted and use lower_bound
+//  as far as the list is concerned... use list insert and list find I guess...
+//  set should overwrite first if the entry exists
+
 #ifndef EDGE_CONT
 #define EDGE_CONT
 
