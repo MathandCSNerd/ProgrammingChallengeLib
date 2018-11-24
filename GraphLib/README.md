@@ -1,4 +1,4 @@
-#GraphLib
+# GraphLib
 
 This directory contains the graph class and methods I use in
 programming challenges.
