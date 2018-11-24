@@ -16,14 +16,12 @@ the way it is.
 
 <pre>
 Future addition plans:
-  Motion Planning Grid class
   Bellman Ford
   Floyd Warshall
   Prims
 
 Future Modifications:
   Create namespace either for entire graph library or separate parts
-  Change "dstra" to better accommodate motion planning
   Rewrite the interface for "dstra" and Bellman Ford to be the same
     to allow to more generic calls to SSSP algorithms.
 </pre>
