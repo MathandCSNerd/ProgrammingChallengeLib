@@ -49,10 +49,10 @@ DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPath(
   if (node == myset.end())  // we don't have that node
     return nodeList;        // so return an empty list
 
-  nodeList.push_front(node.Node());
+  nodeList.push_front(node->Node());
 
   DijkstraSSSPNode<weightType, nodeLabelType> curnode =
-      *myset.find(node.Predecessor());
+      *myset.find(node->Predecessor());
 
   while (curnode.Predecessor() != curnode.Node()) {
     nodeList.push_front(curnode.Node());
@@ -103,7 +103,7 @@ void DijkstraSSSPInstance<GraphLikeClass, weightType,
            it != graphPointer->end(currIndex); ++it) {
         if ((myset.find(it->Node()) == myset.end())) {
           DijkstraSSSPNode<weightType, nodeLabelType> newNode(
-              it->Node(), currWeight + it->Weight(), tmpnode.Node());
+              it->Node(), it->Weight() + currWeight, tmpnode.Node());
           pq.push(newNode);
         }
       }

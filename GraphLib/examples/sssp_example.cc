@@ -80,6 +80,11 @@ void DoCase(long long n, long long m, long q, long long s) {
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
+
+    auto path = dostra.ShortestPath(x);
+    for(auto it: path)
+      cout << it << ' ';
+    cout << endl;
   }
 }
 
