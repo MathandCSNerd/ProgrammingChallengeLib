@@ -64,7 +64,7 @@ class MaxElementStack {
 
   // TODO: decide what to do on empty stack
   const myType& Top() const {
-    if (elementStack.size()) return *elementStack.top();
+    if (elementStack.size()) return elementStack.top();
   }
 
   size_t Size() const { return elementStack.size(); }
