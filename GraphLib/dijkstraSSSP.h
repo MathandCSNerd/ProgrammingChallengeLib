@@ -88,7 +88,11 @@ class DijkstraSSSPInstance {
   std::list<nodeLabelType> ShortestPath(nodeLabelType end);
 
   void ResetState();
-  void SetSource(nodeLabelType newSource) { source = newSource; }
+  void SetSource(nodeLabelType newSource) {
+    if(source != newSource)
+      ResetState();
+    source = newSource;
+  }
 
  private:
   DijkstraSSSPInstance();
