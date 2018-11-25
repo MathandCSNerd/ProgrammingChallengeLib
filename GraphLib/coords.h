@@ -21,60 +21,87 @@
 #define COORD_CLASS
 
 #include <utility>
+#include <vector>
 
-// This class mostly exists for readability purposes.
-// In esscense it's just a slightly clearer interface
-// on top of a pair for its specific purpose.
+template <class number>
+class Coordinates;
+
+template <class number>
+std::ostream& operator<<(std::ostream& out, const Coordinates<number>& that);
+
 template <class number>
 class Coordinates {
  public:
-  Coordinates() { Set(0, 0); }
-  Coordinates(long long a, long long b) { Set(a, b); }
+  Coordinates() { Set({0, 0}); }
+  Coordinates(long long a, long long b) { Set({a, b}); }
+  Coordinates(std::initializer_list<number> coordList) { Set(coordList); }
 
-  number& X() { return myCoords.second; }
-  number& Y() { return myCoords.first; }
+  number& X() { return myCoords[1]; }
+  number& Y() { return myCoords[0]; }
 
-  number& Row() { return myCoords.first; }
-  number& Col() { return myCoords.second; }
+  number& Row() { return myCoords[0]; }
+  number& Col() { return myCoords[1]; }
 
-  const number& CRow() const { return myCoords.first; }
-  const number& CCol() const { return myCoords.second; }
+  const number& CRow() const { return myCoords[0]; }
+  const number& CCol() const { return myCoords[1]; }
 
-  void Set(const number row, const number col) {
-    myCoords.first = row;
-    myCoords.second = col;
+  number Get(size_t place) const {
+    if (place < Size()) return myCoords[place];
   }
 
-  void SetXY(const number x, const number y) {
-    myCoords.first = y;
-    myCoords.second = x;
+  number& operator()(size_t place) {
+    if (place < Size()) return myCoords[place];
+  }
+
+  size_t Size() const { return myCoords.size(); }
+
+  void Set(std::initializer_list<number> coordList) {
+    myCoords.clear();
+    myCoords.reserve(coordList.size());
+
+    for (auto it : coordList) myCoords.push_back(it);
+  }
+
+  void Set(const number row, const number col) { Set({row, col}); }
+
+  void SetXY(const number x, const number y) { Set({y, x}); }
+
+  number CmpCoords(const Coordinates<number>& b) const {
+    if (Size() != b.Size()) return Size() - b.Size();
+    for (size_t i = 0; i < Size(); ++i) {
+      if (myCoords[i] != b.myCoords[i]) return myCoords[i] - b.myCoords[i];
+    }
+    return 0;
   }
 
   bool operator<(const Coordinates<number>& b) const {
-    return myCoords < b.myCoords;
-  }
-  bool operator==(const Coordinates<number>& b) const {
-    return myCoords == b.myCoords;
+    return CmpCoords(b) < 0;
   }
   bool operator>(const Coordinates<number>& b) const {
-    return myCoords > b.myCoords;
-  }
-  bool operator!=(const Coordinates<number>& b) const {
-    return myCoords != b.myCoords;
+    return CmpCoords(b) > 0;
   }
 
-  template <class numberType>
-  friend std::ostream& operator<<(std::ostream& out,
-                                  const Coordinates<number>& that);
+  bool operator==(const Coordinates<number>& b) const {
+    return CmpCoords(b) == 0;
+  }
+  bool operator!=(const Coordinates<number>& b) const { return !(*this == b); }
+
+  friend std::ostream& operator<<<number>(std::ostream& out,
+                                          const Coordinates<number>& that);
 
  private:
-  std::pair<number, number> myCoords;
+  std::vector<number> myCoords;
 };
 
-template <class numberType>
-std::ostream& operator<<(std::ostream& out,
-                         const Coordinates<numberType>& that) {
-  out << "(" << that.CRow() << ", " << that.CCol() << ")";
+template <class number>
+std::ostream& operator<<(std::ostream& out, const Coordinates<number>& that) {
+  out << "(";
+  if (that.myCoords.size()) {
+    out << that.myCoords[0];
+    for (auto it = that.myCoords.begin() + 1; it != that.myCoords.end(); ++it)
+      out << ", " << *it;
+  }
+  out << ")";
   return out;
 }
 
