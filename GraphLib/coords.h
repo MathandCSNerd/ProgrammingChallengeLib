@@ -26,10 +26,10 @@
 // In esscense it's just a slightly clearer interface
 // on top of a pair for its specific purpose.
 template <class number>
-class CoordinatePair {
+class Coordinates {
  public:
-  CoordinatePair() { Set(0, 0); }
-  CoordinatePair(long long a, long long b) { Set(a, b); }
+  Coordinates() { Set(0, 0); }
+  Coordinates(long long a, long long b) { Set(a, b); }
 
   number& X() { return myCoords.second; }
   number& Y() { return myCoords.first; }
@@ -50,22 +50,22 @@ class CoordinatePair {
     myCoords.second = x;
   }
 
-  bool operator<(const CoordinatePair<number>& b) const {
+  bool operator<(const Coordinates<number>& b) const {
     return myCoords < b.myCoords;
   }
-  bool operator==(const CoordinatePair<number>& b) const {
+  bool operator==(const Coordinates<number>& b) const {
     return myCoords == b.myCoords;
   }
-  bool operator>(const CoordinatePair<number>& b) const {
+  bool operator>(const Coordinates<number>& b) const {
     return myCoords > b.myCoords;
   }
-  bool operator!=(const CoordinatePair<number>& b) const {
+  bool operator!=(const Coordinates<number>& b) const {
     return myCoords != b.myCoords;
   }
 
   template <class numberType>
   friend std::ostream& operator<<(std::ostream& out,
-                                  const CoordinatePair<number>& that);
+                                  const Coordinates<number>& that);
 
  private:
   std::pair<number, number> myCoords;
@@ -73,7 +73,7 @@ class CoordinatePair {
 
 template <class numberType>
 std::ostream& operator<<(std::ostream& out,
-                         const CoordinatePair<numberType>& that) {
+                         const Coordinates<numberType>& that) {
   out << "(" << that.CRow() << ", " << that.CCol() << ")";
   return out;
 }

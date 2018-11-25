@@ -30,7 +30,7 @@ MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
 
 template <class weightType>
 MotionPlanningGrid<weightType>::MotionPlanningGrid(
-    const CoordinatePair<long long>& coord)
+    const Coordinates<long long>& coord)
     : maze(NULL) {
   ChangeSize(coord);
 }
@@ -46,7 +46,7 @@ MotionPlanningGrid<weightType>::MotionPlanningGrid(
 
 template <class weightType>
 void MotionPlanningGrid<weightType>::ChangeSize(
-    const CoordinatePair<long long>& coord) {
+    const Coordinates<long long>& coord) {
   delete[] maze;
   rowsize = coord.CRow();
   colsize = coord.CCol();
@@ -61,45 +61,45 @@ long long MotionPlanningGrid<weightType>::Size() const {
 
 template <class weightType>
 long long MotionPlanningGrid<weightType>::CoordsToIndex(
-    const CoordinatePair<long long>& coord) const {
+    const Coordinates<long long>& coord) const {
   return coord.CRow() * ColSize() + coord.CCol();
 }
 
 template <class weightType>
 weightType& MotionPlanningGrid<weightType>::Get(
-    const CoordinatePair<long long>& coord) const {
+    const Coordinates<long long>& coord) const {
   return maze[CoordsToIndex(coord)].GetNum();
 }
 
 template <class weightType>
 weightType& MotionPlanningGrid<weightType>::Access(
-    const CoordinatePair<long long>& coord) {
+    const Coordinates<long long>& coord) {
   maze[CoordsToIndex(coord)].MarkFinite();
   return maze[CoordsToIndex(coord)].GetNum();
 }
 
 template <class weightType>
 weightType& MotionPlanningGrid<weightType>::operator()(
-    const CoordinatePair<long long>& coord) {
+    const Coordinates<long long>& coord) {
   return Access(coord);
 }
 
 /*template <class weightType>
 weightType& MotionPlanningGrid<weightType>::operator()(long long row,
                                                        long long col) {
-  CoordinatePair<long long> coord(row, col);
+  Coordinates<long long> coord(row, col);
   return Access(coord);
 }*/
 
 template <class weightType>
 bool MotionPlanningGrid<weightType>::ObstacleAt(
-    const CoordinatePair<long long>& coord) const {
+    const Coordinates<long long>& coord) const {
   return maze[CoordsToIndex(coord)].IsInfinite();
 }
 
 template <class weightType>
 typename MotionPlanningGrid<weightType>::iterator
-MotionPlanningGrid<weightType>::begin(CoordinatePair<long long> coord) const {
+MotionPlanningGrid<weightType>::begin(Coordinates<long long> coord) const {
   iterator it(0, coord, this);
   if (!it->ValidIterator()) ++it;
   return it;
@@ -107,7 +107,7 @@ MotionPlanningGrid<weightType>::begin(CoordinatePair<long long> coord) const {
 
 template <class weightType>
 typename MotionPlanningGrid<weightType>::iterator
-MotionPlanningGrid<weightType>::end(CoordinatePair<long long> coord) const {
+MotionPlanningGrid<weightType>::end(Coordinates<long long> coord) const {
   return iterator(4, coord, this);
 }
 
@@ -116,7 +116,7 @@ MotionPlanningGrid<weightType>::end(CoordinatePair<long long> coord) const {
 /*********/
 template <class weightType>
 void MotionPlanningGrid<weightType>::iterator::CalcIndexCoords(
-    CoordinatePair<long long>& coord) const {
+    Coordinates<long long>& coord) const {
   /*
   down, right, up, left
   even = row
@@ -135,16 +135,16 @@ void MotionPlanningGrid<weightType>::iterator::CalcIndexCoords(
 }
 
 template <class weightType>
-CoordinatePair<long long> MotionPlanningGrid<weightType>::iterator::Node()
+Coordinates<long long> MotionPlanningGrid<weightType>::iterator::Node()
     const {
-  CoordinatePair<long long> coord;
+  Coordinates<long long> coord;
   CalcIndexCoords(coord);
   return coord;
 }
 
 template <class weightType>
 const weightType& MotionPlanningGrid<weightType>::iterator::Weight() const {
-  CoordinatePair<long long> coord;
+  Coordinates<long long> coord;
   CalcIndexCoords(coord);
   return data->Get(coord);  //.CGetNum();
 }
@@ -154,7 +154,7 @@ MotionPlanningGrid<weightType>::iterator::iterator()
     : curCoord(0, 0), index(0), data(nullptr) {}
 template <class weightType>
 MotionPlanningGrid<weightType>::iterator::iterator(
-    int newIndex, CoordinatePair<long long> newNode,
+    int newIndex, Coordinates<long long> newNode,
     const MotionPlanningGrid<weightType>* dataPtr)
     : curCoord(newNode), index(newIndex), data(dataPtr) {}
 

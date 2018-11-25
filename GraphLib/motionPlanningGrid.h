@@ -31,22 +31,22 @@ class MotionPlanningGrid {
 
   MotionPlanningGrid();
   ~MotionPlanningGrid();
-  MotionPlanningGrid(const CoordinatePair<long long>& coord);
+  MotionPlanningGrid(const Coordinates<long long>& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  void ChangeSize(const CoordinatePair<long long>& coord);
+  void ChangeSize(const Coordinates<long long>& coord);
   long long Size() const;
   long long RowSize() const { return rowsize; };
   long long ColSize() const { return colsize; };
   // long long DimSize(int dim) const;
 
-  long long CoordsToIndex(const CoordinatePair<long long>& coord) const;
-  weightType& Access(const CoordinatePair<long long>& coord);
-  weightType& Get(const CoordinatePair<long long>& coord) const;
-  weightType& operator()(const CoordinatePair<long long>& coord);
-  bool ObstacleAt(const CoordinatePair<long long>& coord) const;
+  long long CoordsToIndex(const Coordinates<long long>& coord) const;
+  weightType& Access(const Coordinates<long long>& coord);
+  weightType& Get(const Coordinates<long long>& coord) const;
+  weightType& operator()(const Coordinates<long long>& coord);
+  bool ObstacleAt(const Coordinates<long long>& coord) const;
 
-  iterator begin(CoordinatePair<long long> coord) const;
-  iterator end(CoordinatePair<long long> coord) const;
+  iterator begin(Coordinates<long long> coord) const;
+  iterator end(Coordinates<long long> coord) const;
 
  private:
   long long rowsize;
@@ -61,7 +61,7 @@ class MotionPlanningGrid {
 template <class weightType>
 class MotionPlanningGrid<weightType>::iterator {
  private:
-  CoordinatePair<long long> curCoord;
+  Coordinates<long long> curCoord;
   // index just holds the current iteration step
   // from the current node.
   // It might be a good idea to change it to a
@@ -77,12 +77,12 @@ class MotionPlanningGrid<weightType>::iterator {
   const long long CRow() const { return curCoord.CRow(); }
   const long long CCol() const { return curCoord.CCol(); }
 
-  void CalcIndexCoords(CoordinatePair<long long>& coord) const;
+  void CalcIndexCoords(Coordinates<long long>& coord) const;
 
-  CoordinatePair<long long> Node() const;
+  Coordinates<long long> Node() const;
   const weightType& Weight() const;
   iterator();
-  iterator(int newIndex, CoordinatePair<long long> newNode,
+  iterator(int newIndex, Coordinates<long long> newNode,
            const MotionPlanningGrid<weightType>* dataPtr);
 
   iterator& operator=(const iterator& that);

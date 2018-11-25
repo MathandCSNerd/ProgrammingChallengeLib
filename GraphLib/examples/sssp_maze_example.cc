@@ -52,7 +52,7 @@ long long theMaze[size][size] = {
 
 void DoCase(long q) {
   long long x, y;
-  CoordinatePair<long long> tmpCoord(size, size);
+  Coordinates<long long> tmpCoord(size, size);
   MotionPlanningGrid<long long> g(tmpCoord);
 
   // Sets rows and cols of g to be "tmpCoord's" size.
@@ -74,10 +74,10 @@ void DoCase(long q) {
   }
 
   // set the source to be 0,0
-  CoordinatePair<long long> source(0, 0);
+  Coordinates<long long> source(0, 0);
   auto dostra = NewDijkstraSSSPInstance(g, source);
 
-  CoordinatePair<long long> dest;
+  Coordinates<long long> dest;
 
   // this loop performs the number of queries the user requests
   for (long long i = 0; i < q; ++i) {
