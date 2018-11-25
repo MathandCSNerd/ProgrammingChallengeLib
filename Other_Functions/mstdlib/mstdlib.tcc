@@ -17,14 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#include "mstdlib.h"
+#ifdef MATTSTDLIB_MSTDLIB_H
 
 namespace mstdlib {
 
 //**************************
 // simple math functions
 //**************************
-template<class numType>
+template <class numType>
 numType gcd(numType a, numType b) {
   if (!b)
     return a;
@@ -32,7 +32,7 @@ numType gcd(numType a, numType b) {
     return gcd(b, a % b);
 }
 
-template<class numType>
+template <class numType>
 numType lcm(numType a, numType b) {
   if (a || b) {
     numType tmp = a * b;
@@ -43,18 +43,18 @@ numType lcm(numType a, numType b) {
   }
 }
 
-template<class numType>
+template <class numType>
 numType log(numType base, numType num) {
   return log10l(num) / log10l(base);
 }
 
-template<class numType>
+template <class numType>
 void PAssign(numType& var1, numType& var2, numType val1, numType val2) {
   var1 = val1;
   var2 = val2;
 }
 
-template<class numType>
+template <class numType>
 std::vector<numType> xgcd(numType a, numType b) {
   using namespace std;
   vector<numType> vec;
@@ -74,25 +74,24 @@ std::vector<numType> xgcd(numType a, numType b) {
   return vec;
 }
 
-template<class numType>
+template <class numType>
 numType InverseMod(numType a, numType b) {
   auto l = xgcd(a, b);
   if (l[1] < 0) l[1] += b;
   return l[1];
 }
 
-template<class numType>
- numType IntPow( numType base,  numType exp) {
+template <class numType>
+numType IntPow(numType base, numType exp) {
   // return (numType)(floorl(powl(base, exp) + 0.5));
   return pow(base, exp, ULLONG_MAX);
 }
 
-template<class numType>
- numType pow( numType base,  numType exp,
-                        numType mod) {
+template <class numType>
+numType pow(numType base, numType exp, numType mod) {
   if (base < 1) return 0;
   if (!exp) return 1;
-   numType curr = base, result = 1;
+  numType curr = base, result = 1;
 
   while (exp) {
     if (exp % 2) result = (result * curr) % mod;
@@ -105,22 +104,22 @@ template<class numType>
 //**************************
 // simple common functions
 //**************************
-template<class numType>
+template <class numType>
 void swap(numType& a, numType& b) {
   numType tmp(a);
   a = b;
   b = tmp;
 }
 
-template<class numType>
+template <class numType>
 void Simplify(numType& a, numType& b) {
   numType tmp = gcd(a, b);
   a /= tmp;
   b /= tmp;
 }
 
-template<class numType>
-numType CountDigits( numType i) {
+template <class numType>
+numType CountDigits(numType i) {
   numType ret = (ceil(log10l(i)));
   if (ret == (log10l(i))) ++ret;
   return ret;
@@ -129,25 +128,25 @@ numType CountDigits( numType i) {
 //**************************
 // counting functions
 //**************************
-template<class numType>
+template <class numType>
 numType Factorial(numType x) {
   numType sum = 1;
   for (numType i = x; i > 1; --i) sum *= i;
   return sum;
 }
 
-template<class numType>
+template <class numType>
 numType NChoosek(numType n, numType k) {
   if (n < k) swap(n, k);
   return Factorial(n) / (Factorial(n - k) * Factorial(k));
 }
 
-template<class numType>
+template <class numType>
 numType NPermk(numType n, numType k) {
   return Factorial(n) / (Factorial(n - k));
 }
 
-template<class numType>
+template <class numType>
 numType PrecisenChoosek(numType n, numType k) {
   if (n < k) swap(n, k);
 
@@ -170,14 +169,14 @@ numType PrecisenChoosek(numType n, numType k) {
   return sumn / sumd;
 }
 
-template<class numType>
+template <class numType>
 numType PrecisenPermk(numType n, numType k) {
   numType sum = 1;
   for (numType i = n; i > (n - k); --i) sum *= i;
   return sum;
 }
 
-template<class numType>
+template <class numType>
 numType Binomial(numType k, numType n, numType p) {
   return powl(p, k) * powl(1 - p, n - k) * PrecisenChoosek(n, k);
 }
@@ -185,30 +184,40 @@ numType Binomial(numType k, numType n, numType p) {
 //**************************
 // summing functions
 //**************************
-template<class numType>
-numType Sum(numType n) { return (n * (n + 1)) / 2; }
+template <class numType>
+numType Sum(numType n) {
+  return (n * (n + 1)) / 2;
+}
 
-template<class numType>
-numType SquareSum(numType n) { return (n * (n + 1) * (2 * n + 1)) / 6; }
+template <class numType>
+numType SquareSum(numType n) {
+  return (n * (n + 1) * (2 * n + 1)) / 6;
+}
 
-template<class numType>
-numType CubeSum(numType n) { return (n * n * (n + 1) * (n + 1)) / 4; }
+template <class numType>
+numType CubeSum(numType n) {
+  return (n * n * (n + 1) * (n + 1)) / 4;
+}
 
-template<class numType>
-numType SumBy(numType n, numType m) { return m * Sum(n / m); }
+template <class numType>
+numType SumBy(numType n, numType m) {
+  return m * Sum(n / m);
+}
 
 //**************************
 // primes and factoring
 //**************************
-template<class numType>
-bool FermatPrimalityTest(numType x) { return (pow(2, x - 1, x) != 1); }
+template <class numType>
+bool FermatPrimalityTest(numType x) {
+  return (pow(2, x - 1, x) != 1);
+}
 
-template<class numType>
+template <class numType>
 bool IsObviousNonPrime(numType x) {
   return (!(x % 2) || x < 2) || FermatPrimalityTest(x);
 }
 
-template<class numType>
+template <class numType>
 bool IsPrime(numType x) {
   if (x == 2)
     return true;
@@ -221,7 +230,7 @@ bool IsPrime(numType x) {
   return true;
 }
 
-template<class numType>
+template <class numType>
 bool IsPrime(numType x, const std::vector<numType>& primeSet) {
   if (!(x % 2)) return false;
 
@@ -236,7 +245,7 @@ bool IsPrime(numType x, const std::vector<numType>& primeSet) {
   }
 }
 
-template<class numType>
+template <class numType>
 bool IsCachePrime(numType x) {
   const static numType MAXPSIZE = 100000;
   static bool cPrime[MAXPSIZE];
@@ -259,7 +268,7 @@ bool IsCachePrime(numType x) {
   return IsPrime(x);
 }
 
-template<class numType>
+template <class numType>
 std::vector<numType> ListPrimeSieve(numType MAX_NUM) {
   std::vector<numType> primeList;
   // 1.15 is due to the maximum error in the approximate prime counting function
@@ -275,7 +284,7 @@ std::vector<numType> ListPrimeSieve(numType MAX_NUM) {
   return primeList;
 }
 
-template<class numType>
+template <class numType>
 bool* ArrPrimeSieve(numType MAX_NUM) {
   bool* arr = new bool[MAX_NUM];
   memset(arr, true, MAX_NUM * sizeof(bool));
@@ -288,7 +297,7 @@ bool* ArrPrimeSieve(numType MAX_NUM) {
   return arr;
 }
 
-template<class numType>
+template <class numType>
 std::vector<numType> PrimeArrToVec(bool* parr, numType MAX_NUM) {
   using namespace std;
   vector<numType> pset;
@@ -298,13 +307,13 @@ std::vector<numType> PrimeArrToVec(bool* parr, numType MAX_NUM) {
   return pset;
 }
 
-template<class numType>
+template <class numType>
 std::vector<numType> NormalPrimeSieve(numType MAX_NUM) {
   bool* arr = ArrPrimeSieve(MAX_NUM);
   return std::move(PrimeArrToVec(arr, MAX_NUM));
 }
 
-template<class numType>
+template <class numType>
 std::pair<numType, numType> DoFactDiv(numType& x, const numType i) {
   using namespace std;
   pair<numType, numType> tmp;
@@ -318,7 +327,7 @@ std::pair<numType, numType> DoFactDiv(numType& x, const numType i) {
   return tmp;
 }
 
-template<class numType>
+template <class numType>
 std::list<std::pair<numType, numType>> Factor(numType x) {
   using namespace std;
   list<pair<numType, numType>> factors;
@@ -330,7 +339,7 @@ std::list<std::pair<numType, numType>> Factor(numType x) {
   return factors;
 }
 
-template<class numType>
+template <class numType>
 std::list<std::pair<numType, numType>> PFactor(
     numType x, const std::vector<numType>& primeList) {
   using namespace std;
@@ -344,7 +353,7 @@ std::list<std::pair<numType, numType>> PFactor(
   return factors;
 }
 
-template<class numType>
+template <class numType>
 numType EulerPhi(std::list<std::pair<numType, numType>>& l) {
   numType prod = 1;
   numType a, p;
@@ -356,7 +365,7 @@ numType EulerPhi(std::list<std::pair<numType, numType>>& l) {
   return prod;
 }
 
-template<class numType>
+template <class numType>
 numType EulerPhi(numType x) {
   if (x < 1) return 0;
 
@@ -365,13 +374,13 @@ numType EulerPhi(numType x) {
   return EulerPhi(l);
 }
 
-template<class numType>
+template <class numType>
 std::list<numType> FactorsToDivisors(
     std::list<std::pair<numType, numType>>& l) {
   using namespace std;
   numType* exps = new numType[l.size()];
   numType* tmps = new numType[l.size()];
-   numType i;
+  numType i;
   numType prod;
   list<numType> newl;
 
@@ -393,7 +402,7 @@ std::list<numType> FactorsToDivisors(
   return newl;
 }
 
-template<class numType>
+template <class numType>
 numType DivisorCount(numType x, const std::vector<numType>& primeList) {
   auto l = PFactor(x, primeList);
   numType prod = 1;
@@ -401,7 +410,7 @@ numType DivisorCount(numType x, const std::vector<numType>& primeList) {
   return prod;
 }
 
-template<class numType>
+template <class numType>
 numType DivisorCount(numType x) {
   auto l = Factor(x);
   numType prod = 1;
@@ -409,7 +418,7 @@ numType DivisorCount(numType x) {
   return prod;
 }
 
-template<class numType>
+template <class numType>
 numType DivisorSum(numType x, const std::vector<numType>& primeList) {
   auto l = PFactor(x, primeList);
   numType prod = 1;
@@ -418,7 +427,7 @@ numType DivisorSum(numType x, const std::vector<numType>& primeList) {
   return prod;
 }
 
-template<class numType>
+template <class numType>
 numType DivisorSum(std::list<std::pair<numType, numType>>& l) {
   numType prod = 1;
   for (auto it : l)
@@ -429,57 +438,77 @@ numType DivisorSum(std::list<std::pair<numType, numType>>& l) {
 //**************************
 // figurate numbers functions
 //**************************
-template<class numType>
-numType GetOctX(numType i) { return ceil(sqrt(float(i) / 3)); }
-template<class numType>
-numType OctSumN(numType i) { return i * (3 * i - 2); }
+template <class numType>
+numType GetOctX(numType i) {
+  return ceil(sqrt(float(i) / 3));
+}
+template <class numType>
+numType OctSumN(numType i) {
+  return i * (3 * i - 2);
+}
 
-template<class numType>
-numType GetHeptX(numType i) { return ceil(sqrt(float(i) * float(2) / 5)); }
-template<class numType>
-numType HeptSumN(numType i) { return (i * (5 * i - 3)) / 2; }
+template <class numType>
+numType GetHeptX(numType i) {
+  return ceil(sqrt(float(i) * float(2) / 5));
+}
+template <class numType>
+numType HeptSumN(numType i) {
+  return (i * (5 * i - 3)) / 2;
+}
 
-template<class numType>
-numType GetHexX(numType i) { return ceil(sqrt(float(i) / 2)); }
-template<class numType>
-numType HexSumN(numType i) { return 2 * i * i - i; }
+template <class numType>
+numType GetHexX(numType i) {
+  return ceil(sqrt(float(i) / 2));
+}
+template <class numType>
+numType HexSumN(numType i) {
+  return 2 * i * i - i;
+}
 
-template<class numType>
-numType GetPentX(numType i) { return ceil(sqrt(float(i) * float(2) / 3)); }
-template<class numType>
-numType PentSumN(numType i) { return (3 * (i * i) - i) / 2; }
+template <class numType>
+numType GetPentX(numType i) {
+  return ceil(sqrt(float(i) * float(2) / 3));
+}
+template <class numType>
+numType PentSumN(numType i) {
+  return (3 * (i * i) - i) / 2;
+}
 
-template<class numType>
-numType GetTriX(numType i) { return floor(sqrt(i * 2)); }
-template<class numType>
-numType TriSumN(numType i) { return ((i * (i + 1)) / 2); }
+template <class numType>
+numType GetTriX(numType i) {
+  return floor(sqrt(i * 2));
+}
+template <class numType>
+numType TriSumN(numType i) {
+  return ((i * (i + 1)) / 2);
+}
 
-template<class numType>
+template <class numType>
 bool IsOct(numType i) {
   numType temp = GetOctX(i);
   return OctSumN(temp) == i;
 }
-template<class numType>
+template <class numType>
 bool IsHept(numType i) {
   numType temp = GetHeptX(i);
   return HeptSumN(temp) == i;
 }
-template<class numType>
+template <class numType>
 bool IsHex(numType i) {
   numType temp = GetHexX(i);
   return HexSumN(temp) == i;
 }
-template<class numType>
+template <class numType>
 bool IsPent(numType i) {
   numType temp = GetPentX(i);
   return PentSumN(temp) == i;
 }
-template<class numType>
+template <class numType>
 bool IsTri(numType i) {
   numType temp = GetTriX(i);
   return TriSumN(temp) == i;
 }
-template<class numType>
+template <class numType>
 bool IsSquare(numType i) {
   numType temp = sqrt(i);
   return (temp * temp) == i;
@@ -488,7 +517,7 @@ bool IsSquare(numType i) {
 //**************************
 // other math functions
 //**************************
-template<class numType>
+template <class numType>
 numType DigitSum(numType x) {
   numType sum = 0;
   while (x) {
@@ -498,7 +527,7 @@ numType DigitSum(numType x) {
   return sum;
 }
 
-template<class numType>
+template <class numType>
 numType SquareDigitSum(numType x) {
   numType sum = 0;
   while (x) {
@@ -547,9 +576,8 @@ bool IterateStrin(std::string& str) {
   return true;
 }
 
-template<class numType>
-bool IterateArr(numType* myarrbegin, numType* myarrend,
-                numType* testarr) {
+template <class numType>
+bool IterateArr(numType* myarrbegin, numType* myarrend, numType* testarr) {
   numType* i;
 
   for (i = myarrbegin; i < myarrend && (*i == *(i - myarrbegin + testarr)); ++i)
@@ -565,7 +593,7 @@ bool IterateArr(numType* myarrbegin, numType* myarrend,
   return true;
 }
 
-template<class numType>
+template <class numType>
 bool ChooseNFromK(std::vector<numType>& arr, numType maxNum) {
   size_t i;
 
@@ -585,7 +613,7 @@ bool ChooseNFromK(std::vector<numType>& arr, numType maxNum) {
   return true;
 }
 
-template<class numType>
+template <class numType>
 numType MkNum(numType start, numType end, numType* myarr) {
   numType num = 0;
   --start;
@@ -596,8 +624,8 @@ numType MkNum(numType start, numType end, numType* myarr) {
   return num;
 }
 
-template<class numType>
-numType* MkArr( numType num, numType& size) {
+template <class numType>
+numType* MkArr(numType num, numType& size) {
   numType len = CountDigits(num);
   size = len;
   numType* digits = new numType[len];
@@ -610,9 +638,9 @@ numType* MkArr( numType num, numType& size) {
   return digits;
 }
 
-template<class numType>
- numType MkPalNum( numType x) {
-   numType num = x;
+template <class numType>
+numType MkPalNum(numType x) {
+  numType num = x;
   while (x) {
     num *= 10;
     num += x % 10;
@@ -621,9 +649,9 @@ template<class numType>
   return num;
 }
 
-template<class numType>
- numType MkPalNum2( numType x) {
-   numType num = x;
+template <class numType>
+numType MkPalNum2(numType x) {
+  numType num = x;
   x /= 10;
   while (x) {
     num *= 10;
@@ -633,9 +661,9 @@ template<class numType>
   return num;
 }
 
-template<class numType>
- numType RevNum( numType x) {
-   numType num = 0;
+template <class numType>
+numType RevNum(numType x) {
+  numType num = 0;
   while (x) {
     num *= 10;
     num += x % 10;
@@ -644,10 +672,12 @@ template<class numType>
   return num;
 }
 
-template<class numType>
-bool IsPal( numType x) { return RevNum(x) == x; }
+template <class numType>
+bool IsPal(numType x) {
+  return RevNum(x) == x;
+}
 
-template<class numType>
+template <class numType>
 std::vector<numType> SetToVec(std::set<numType>& myset) {
   using namespace std;
   vector<numType> myvec(myset.size());
@@ -655,7 +685,7 @@ std::vector<numType> SetToVec(std::set<numType>& myset) {
   return myvec;
 }
 
-template<class numType>
+template <class numType>
 std::vector<bool> GetBinaryString(numType x, bool pad, size_t padlen) {
   using namespace std;
   vector<bool> vec, retvec;
@@ -672,7 +702,7 @@ std::vector<bool> GetBinaryString(numType x, bool pad, size_t padlen) {
   return retvec;
 }
 
-template<class numType>
+template <class numType>
 numType FromBinaryString(const std::vector<bool>& binstr) {
   numType retval = 0;
 
@@ -683,9 +713,11 @@ numType FromBinaryString(const std::vector<bool>& binstr) {
   return retval;
 }
 
-template<class numType>
+template <class numType>
 bool IsInSet(numType x, std::set<numType>& mySet) {
   return mySet.find(x) != mySet.end();
 }
 
 }  // namespace mstdlib
+
+#endif
