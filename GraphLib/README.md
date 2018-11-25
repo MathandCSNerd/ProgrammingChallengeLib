@@ -16,15 +16,22 @@ the way it is.
 
 <pre>
 Future addition plans:
-  Bellman Ford
   Floyd Warshall
   Prims
 
 Future Modifications:
-  Create namespace either for entire graph library or separate parts
-  Rewrite the interface for "dstra" and Bellman Ford to be the same
-    to allow to more generic calls to SSSP algorithms.
+  Create namespace either for entire graph library or seperate
+    namespaces for different parts.
+  Modify motion planning grid code for different sized dimensions
+  Modify motion planning grid code for n-dimensional grids
 
-Potential Additions:
+Potential Additions/Changes:
   Multigraphs
+  Maybe modify motion planning grid class for use with Bellman Ford
+    Not because there's any use case I can think of for that, but
+    more just for consistency with Dijkstra's.
+  Configuration Space Class and RRT
+    These are unlikely to ever be useful to me in the context in
+    which I use this library. If I ever decide to implement these,
+    I'm probably just showing off.
 </pre>
