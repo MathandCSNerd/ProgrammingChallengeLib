@@ -29,9 +29,8 @@ MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
 }
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid(long long newRowSize,
-                                                   long long newColSize) {
-  ChangeSize(newRowSize, newColSize);
+MotionPlanningGrid<weightType>::MotionPlanningGrid(const CoordinatePair<long long>& coord):maze(NULL){
+  ChangeSize(coord);
 }
 
 template <class weightType>
@@ -44,11 +43,11 @@ MotionPlanningGrid<weightType>::MotionPlanningGrid(
 }
 
 template <class weightType>
-void MotionPlanningGrid<weightType>::ChangeSize(long long newRowSize,
-                                                long long newColSize) {
+void MotionPlanningGrid<weightType>::ChangeSize(const CoordinatePair<long long>& coord
+                                                ) {
   delete[] maze;
-  rowsize = newRowSize;
-  colsize = newColSize;
+  rowsize = coord.CRow();
+  colsize = coord.CCol();
   maze = new InfNum<weightType>[Size()];
   for (size_t i = 0; i < Size(); ++i) maze[i].MarkInfinite();
 }
@@ -83,12 +82,12 @@ weightType& MotionPlanningGrid<weightType>::operator()(
   return Access(coord);
 }
 
-template <class weightType>
+/*template <class weightType>
 weightType& MotionPlanningGrid<weightType>::operator()(long long row,
                                                        long long col) {
   CoordinatePair<long long> coord(row, col);
   return Access(coord);
-}
+}*/
 
 template <class weightType>
 bool MotionPlanningGrid<weightType>::ObstacleAt(

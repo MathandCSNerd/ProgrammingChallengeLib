@@ -31,18 +31,18 @@ class MotionPlanningGrid {
 
   MotionPlanningGrid();
   ~MotionPlanningGrid();
-  MotionPlanningGrid(long long newRowSize, long long newColSize);
+  MotionPlanningGrid(const CoordinatePair<long long>& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  void ChangeSize(long long newRowSize, long long newColSize);
+  void ChangeSize(const CoordinatePair<long long>& coord);
   long long Size() const;
   long long RowSize() const { return rowsize; };
   long long ColSize() const { return colsize; };
+  //long long DimSize(int dim) const;
 
   long long CoordsToIndex(const CoordinatePair<long long>& coord) const;
   weightType& Access(const CoordinatePair<long long>& coord);
   weightType& Get(const CoordinatePair<long long>& coord) const;
   weightType& operator()(const CoordinatePair<long long>& coord);
-  weightType& operator()(long long row, long long col);
   bool ObstacleAt(const CoordinatePair<long long>& coord) const;
 
   iterator begin(CoordinatePair<long long> coord) const;
@@ -56,6 +56,8 @@ class MotionPlanningGrid {
 
 // TODO: expand this to allow diagonal directions as well
 //       maybe also a SetDiagonal(true/false) function?
+// notes: n-dimensional grid nodes have 2n directions
+//        without diagonals and 2(n^2) directions with.
 template <class weightType>
 class MotionPlanningGrid<weightType>::iterator {
  private:
