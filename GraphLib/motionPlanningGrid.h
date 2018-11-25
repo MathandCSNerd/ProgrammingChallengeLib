@@ -20,6 +20,7 @@
 #ifndef MOTION_PLANNING_GRID
 #define MOTION_PLANNING_GRID
 
+#include "containers/infNumClass.h"
 #include "coords.h"
 
 // TODO: expand to have an arbitrary number of dimensions
@@ -30,11 +31,12 @@ class MotionPlanningGrid {
 
   MotionPlanningGrid();
   ~MotionPlanningGrid();
-  MotionPlanningGrid(long long newSize);
+  MotionPlanningGrid(long long newRowSize, long long newColSize);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  void ChangeSize(long long newSize);
+  void ChangeSize(long long newRowSize, long long newColSize);
   long long Size() const;
-  long long ColSize() const { return size; };
+  long long RowSize() const { return rowsize; };
+  long long ColSize() const { return colsize; };
 
   long long CoordsToIndex(const CoordinatePair<long long>& coord) const;
   weightType& Access(const CoordinatePair<long long>& coord);
@@ -47,7 +49,8 @@ class MotionPlanningGrid {
   iterator end(CoordinatePair<long long> coord) const;
 
  private:
-  long long size;
+  long long rowsize;
+  long long colsize;
   InfNum<weightType>* maze;
 };
 

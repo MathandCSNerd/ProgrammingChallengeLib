@@ -55,11 +55,7 @@ void DoCase(long q) {
   MotionPlanningGrid<long long> g;
 
   // Sets rows and cols of g to be "size".
-  //
-  // At the momment, I use a square array.
-  // I have plans to change it to rectangular
-  // in the future.
-  g.ChangeSize(size);
+  g.ChangeSize(size, size);
 
   // this is the input loop
   // Weights are initialized to infinity until
@@ -74,14 +70,13 @@ void DoCase(long q) {
     }
   }
 
-  // I've hardcoded source to be 0,0, but other sources should
-  // work as well.
+  // set the source to be 0,0
   CoordinatePair<long long> source(0, 0);
   auto dostra = NewDijkstraSSSPInstance(g, source);
 
   CoordinatePair<long long> dest;
 
-  // this loop performs the number of queries the user requestes
+  // this loop performs the number of queries the user requests
   for (long long i = 0; i < q; ++i) {
     cin >> x >> y;  // row, col format
     dest.Set(x, y);

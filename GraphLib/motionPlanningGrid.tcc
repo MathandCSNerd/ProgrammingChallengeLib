@@ -20,7 +20,8 @@
 #ifdef MOTION_PLANNING_GRID
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid() : size(0), maze(nullptr) {}
+MotionPlanningGrid<weightType>::MotionPlanningGrid()
+    : rowsize(0), colsize(0), maze(nullptr) {}
 
 template <class weightType>
 MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
@@ -28,35 +29,39 @@ MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
 }
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid(long long newSize)
-    : size(newSize) /*, maze(new InfNum<weightType>[newSize * newSize])*/ {
-  ChangeSize(size);
+MotionPlanningGrid<weightType>::MotionPlanningGrid(long long newRowSize,
+                                                   long long newColSize) {
+  ChangeSize(newRowSize, newColSize);
 }
 
 template <class weightType>
 MotionPlanningGrid<weightType>::MotionPlanningGrid(
     const MotionPlanningGrid& that)
-    : size(that.size), maze(new InfNum<weightType>[that.size * that.size]) {
-  for (long long i = 0; i < size * size; ++i) maze[i] = that.maze[i];
+    : rowsize(that.rowsize),
+      colsize(that.colsize),
+      maze(new InfNum<weightType>[that.size * that.size]) {
+  for (long long i = 0; i < Size(); ++i) maze[i] = that.maze[i];
 }
 
 template <class weightType>
-void MotionPlanningGrid<weightType>::ChangeSize(long long newSize) {
+void MotionPlanningGrid<weightType>::ChangeSize(long long newRowSize,
+                                                long long newColSize) {
   delete[] maze;
-  size = newSize;
-  maze = new InfNum<weightType>[size * size];
-  for (size_t i = 0; i < size * size; ++i) maze[i].MarkInfinite();
+  rowsize = newRowSize;
+  colsize = newColSize;
+  maze = new InfNum<weightType>[Size()];
+  for (size_t i = 0; i < Size(); ++i) maze[i].MarkInfinite();
 }
 
 template <class weightType>
 long long MotionPlanningGrid<weightType>::Size() const {
-  return size * size;
+  return rowsize * colsize;
 }
 
 template <class weightType>
 long long MotionPlanningGrid<weightType>::CoordsToIndex(
     const CoordinatePair<long long>& coord) const {
-  return coord.CRow() * size + coord.CCol();
+  return coord.CRow() * ColSize() + coord.CCol();
 }
 
 template <class weightType>
