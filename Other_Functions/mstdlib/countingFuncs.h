@@ -17,16 +17,32 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//This is a meta file for including all of the mstdlib.
+#ifndef MATTSTDLIB_COUNTING_H
+#define MATTSTDLIB_COUNTING_H
 
-#ifndef MATTSTDLIB_META
-#define MATTSTDLIB_META
-
-#include "countingFuncs.h"
-#include "figurates.h"
+#include <math.h>
 #include "miscMath.h"
-#include "nonMath.h"
-#include "primesAndFactors.h"
-#include "simpleMathFuncs.h"
+
+namespace mstdlib {
+
+// counting functions
+template <class numType>
+numType Factorial(numType x);
+template <class numType>
+numType NChoosek(numType n, numType k);
+template <class numType>
+numType NPermk(numType n, numType k);
+// less naive counting functions, which can be used on higher values
+template <class numType>
+numType PrecisenChoosek(numType n, numType k);
+template <class numType>
+numType PrecisenPermk(numType n, numType k);
+// binomial dist pmf
+template <class numType>
+numType Binomial(numType k, numType n, numType p);
+
+}  // namespace mstdlib
+
+#include "countingFuncs.tcc"
 
 #endif

@@ -17,16 +17,11 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//This is a meta file for including all of the mstdlib.
-
-#ifndef MATTSTDLIB_META
-#define MATTSTDLIB_META
-
-#include "countingFuncs.h"
-#include "figurates.h"
-#include "miscMath.h"
-#include "nonMath.h"
-#include "primesAndFactors.h"
-#include "simpleMathFuncs.h"
-
-#endif
+#include <limits.h>
+#include <math.h>
+#include <string.h>
+#include <algorithm>
+#include <iostream>
+#include <list>
+#include <set>
+#include <vector>

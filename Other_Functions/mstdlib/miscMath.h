@@ -17,16 +17,38 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//This is a meta file for including all of the mstdlib.
-
-#ifndef MATTSTDLIB_META
-#define MATTSTDLIB_META
-
-#include "countingFuncs.h"
-#include "figurates.h"
-#include "miscMath.h"
-#include "nonMath.h"
-#include "primesAndFactors.h"
+#ifndef MATTSTDLIB_MISCMATH_H
+#define MATTSTDLIB_MISCMATH_H
 #include "simpleMathFuncs.h"
+
+namespace mstdlib {
+// simple common functions
+template <class numType>
+void swap(numType& a, numType& b);
+// simplify fraction where a is the numerator and b is the denominator
+template <class numType>
+void Simplify(numType& a, numType& b);
+template <class numType>
+numType CountDigits(numType i);
+
+// summing functions
+template <class numType>
+numType Sum(numType n);
+template <class numType>
+numType SquareSum(numType n);
+template <class numType>
+numType CubeSum(numType n);
+template <class numType>
+numType SumBy(numType n, numType m);
+
+// other math functions
+template <class numType>
+numType DigitSum(numType x);
+template <class numType>
+numType SquareDigitSum(numType x);
+
+}  // namespace mstdlib
+
+#include "miscMath.tcc"
 
 #endif
