@@ -50,7 +50,7 @@ void MotionPlanningGrid<weightType>::ChangeSize(long long newSize) {
 
 template <class weightType>
 long long MotionPlanningGrid<weightType>::Size() const {
-  return size;
+  return size * size;
 }
 
 template <class weightType>
@@ -186,7 +186,7 @@ bool MotionPlanningGrid<weightType>::iterator::operator!=(
 
 template <class weightType>
 bool MotionPlanningGrid<weightType>::iterator::ValidIterator() const {
-  long long s = data->Size();
+  long long s = data->ColSize();
 
   auto n = Node();
   if (n.CRow() < 0 || n.CRow() >= s || n.CCol() < 0 || n.CCol() >= s)

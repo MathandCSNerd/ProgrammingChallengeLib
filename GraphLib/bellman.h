@@ -104,9 +104,9 @@ BellmanResults<weightType, nodeLabelType> Bellman(
 
   vertices[source].Distance() = 0;
 
-  for (nodeLabelType i = 1; i < g.Size(); ++i) {
+  for (long long i = 1; i < g.Size(); ++i) {
     // for each edge u,v
-    for (nodeLabelType u = 0; u < g.Size(); ++u) {
+    for (nodeLabelType u(0); u < g.Size(); ++u) {
       for (auto v = g.begin(u); v != g.end(u); ++v)
         if (/*v->Node() != u && */ vertices[u].Distance() + v->Weight() <
             vertices[v->Node()].Distance()) {
@@ -117,8 +117,8 @@ BellmanResults<weightType, nodeLabelType> Bellman(
   }
 
   // find all nodes which are part of negative cycles
-  for (nodeLabelType i = 1; i < g.Size(); ++i) {
-    for (nodeLabelType u = 0; u < g.Size(); ++u) {
+  for (long long i = 1; i < g.Size(); ++i) {
+    for (nodeLabelType u(0); u < g.Size(); ++u) {
       for (auto v = g.begin(u); v != g.end(u); ++v) {
         if (/*v->Node() != u && */ (vertices[u].Distance() + v->Weight()) <
             vertices[v->Node()].Distance()) {
@@ -144,7 +144,7 @@ class BellmanFordSSSPInstance {
     ResetState();
   }
 
-  void CalcShortestPath(nodeLabelType end) {
+  void CalcShortestPath() {
     myresults = new BellmanResults<weightType, nodeLabelType>(
         Bellman(source, *graphPointer));
   }
@@ -152,12 +152,12 @@ class BellmanFordSSSPInstance {
   // TODO: make const versions of the following
   //      which make no calls to CalcShortestPath
   InfNum<weightType> ShortestPathCost(nodeLabelType end) {
-    if (!myresults) CalcShortestPath(end);
+    if (!myresults) CalcShortestPath();
     return (*myresults)[end].Distance();
   }
 
   bool HasNegCyc(nodeLabelType end) {
-    if (!myresults) CalcShortestPath(end);
+    if (!myresults) CalcShortestPath();
     return (*myresults)[end].NegativeCycle();
   }
 

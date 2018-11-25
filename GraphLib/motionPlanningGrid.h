@@ -34,6 +34,7 @@ class MotionPlanningGrid {
   MotionPlanningGrid(const MotionPlanningGrid& that);
   void ChangeSize(long long newSize);
   long long Size() const;
+  long long ColSize() const { return size; };
 
   long long CoordsToIndex(const CoordinatePair<long long>& coord) const;
   weightType& Access(const CoordinatePair<long long>& coord);

@@ -20,6 +20,7 @@
 #ifndef GRAPHLIB_DIJKSTRA_SSSP
 #define GRAPHLIB_DIJKSTRA_SSSP
 
+#include <list>
 #include <queue>
 #include <set>
 #include "containers/infNumClass.h"
