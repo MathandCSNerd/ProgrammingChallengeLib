@@ -20,6 +20,7 @@
 #ifndef COORD_CLASS
 #define COORD_CLASS
 
+#include <iostream>
 #include <utility>
 #include <vector>
 
@@ -51,6 +52,10 @@ class Coordinates {
 
   number& operator()(size_t place) {
     if (place < Size()) return myCoords[place];
+  }
+
+  void Resize(size_t i){
+    myCoords.resize(i);
   }
 
   size_t Size() const { return myCoords.size(); }
