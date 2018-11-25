@@ -22,7 +22,7 @@
 
 #include <set>
 #include <vector>
-#include "containers/infNumClass.h"
+#include "../containers/infNumClass.h"
 
 template <class weightType, class nodeLabelType>
 class BellmanNode {

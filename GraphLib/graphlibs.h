@@ -21,7 +21,8 @@
 #define GRAPH_LIB_META
 
 #include "coords.h"
-#include "dijkstraSSSP.h"
+#include "sssp/dijkstraSSSP.h"
+#include "sssp/bellmanFordSSSP.h"
 #include "graphContainers.h"
 #include "motionPlanningGrid.h"
 

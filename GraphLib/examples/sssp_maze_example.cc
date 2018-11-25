@@ -40,10 +40,7 @@
  */
 
 #include <iostream>
-#include "../containers/infNumClass.h"
-#include "../dijkstraSSSP.h"
-#include "../graphContainers.h"
-#include "../motionPlanningGrid.h"
+#include "../graphlibs.h"
 
 using namespace std;
 

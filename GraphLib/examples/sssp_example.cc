@@ -45,8 +45,7 @@
  */
 
 #include <iostream>
-#include "../dijkstraSSSP.h"
-#include "../graphContainers.h"
+#include "../graphlibs.h"
 
 using namespace std;
 

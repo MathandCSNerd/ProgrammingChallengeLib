@@ -45,8 +45,7 @@
  */
 
 #include <iostream>
-#include "../bellman.h"
-#include "../graphContainers.h"
+#include "../graphlibs.h"
 
 using namespace std;
 
