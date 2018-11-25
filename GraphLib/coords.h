@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,7 +13,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef COORD_CLASS
@@ -27,8 +28,8 @@
 template <class number>
 class CoordinatePair {
  public:
-  CoordinatePair(){Set(0,0);}
-  CoordinatePair(long long a, long long b){Set(a,b);}
+  CoordinatePair() { Set(0, 0); }
+  CoordinatePair(long long a, long long b) { Set(a, b); }
 
   number& X() { return myCoords.second; }
   number& Y() { return myCoords.first; }
@@ -49,10 +50,18 @@ class CoordinatePair {
     myCoords.second = x;
   }
 
-  bool operator< (const CoordinatePair<number>& b)const {return myCoords <  b.myCoords;}
-  bool operator==(const CoordinatePair<number>& b)const {return myCoords == b.myCoords;}
-  bool operator> (const CoordinatePair<number>& b)const {return myCoords >  b.myCoords;}
-  bool operator!=(const CoordinatePair<number>& b)const {return myCoords != b.myCoords;}
+  bool operator<(const CoordinatePair<number>& b) const {
+    return myCoords < b.myCoords;
+  }
+  bool operator==(const CoordinatePair<number>& b) const {
+    return myCoords == b.myCoords;
+  }
+  bool operator>(const CoordinatePair<number>& b) const {
+    return myCoords > b.myCoords;
+  }
+  bool operator!=(const CoordinatePair<number>& b) const {
+    return myCoords != b.myCoords;
+  }
 
   template <class numberType>
   friend std::ostream& operator<<(std::ostream& out,
@@ -63,7 +72,8 @@ class CoordinatePair {
 };
 
 template <class numberType>
-std::ostream& operator<<(std::ostream& out, const CoordinatePair<numberType>& that) {
+std::ostream& operator<<(std::ostream& out,
+                         const CoordinatePair<numberType>& that) {
   out << "(" << that.CRow() << ", " << that.CCol() << ")";
   return out;
 }

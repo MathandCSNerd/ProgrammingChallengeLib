@@ -57,16 +57,13 @@ class InfNum {
   }
 
   bool operator==(const InfNum<type>& that) const {
-    return (!finite and !that.finite) || ((finite and that.finite) and num == that.num);
+    return (!finite and !that.finite) ||
+           ((finite and that.finite) and num == that.num);
   }
 
-  bool operator==(const type& that) const {
-    return *this == InfNum(that);
-  }
+  bool operator==(const type& that) const { return *this == InfNum(that); }
 
-  bool operator!=(const type& that) const {
-    return !(*this == InfNum(that));
-  }
+  bool operator!=(const type& that) const { return !(*this == InfNum(that)); }
 
   void MarkInfinite() { finite = false; }
   void MarkFinite() { finite = true; }
@@ -76,13 +73,9 @@ class InfNum {
     MarkFinite();
   }
 
-  type& GetNum(){
-    return num;
-  }
+  type& GetNum() { return num; }
 
-  const type& CGetNum() const{
-    return num;
-  }
+  const type& CGetNum() const { return num; }
 
   bool IsFinite() const { return finite; }
   bool IsInfinite() const { return !finite; }

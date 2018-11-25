@@ -89,8 +89,7 @@ class DijkstraSSSPInstance {
 
   void ResetState();
   void SetSource(nodeLabelType newSource) {
-    if(source != newSource)
-      ResetState();
+    if (source != newSource) ResetState();
     source = newSource;
   }
 

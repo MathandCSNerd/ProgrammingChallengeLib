@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,7 +13,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 // this file demonstrates how to use the motionPlanningGrid
@@ -40,8 +41,8 @@
 
 #include <iostream>
 #include "../containers/infNumClass.h"
-#include "../graphContainers.h"
 #include "../dijkstraSSSP.h"
+#include "../graphContainers.h"
 #include "../motionPlanningGrid.h"
 
 using namespace std;
@@ -52,55 +53,53 @@ long long theMaze[size][size] = {
     {1, 1, 3, 1, 0, 1, 4}, {1, 3, 1, -1, -1, -1, -1}, {1, 5, 1, -1, 5, 1, 1},
     {1, 4, 1, 6, 1, -1, 1}};
 
-
 void DoCase(long q) {
-  long long x,y;
+  long long x, y;
   MotionPlanningGrid<long long> g;
 
-  //Sets rows and cols of g to be "size".
+  // Sets rows and cols of g to be "size".
   //
-  //At the momment, I use a square array.
-  //I have plans to change it to rectangular
-  //in the future.
+  // At the momment, I use a square array.
+  // I have plans to change it to rectangular
+  // in the future.
   g.ChangeSize(size);
 
-  //this is the input loop
-  //Weights are initialized to infinity until
-  //I give them a weight. In this case all
-  //negative values are infinite weight.
+  // this is the input loop
+  // Weights are initialized to infinity until
+  // I give them a weight. In this case all
+  // negative values are infinite weight.
   for (long long i = 0; i < size; ++i) {
     for (long long i2 = 0; i2 < size; ++i2) {
-      if (theMaze[i][i2] < 0) ;
+      if (theMaze[i][i2] < 0)
+        ;
       else
         g(i, i2) = theMaze[i][i2];
     }
   }
 
-
-  //I've hardcoded source to be 0,0, but other sources should
-  //work as well.
-  CoordinatePair<long long> source(0,0);
-  auto dostra = NewDijkstraSSSPInstance(g,source);
+  // I've hardcoded source to be 0,0, but other sources should
+  // work as well.
+  CoordinatePair<long long> source(0, 0);
+  auto dostra = NewDijkstraSSSPInstance(g, source);
 
   CoordinatePair<long long> dest;
 
-  //this loop performs the number of queries the user requestes
+  // this loop performs the number of queries the user requestes
   for (long long i = 0; i < q; ++i) {
-    cin >> x >> y; //row, col format
-    dest.Set(x,y);
+    cin >> x >> y;  // row, col format
+    dest.Set(x, y);
     cout << "case " << x << ' ' << y << ' ' << i << endl;
 
-    //ShortestPathCost will return an infNum class
-    //if path DNE, the number will be infinity
+    // ShortestPathCost will return an infNum class
+    // if path DNE, the number will be infinity
     auto tmp = dostra.ShortestPathCost(dest);
     cout << "COST: " << tmp << endl;
 
-    //if the path dne, path will be an empty list
+    // if the path dne, path will be an empty list
     auto path = dostra.ShortestPath(dest);
     cout << "####PATH#####" << endl;
     for (auto it : path) cout << it << ' ';
     cout << endl << endl;
-
   }
 }
 
@@ -108,9 +107,8 @@ int main() {
   using namespace std;
   long long q;
 
-  for(int i = 0; i < size; ++i){
-    for(int i2 = 0; i2 < size; ++i2)
-      cout << theMaze[i][i2] << ' ';
+  for (int i = 0; i < size; ++i) {
+    for (int i2 = 0; i2 < size; ++i2) cout << theMaze[i][i2] << ' ';
     cout << endl;
   }
 

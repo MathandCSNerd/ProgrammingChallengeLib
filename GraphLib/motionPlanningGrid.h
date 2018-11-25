@@ -2,8 +2,8 @@
  *
  * This file is part of ProgrammingChallengeLib.
  *
- * ProgrammingChallengeLib is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * ProgrammingChallengeLib is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -13,7 +13,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with ProgrammingChallengeLib.  If not, see <https://www.gnu.org/licenses/>.
+ * along with ProgrammingChallengeLib.  If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 #ifndef MOTION_PLANNING_GRID
@@ -49,7 +50,6 @@ class MotionPlanningGrid {
   InfNum<weightType>* maze;
 };
 
-
 // TODO: expand this to allow diagonal directions as well
 //       maybe also a SetDiagonal(true/false) function?
 template <class weightType>
@@ -66,16 +66,15 @@ class MotionPlanningGrid<weightType>::iterator {
   MotionPlanningGrid<weightType> const* data;
 
  public:
-
-  const long long Row()        {return curCoord.Row ();}
-  const long long Col()        {return curCoord.Col ();}
-  const long long CRow() const {return curCoord.CRow();}
-  const long long CCol() const {return curCoord.CCol();}
+  const long long Row() { return curCoord.Row(); }
+  const long long Col() { return curCoord.Col(); }
+  const long long CRow() const { return curCoord.CRow(); }
+  const long long CCol() const { return curCoord.CCol(); }
 
   void CalcIndexCoords(CoordinatePair<long long>& coord) const;
 
   CoordinatePair<long long> Node() const;
-  const weightType& Weight() const; 
+  const weightType& Weight() const;
   iterator();
   iterator(int newIndex, CoordinatePair<long long> newNode,
            const MotionPlanningGrid<weightType>* dataPtr);

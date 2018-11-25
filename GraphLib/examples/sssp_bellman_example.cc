@@ -45,7 +45,7 @@
  */
 
 #include <iostream>
-#include "../dijkstraSSSP.h"
+#include "../bellman.h"
 #include "../graphContainers.h"
 
 using namespace std;
@@ -53,8 +53,9 @@ using namespace std;
 void DoCase(long long n, long long m, long q, long long s) {
   DirectedListGraph<long long> g;
 
-  // dostra is type DijkstraSSSPInstance<DirectedListGraph, long long>
-  auto dostra = NewDijkstraSSSPInstance(g, s);
+  // dostra is type BellmanFordInstance<DirectedListGraph, long long, long
+  // long>;
+  auto dostra = NewBellmanFordSSSPInstance(g, s);
 
   long long x, y, z;
   InfNum<long long> tmp;
@@ -76,14 +77,17 @@ void DoCase(long long n, long long m, long q, long long s) {
     // node, to node x, with graph object g.
     tmp = dostra.ShortestPathCost(x);  // DijkstraSSSP(-1, x, g);
 
-    if (!tmp.IsFinite())
+    if (dostra.HasNegCyc(x))
+      cout << "-Infinity" << endl;
+    else if (!tmp.IsFinite())
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
 
-    auto path = dostra.ShortestPath(x);
-    for (auto it : path) cout << it << ' ';
-    cout << endl;
+    /*auto path = dostra.ShortestPath(x);
+    for(auto it: path)
+      cout << it << ' ';
+    cout << endl;*/
   }
 }
 
