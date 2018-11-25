@@ -34,5 +34,9 @@ main
 main?
 test
 
+#Temporary test files
+main.cc
+test.cc
+
 # Vim
 *.swp

@@ -32,94 +32,152 @@
 namespace mstdlib {
 
 // simple math functions
-long long gcd(long long a, long long b);
-long long lcm(long long a, long long b);
-long double log(long double base, long double num);
+template<class numType>
+numType gcd(numType a, numType b);
+template<class numType>
+numType lcm(numType a, numType b);
+template<class numType>
+numType log(numType base, numType num);
 // parralel assign
-void PAssign(long long& var1, long long& var2, long long val1, long long val2);
-std::vector<long long> xgcd(long long a, long long b);
-long long InverseMod(long long a, long long b);
-// a higher precision pow function for integers
-unsigned long long IntPow(unsigned long long base, unsigned long long exp);
-unsigned long long pow(unsigned long long base, unsigned long long exp,
-                       unsigned long long mod);
+template<class numType>
+void PAssign(numType& var1, numType& var2, numType val1, numType val2);
+template<class numType>
+std::vector<numType> xgcd(numType a, numType b);
+template<class numType>
+numType InverseMod(numType a, numType b);
+// a higher precision pow function for numTypeegers
+template<class numType>
+ numType IntPow( numType base,  numType exp);
+template<class numType>
+ numType pow( numType base,  numType exp,
+                        numType mod);
 
 // simple common functions
-void swap(long long& a, long long& b);
+template<class numType>
+void swap(numType& a, numType& b);
 // simplify fraction where a is the numerator and b is the denominator
-void Simplify(long long& a, long long& b);
-int CountDigits(unsigned long long i);
+template<class numType>
+void Simplify(numType& a, numType& b);
+template<class numType>
+numType CountDigits( numType i);
 
 // counting functions
-long long Factorial(int x);
-long long NChoosek(long long n, long long k);
-long long NPermk(long long n, long long k);
+template<class numType>
+numType Factorial(numType x);
+template<class numType>
+numType NChoosek(numType n, numType k);
+template<class numType>
+numType NPermk(numType n, numType k);
 // less naive counting functions, which can be used on higher values
-long long PrecisenChoosek(long long n, long long k);
-long long PrecisenPermk(long long n, long long k);
+template<class numType>
+numType PrecisenChoosek(numType n, numType k);
+template<class numType>
+numType PrecisenPermk(numType n, numType k);
 // binomial dist pmf
-long double Binomial(int k, int n, long double p);
+template<class numType>
+numType Binomial(numType k, numType n, numType p);
 
 // summing functions
-long long Sum(long long n);
-long long SquareSum(long long n);
-long long CubeSum(long long n);
-long long SumBy(long long n, long long m);
+template<class numType>
+numType Sum(numType n);
+template<class numType>
+numType SquareSum(numType n);
+template<class numType>
+numType CubeSum(numType n);
+template<class numType>
+numType SumBy(numType n, numType m);
 
 // primes and factoring
-bool FermatPrimalityTest(long long x);
-bool IsObviousNonPrime(long long x);
+template<class numType>
+bool FermatPrimalityTest(numType x);
+template<class numType>
+bool IsObviousNonPrime(numType x);
 // trial-division based prime checker
-bool IsPrime(long long x);
+template<class numType>
+bool IsPrime(numType x);
 // checks for x in primeSet
-bool IsPrime(long long x, const std::vector<long long>& primeSet);
+template<class numType>
+bool IsPrime(numType x, const std::vector<numType>& primeSet);
 // prime checker which builds a cache over time, uses single-argument IsPrime
-bool IsCachePrime(int x);
+template<class numType>
+bool IsCachePrime(numType x);
 // O(n^1.5) time, O(n/ln(n)) space
-std::vector<long long> ListPrimeSieve(long long MAX_NUM);
+template<class numType>
+std::vector<numType> ListPrimeSieve(numType MAX_NUM);
 // sieve of Eratosthenes
-bool* ArrPrimeSieve(long long MAX_NUM);
-std::vector<long long> PrimeArrToVec(bool* parr, long long MAX_NUM);
-std::vector<long long> NormalPrimeSieve(long long MAX_NUM);
-std::pair<long long, long long> DoFactDiv(long long& x, const long long i);
-std::list<std::pair<long long, long long>> Factor(long long x);
+template<class numType>
+bool* ArrPrimeSieve(numType MAX_NUM);
+template<class numType>
+std::vector<numType> PrimeArrToVec(bool* parr, numType MAX_NUM);
+template<class numType>
+std::vector<numType> NormalPrimeSieve(numType MAX_NUM);
+template<class numType>
+std::pair<numType, numType> DoFactDiv(numType& x, const numType i);
+template<class numType>
+std::list<std::pair<numType, numType>> Factor(numType x);
 // prime-based trial division factor. O(sqrt(n)) time
-std::list<std::pair<long long, long long>> PFactor(
-    long long x, const std::vector<long long>& primeList);
+template<class numType>
+std::list<std::pair<numType, numType>> PFactor(
+    numType x, const std::vector<numType>& primeList);
 // arg is factors
-long long EulerPhi(std::list<std::pair<long long, long long>>& l);
-long long EulerPhi(long long x);
-std::list<long long> FactorsToDivisors(
-    std::list<std::pair<long long, long long>>& l);
-long long DivisorCount(long long x, const std::vector<long long>& primeList);
-long long DivisorCount(long long x);
-long long DivisorSum(long long x, const std::vector<long long>& primeList);
-long long DivisorSum(std::list<std::pair<long long, long long>>& l);
+template<class numType>
+numType EulerPhi(std::list<std::pair<numType, numType>>& l);
+template<class numType>
+numType EulerPhi(numType x);
+template<class numType>
+std::list<numType> FactorsToDivisors(
+    std::list<std::pair<numType, numType>>& l);
+template<class numType>
+numType DivisorCount(numType x, const std::vector<numType>& primeList);
+template<class numType>
+numType DivisorCount(numType x);
+template<class numType>
+numType DivisorSum(numType x, const std::vector<numType>& primeList);
+template<class numType>
+numType DivisorSum(std::list<std::pair<numType, numType>>& l);
 
 // figurate numbers functions
 // Get___X: gets candidate for the figurate root of number
 // ___SumN: calculates figurate sum of number
 // Is___  : returns whether or not the number is of that figure's type
-long long GetOctX(long long i);
-long long OctSumN(long long i);
-long long GetHeptX(long long i);
-long long HeptSumN(long long i);
-long long GetHexX(long long i);
-long long HexSumN(long long i);
-long long GetPentX(long long i);
-long long PentSumN(long long i);
-long long GetTriX(long long i);
-long long TriSumN(long long i);
-bool IsOct(long long i);
-bool IsHept(long long i);
-bool IsHex(long long i);
-bool IsPent(long long i);
-bool IsTri(long long i);
-bool IsSquare(long long i);
+template<class numType>
+numType GetOctX(numType i);
+template<class numType>
+numType OctSumN(numType i);
+template<class numType>
+numType GetHeptX(numType i);
+template<class numType>
+numType HeptSumN(numType i);
+template<class numType>
+numType GetHexX(numType i);
+template<class numType>
+numType HexSumN(numType i);
+template<class numType>
+numType GetPentX(numType i);
+template<class numType>
+numType PentSumN(numType i);
+template<class numType>
+numType GetTriX(numType i);
+template<class numType>
+numType TriSumN(numType i);
+template<class numType>
+bool IsOct(numType i);
+template<class numType>
+bool IsHept(numType i);
+template<class numType>
+bool IsHex(numType i);
+template<class numType>
+bool IsPent(numType i);
+template<class numType>
+bool IsTri(numType i);
+template<class numType>
+bool IsSquare(numType i);
 
 // other math functions
-long long DigitSum(long long x);
-long long SquareDigitSum(long long x);
+template<class numType>
+numType DigitSum(numType x);
+template<class numType>
+numType SquareDigitSum(numType x);
 
 //**********************
 // misc/non-math section
@@ -129,55 +187,69 @@ long long SquareDigitSum(long long x);
 // for use similar to next_permutation
 bool IterateBin(bool* myarrbegin, bool* myarrend);
 
-// in case you would rather have a string interface to iterate over
+// in case you would rather have a string numTypeerface to iterate over
 bool IterateStrin(std::string& str);
 
 // like IterateBin, but uses $testarr as the upper bound and 0 as the lower
 // bound
-bool IterateArr(long long* myarrbegin, long long* myarrend, long long* testarr);
+template<class numType>
+bool IterateArr(numType* myarrbegin, numType* myarrend, numType* testarr);
 
 // function for selecting n items from a group of k without replacement
 // n = arr.size(), k = maxNum
 // begining array is numbers 0 to k-1 in descending order
 // ex, for choosin 3 from 5
 // ChooseNFromK({2,1,0}, 5)
-bool ChooseNFromK(std::vector<int>& arr, int maxNum);
+template<class numType>
+bool ChooseNFromK(std::vector<numType>& arr, numType maxNum);
 
 // takes an array, converts it to number
-long long MkNum(int start, int end, int* myarr);
+template<class numType>
+numType MkNum(numType start, numType end, numType* myarr);
 
 // takes a num, converts it to an array
-int* MkArr(unsigned long long num, int& size);
+template<class numType>
+numType* MkArr( numType num, numType& size);
 
 // concats number essentially creating a palindrome
 // the second one deletes the last digit so as to include odd palindromes
-unsigned long long MkPalNum(unsigned long long x);
-unsigned long long MkPalNum2(unsigned long long x);
+template<class numType>
+ numType MkPalNum( numType x);
+template<class numType>
+ numType MkPalNum2( numType x);
 
 // reverses a number
-unsigned long long RevNum(unsigned long long x);
+template<class numType>
+ numType RevNum( numType x);
 
 // checks is a number is a palindrome
-bool IsPal(unsigned long long x);
+template<class numType>
+bool IsPal( numType x);
 
 // converts a set to a vector...
 // usefull if you need to iterate over a set multiple times while
 // changing nothing
-std::vector<long long> SetToVec(std::set<long long>& myset);
+template<class numType>
+std::vector<numType> SetToVec(std::set<numType>& myset);
 
 // returns binary string representing the number, padded to padlen zeroes if
-// requested I may want to consider switching to a string interface to allow
+// requested I may want to consider switching to a string numTypeerface to allow
 // for the less than operator... hmmm
-std::vector<bool> GetBinaryString(long long x, bool pad = false,
+template<class numType>
+std::vector<bool> GetBinaryString(numType x, bool pad = false,
                                   size_t padlen = 0);
 
 // return number represented by binary string
-long long FromBinaryString(const std::vector<bool>& binstr);
+template<class numType>
+numType FromBinaryString(const std::vector<bool>& binstr);
 
 // here purely out of convinience
 // probably going to make this a template
-bool IsInSet(long long x, std::set<long long>& mySet);
+template<class numType>
+bool IsInSet(numType x, std::set<numType>& mySet);
 
 }  // namespace mstdlib
+
+#include "mstdlibT.tcc"
 
 #endif
