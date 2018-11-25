@@ -24,6 +24,7 @@ Future Modifications:
   Create namespace either for entire graph library or seperate
     namespaces for different parts.
   Modify motion planning grid code for n-dimensional grids
+  Modify sssp classes to all inherit from a base sssp class
 
 Potential Additions/Changes:
   Multigraphs

@@ -37,7 +37,7 @@ class MotionPlanningGrid {
   long long Size() const;
   long long RowSize() const { return rowsize; };
   long long ColSize() const { return colsize; };
-  //long long DimSize(int dim) const;
+  // long long DimSize(int dim) const;
 
   long long CoordsToIndex(const CoordinatePair<long long>& coord) const;
   weightType& Access(const CoordinatePair<long long>& coord);

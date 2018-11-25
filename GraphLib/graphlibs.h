@@ -25,5 +25,6 @@
 #include "motionPlanningGrid.h"
 #include "sssp/bellmanFordSSSP.h"
 #include "sssp/dijkstraSSSP.h"
+#include "sssp/genericSSSP.h"
 
 #endif

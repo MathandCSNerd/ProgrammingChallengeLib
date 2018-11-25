@@ -25,12 +25,12 @@ int arr[8] = {1, 4, 5, 2, 6, 4, 1, 3};
 
 void Print(WindowedMaxElementQueue<int> myq) {
   cout << "queue: ";
-  while(myq.Size()){
+  while (myq.Size()) {
     cout << myq.Front() << ' ';
     myq.pop();
   }
   cout << "\t";
-  //myq.Print();
+  // myq.Print();
 }
 
 int PrintingQueuePush(WindowedMaxElementQueue<int>& myq, int x) {
@@ -39,37 +39,37 @@ int PrintingQueuePush(WindowedMaxElementQueue<int>& myq, int x) {
   return myq.MaxElement();
 }
 
-void PrintMax(WindowedMaxElementQueue<int>& myq){
+void PrintMax(WindowedMaxElementQueue<int>& myq) {
   cout << "Max: " << myq.MaxElement() << endl;
 }
 
-void PrintStats(WindowedMaxElementQueue<int>& myq){
+void PrintStats(WindowedMaxElementQueue<int>& myq) {
   Print(myq);
   PrintMax(myq);
 }
 
-void PrintPush(WindowedMaxElementQueue<int>& myq, int x){
+void PrintPush(WindowedMaxElementQueue<int>& myq, int x) {
   cout << "push " << x << endl;
   myq.push(x);
 }
-    
-void PrintPop(WindowedMaxElementQueue<int>& myq){
+
+void PrintPop(WindowedMaxElementQueue<int>& myq) {
   cout << "pop " << myq.Front() << endl;
   myq.pop();
 }
 
-void PushArrElements(WindowedMaxElementQueue<int>& myq, int begin, int end){
-  for (int i = begin; i < end; ++i){
-    PrintPush(myq,arr[i]);
+void PushArrElements(WindowedMaxElementQueue<int>& myq, int begin, int end) {
+  for (int i = begin; i < end; ++i) {
+    PrintPush(myq, arr[i]);
     PrintStats(myq);
   }
   cout << endl;
 }
 
 int main() {
-  //max element q with a 3 window-size
+  // max element q with a 3 window-size
   WindowedMaxElementQueue<int> myq(3);
- 
+
   PushArrElements(myq, 0, 3);
   PrintPop(myq);
   PrintStats(myq);

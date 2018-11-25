@@ -17,8 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-// this file demonstrates how to use the graph class on an SSSP problem
-// input is read from stdin
+// This file exists to demonstrate using the graph class with a
+// generic SSSP class.
+// The current selection criterea of what algorithm to use is
+//  if there are negative weights
+//    use bellmanFord
+//  else
+//    use dijkstra's
 
 /*INPUT FORMAT:
  *
@@ -52,8 +57,10 @@ using namespace std;
 void DoCase(long long n, long long m, long q, long long s) {
   DirectedListGraph<long long> g;
 
-  // dostra is type DijkstraSSSPInstance<DirectedListGraph, long long>
-  auto dostra = NewDijkstraSSSPInstance(g, s);
+  // dostra is type BellmanFordInstance<DirectedListGraph, long long, long
+  // long>;
+  // auto dostra = NewBellmanFordSSSPInstance(g, s);
+  auto dostra = NewSSSPInstance(g, s);
 
   long long x, y, z;
   InfNum<long long> tmp;
@@ -75,11 +82,14 @@ void DoCase(long long n, long long m, long q, long long s) {
     // node, to node x, with graph object g.
     tmp = dostra.ShortestPathCost(x);  // DijkstraSSSP(-1, x, g);
 
-    if (!tmp.IsFinite())
+    if (tmp.IsNegInfinity())
+      cout << "-Infinity" << endl;
+    else if (tmp.IsInfinity())
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
 
+    cout << "PATH: ";
     auto path = dostra.ShortestPath(x);
     for (auto it : path) cout << it << ' ';
     cout << endl;

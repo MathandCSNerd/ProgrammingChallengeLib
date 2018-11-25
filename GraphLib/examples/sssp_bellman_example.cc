@@ -18,7 +18,7 @@
  */
 
 // this file demonstrates how to use the graph class on an SSSP problem
-// input is read from stdin
+// specifically using bellman ford
 
 /*INPUT FORMAT:
  *
@@ -83,10 +83,9 @@ void DoCase(long long n, long long m, long q, long long s) {
     else
       cout << tmp << endl;
 
-    /*auto path = dostra.ShortestPath(x);
-    for(auto it: path)
-      cout << it << ' ';
-    cout << endl;*/
+    auto path = dostra.ShortestPath(x);
+    for (auto it : path) cout << it << ' ';
+    cout << endl;
   }
 }
 

@@ -29,7 +29,9 @@ MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
 }
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid(const CoordinatePair<long long>& coord):maze(NULL){
+MotionPlanningGrid<weightType>::MotionPlanningGrid(
+    const CoordinatePair<long long>& coord)
+    : maze(NULL) {
   ChangeSize(coord);
 }
 
@@ -43,8 +45,8 @@ MotionPlanningGrid<weightType>::MotionPlanningGrid(
 }
 
 template <class weightType>
-void MotionPlanningGrid<weightType>::ChangeSize(const CoordinatePair<long long>& coord
-                                                ) {
+void MotionPlanningGrid<weightType>::ChangeSize(
+    const CoordinatePair<long long>& coord) {
   delete[] maze;
   rowsize = coord.CRow();
   colsize = coord.CCol();

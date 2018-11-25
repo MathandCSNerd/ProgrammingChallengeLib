@@ -52,12 +52,11 @@ long long theMaze[size][size] = {
 
 void DoCase(long q) {
   long long x, y;
-  CoordinatePair<long long> tmpCoord(size,size);
+  CoordinatePair<long long> tmpCoord(size, size);
   MotionPlanningGrid<long long> g(tmpCoord);
 
-
   // Sets rows and cols of g to be "tmpCoord's" size.
-  //g.ChangeSize(tmpCoord);
+  // g.ChangeSize(tmpCoord);
 
   // this is the input loop
   // Weights are initialized to infinity until
@@ -67,8 +66,8 @@ void DoCase(long q) {
     for (long long i2 = 0; i2 < size; ++i2) {
       if (theMaze[i][i2] < 0)
         ;
-      else{
-        tmpCoord.Set(i,i2);
+      else {
+        tmpCoord.Set(i, i2);
         g(tmpCoord) = theMaze[i][i2];
       }
     }

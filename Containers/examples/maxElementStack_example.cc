@@ -33,15 +33,14 @@ class mint {
   int x;
 };
 
-
 void Print(MaxElementStack<int> mystack) {
   cout << "queue: ";
-  while(mystack.Size()){
+  while (mystack.Size()) {
     cout << mystack.Top() << ' ';
     mystack.pop();
   }
   cout << "\t";
-  //mystack.Print();
+  // mystack.Print();
 }
 
 int PrintingQueuePush(MaxElementStack<int>& mystack, int x) {
@@ -50,44 +49,44 @@ int PrintingQueuePush(MaxElementStack<int>& mystack, int x) {
   return mystack.MaxElement();
 }
 
-void PrintMax(MaxElementStack<int>& mystack){
+void PrintMax(MaxElementStack<int>& mystack) {
   cout << "Max: " << mystack.MaxElement() << endl;
 }
 
-void PrintStats(MaxElementStack<int>& mystack){
+void PrintStats(MaxElementStack<int>& mystack) {
   Print(mystack);
   PrintMax(mystack);
 }
 
-void PrintPush(MaxElementStack<int>& mystack, int x){
+void PrintPush(MaxElementStack<int>& mystack, int x) {
   cout << "push " << x << endl;
   mystack.push(x);
 }
-    
-void PrintPop(MaxElementStack<int>& mystack){
+
+void PrintPop(MaxElementStack<int>& mystack) {
   cout << "pop " << mystack.Top() << endl;
   mystack.pop();
 }
 
-void PushArrElements(MaxElementStack<int>& mystack, int begin, int end){
-  for (int i = begin; i < end; ++i){
-    PrintPush(mystack,arr[i]);
+void PushArrElements(MaxElementStack<int>& mystack, int begin, int end) {
+  for (int i = begin; i < end; ++i) {
+    PrintPush(mystack, arr[i]);
     PrintStats(mystack);
   }
   cout << endl;
 }
 
-int main(){
-  //this piece is just here as a contrived example of
-  //using the stack with a user-defined data type
+int main() {
+  // this piece is just here as a contrived example of
+  // using the stack with a user-defined data type
   {
-  cout << "START OF CONTRIVED EXAMPLE" << endl;
-  MaxElementStack<mint> contrivedExample;
-  mint contrivedExampleElement;
-  contrivedExampleElement.x = 3;
-  contrivedExample.push(contrivedExampleElement);
-  cout << contrivedExample.MaxElement().x << endl;
-  cout << "END OF CONTRIVED EXAMPLE" << endl;
+    cout << "START OF CONTRIVED EXAMPLE" << endl;
+    MaxElementStack<mint> contrivedExample;
+    mint contrivedExampleElement;
+    contrivedExampleElement.x = 3;
+    contrivedExample.push(contrivedExampleElement);
+    cout << contrivedExample.MaxElement().x << endl;
+    cout << "END OF CONTRIVED EXAMPLE" << endl;
   }
 
   MaxElementStack<int> mystack;

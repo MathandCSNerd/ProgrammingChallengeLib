@@ -20,6 +20,7 @@
 #ifndef BELLMAN_FORD
 #define BELLMAN_FORD
 
+#include <list>
 #include <set>
 #include <vector>
 #include "../containers/infNumClass.h"
@@ -52,8 +53,8 @@ class BellmanNode {
   }
   nodeLabelType& Predecessor() { return predecessor; }
   InfNum<weightType>& Distance() { return distance; }
-  bool& NegativeCycle() { return negativeCycle; }
-  void MarkNegativeCycle() { negativeCycle = true; }
+  /*bool& NegativeCycle() { return negativeCycle; }*/
+  void MarkNegativeCycle() { distance.MarkNegInfinite(); }
   void Reset() {
     predecessor = -1;
     distance.MarkInfinite();
@@ -143,29 +144,29 @@ class BellmanFordSSSPInstance {
       : graphPointer(&g), source(mysource), myresults(NULL) {
     ResetState();
   }
+  ~BellmanFordSSSPInstance() { delete myresults; }
 
   void CalcShortestPath() {
-    myresults = new BellmanResults<weightType, nodeLabelType>(
-        Bellman(source, *graphPointer));
+    if (!myresults)
+      myresults = new BellmanResults<weightType, nodeLabelType>(
+          Bellman(source, *graphPointer));
   }
 
   // TODO: make const versions of the following
   //      which make no calls to CalcShortestPath
   InfNum<weightType> ShortestPathCost(nodeLabelType end) {
-    if (!myresults) CalcShortestPath();
+    CalcShortestPath();
     return (*myresults)[end].Distance();
   }
 
+  /*
   bool HasNegCyc(nodeLabelType end) {
-    if (!myresults) CalcShortestPath();
+    CalcShortestPath();
     return (*myresults)[end].NegativeCycle();
   }
+  */
 
-  /*std::list<nodeLabelType> ShortestPath(nodeLabelType end){
-    if(!myresults)
-      CalcShortestPath(end);
-    return myresults->Distance(end);
-  }*/
+  std::list<nodeLabelType> ShortestPath(nodeLabelType end);
 
   void ResetState() {
     delete myresults;
@@ -177,6 +178,33 @@ class BellmanFordSSSPInstance {
   nodeLabelType source;
   BellmanResults<weightType, nodeLabelType>* myresults;
 };
+
+template <template <class weightType> class GraphLikeClass, class weightType,
+          class nodeLabelType>
+std::list<nodeLabelType>
+BellmanFordSSSPInstance<GraphLikeClass, weightType,
+                        nodeLabelType>::ShortestPath(nodeLabelType end) {
+  std::list<nodeLabelType> nodeList;
+
+  CalcShortestPath();
+
+  if (end < 0 || end > myresults->size()) return nodeList;
+
+  auto node = (*myresults)[end];
+  if (!(node.Distance()).IsFinite())  // we don't have that node
+    return nodeList;                  // so return an empty list
+
+  nodeList.push_front(end);
+
+  nodeLabelType curnode = (*myresults)[end].Predecessor();
+
+  while (curnode != -1 && (*myresults)[curnode].Predecessor() != curnode) {
+    nodeList.push_front(curnode);
+    curnode = (*myresults)[curnode].Predecessor();
+  }
+
+  return nodeList;
+}
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>

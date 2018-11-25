@@ -25,13 +25,13 @@
 template <class type>
 class InfNum {
  public:
-  InfNum() : finite(true) {}
+  InfNum() : infinite(true) {}
 
-  InfNum(const InfNum<type>& that) : finite(that.finite), num(that.num) {}
+  InfNum(const InfNum<type>& that) : infinite(that.infinite), num(that.num) {}
 
   InfNum(const type& that) { *this = that; }
 
-  InfNum(const type& that, const bool& fin) : finite(fin), num(that) {}
+  InfNum(const type& that, const bool& fin) : infinite(fin), num(that) {}
 
   InfNum& operator=(const type& that) {
     Set(that);
@@ -40,33 +40,52 @@ class InfNum {
 
   InfNum& operator=(const InfNum<type>& that) {
     num = that.num;
-    finite = that.finite;
+    infinite = that.infinite;
     return *this;
   }
 
   InfNum operator+(const InfNum<type>& that) const {
-    return InfNum(num + that.num, finite and that.finite);
+    int answer = true;
+    if (infinite == that.infinite)  // both are finite or infinite
+      answer = infinite;
+
+    else if (IsFinite())       // this is finite
+      answer = that.infinite;  // the other is not
+
+    else                  // either the second is finite
+      answer = infinite;  // or both are opposite finite
+
+    return InfNum(num + that.num, answer);
   }
 
   InfNum operator+(const type& that) const {
-    return InfNum(num + that, finite);
+    return InfNum(num + that, infinite);
   }
 
   bool operator<(const InfNum<type>& that) const {
-    return finite && (!that.finite || num < that.num);
+    /*if(IsFinite() && that.IsFinite())
+      return num < that.num;
+    else
+      return infinite < that.infinite;*/
+    //-1 < 0 < 1 just as
+    // negative infinite < infinite < infinite
+
+    return ((IsFinite() && that.IsFinite() && num < that.num) or
+            infinite < that.infinite);
+    // return infinite && (!that.infinite || num < that.num);
   }
 
   bool operator==(const InfNum<type>& that) const {
-    return (!finite and !that.finite) ||
-           ((finite and that.finite) and num == that.num);
+    return (infinite == that.infinite) and (!IsFinite() or (num == that.num));
   }
 
   bool operator==(const type& that) const { return *this == InfNum(that); }
 
   bool operator!=(const type& that) const { return !(*this == InfNum(that)); }
 
-  void MarkInfinite() { finite = false; }
-  void MarkFinite() { finite = true; }
+  void MarkInfinite() { infinite = true; }
+  void MarkFinite() { infinite = false; }
+  void MarkNegInfinite() { infinite = -1; }
 
   void Set(type newNum) {
     num = newNum;
@@ -77,22 +96,28 @@ class InfNum {
 
   const type& CGetNum() const { return num; }
 
-  bool IsFinite() const { return finite; }
-  bool IsInfinite() const { return !finite; }
+  bool IsFinite() const { return infinite == 0; }
+  bool IsInfinite() const { return infinite == 1; }
+  bool IsNegInfinite() const { return infinite == -1; }
+
+  bool IsInfinity() const { return infinite == 1; }
+  bool IsNegInfinity() const { return infinite == -1; }
 
   template <class numType>
   friend std::ostream& operator<<(std::ostream& out,
                                   const InfNum<numType>& that);
 
  private:
-  bool finite;
+  int infinite;
   type num;
 };
 
 template <class type>
 std::ostream& operator<<(std::ostream& out, const InfNum<type>& that) {
-  if (!that.finite)
+  if (that.IsInfinity())
     out << "inf";
+  else if (that.IsNegInfinity())
+    out << "-inf";
   else
     out << that.num;
   return out;
