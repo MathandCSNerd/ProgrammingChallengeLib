@@ -23,7 +23,6 @@ Future addition plans:
 Future Modifications:
   Create namespace either for entire graph library or seperate
     namespaces for different parts.
-  Modify motion planning grid code for n-dimensional grids
   Modify sssp classes to all inherit from a base sssp class
 
 Potential Additions/Changes:
@@ -35,6 +34,7 @@ Potential Additions/Changes:
     These are unlikely to ever be useful to me in the context in
     which I use this library. If I ever decide to implement these,
     I'm probably just showing off.
-  Switch Dijkstra's priority queue data type to a set to save memory
-    during circumstances like motion planning.
+  Modify Dijkstra's to save memory when path planning and coming
+    across the same node multiple times. (i.e. don't store multiple
+    copies of the same node in the queue with different weights)
 </pre>

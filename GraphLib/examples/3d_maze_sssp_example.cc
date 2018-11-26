@@ -98,6 +98,7 @@ void DoCase() {
   // this loop performs the number of queries the user requests
   for (long long i = 0; i < q; ++i) {
     cout << "input query: " << i << endl;
+    //order is depth, row, col
     cin >> x >> y >> z;
     dest.Set({x, y, z});
     cout << "query " << i << ": (" << x << ' ' << y << ' ' << z << ") " << endl;
