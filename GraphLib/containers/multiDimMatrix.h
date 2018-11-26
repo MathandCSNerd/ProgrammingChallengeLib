@@ -22,7 +22,7 @@
 
 #ifndef MULTIDIMENSIONAL_MATRIX
 #define MULTIDIMENSIONAL_MATRIX
-#include "../coords.h"
+#include "coordinates.h"
 
 //typedef Coordinates<size_t> MatCoords;
 typedef Coordinates<long long> MatCoords;

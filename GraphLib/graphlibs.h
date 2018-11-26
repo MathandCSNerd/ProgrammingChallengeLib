@@ -20,7 +20,7 @@
 #ifndef GRAPH_LIB_META
 #define GRAPH_LIB_META
 
-#include "coords.h"
+#include "containers/coordinates.h"
 #include "graphContainers.h"
 #include "motionPlanningGrid.h"
 #include "sssp/bellmanFordSSSP.h"

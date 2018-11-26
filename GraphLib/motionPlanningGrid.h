@@ -21,7 +21,7 @@
 #define MOTION_PLANNING_GRID
 
 #include "containers/infNumClass.h"
-#include "coords.h"
+#include "containers/coordinates.h"
 #include "containers/multiDimMatrix.h"
 
 // TODO: expand to have an arbitrary number of dimensions

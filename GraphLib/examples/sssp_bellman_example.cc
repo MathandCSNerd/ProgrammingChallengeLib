@@ -76,9 +76,9 @@ void DoCase(long long n, long long m, long q, long long s) {
     // node, to node x, with graph object g.
     tmp = dostra.ShortestPathCost(x);  // DijkstraSSSP(-1, x, g);
 
-    if (dostra.HasNegCyc(x))
+    if (tmp.IsNegInfinity())
       cout << "-Infinity" << endl;
-    else if (!tmp.IsFinite())
+    else if (tmp.IsInfinity())
       cout << "Impossible" << endl;
     else
       cout << tmp << endl;
