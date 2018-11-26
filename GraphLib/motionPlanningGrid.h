@@ -20,8 +20,8 @@
 #ifndef MOTION_PLANNING_GRID
 #define MOTION_PLANNING_GRID
 
-#include "containers/infNumClass.h"
 #include "containers/coordinates.h"
+#include "containers/infNumClass.h"
 #include "containers/multiDimMatrix.h"
 
 // TODO: expand to have an arbitrary number of dimensions
@@ -34,13 +34,14 @@ class MotionPlanningGrid {
   ~MotionPlanningGrid();
   MotionPlanningGrid(const MatCoords& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  //void ChangeSize(const MatCoords& coord);
+  // void ChangeSize(const MatCoords& coord);
   long long Size() const;
-  //long long RowSize() const { return rowsize; };
-  //long long ColSize() const { return colsize; };
-  long long DimSize(int dim) const {return maze.DimSize(dim);}
+  // long long RowSize() const { return rowsize; };
+  // long long ColSize() const { return colsize; };
+  long long NumDims() const { return maze.NumDimensions(); }
+  long long DimSize(int dim) const { return maze.DimSize(dim); }
 
-  //long long CoordsToIndex(const MatCoordsInfNum<weightType>& coord) const;
+  // long long CoordsToIndex(const MatCoordsInfNum<weightType>& coord) const;
   weightType& Access(const MatCoords& coord);
   const weightType& Get(const MatCoords& coord) const;
   weightType& operator()(const MatCoords& coord);
@@ -49,16 +50,12 @@ class MotionPlanningGrid {
   iterator begin(MatCoords coord) const;
   iterator end(MatCoords coord) const;
 
-  void Special(){
-    using namespace std;
-    cout << maze.GetDims() << endl;
-    maze.Print();
-  }
+  void Print() { maze.Print(); }
 
  private:
   /*long long rowsize;
   long long colsize;*/
-  //InfNum<weightType>* maze;
+  // InfNum<weightType>* maze;
   MultidimensionalMatrix<InfNum<weightType>> maze;
 };
 
@@ -80,6 +77,8 @@ class MotionPlanningGrid<weightType>::iterator {
   MotionPlanningGrid<weightType> const* data;
 
  public:
+  const long long Dim(int i) { return curCoord.Get(i); }
+  const long long CDim(int i) const { return curCoord.Get(i); }
   const long long Row() { return curCoord.Row(); }
   const long long Col() { return curCoord.Col(); }
   const long long CRow() const { return curCoord.CRow(); }

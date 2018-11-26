@@ -21,24 +21,23 @@
 
 template <class weightType>
 MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
-  //delete[] maze;
+  // delete[] maze;
 }
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid(
-    const MatCoords& coord)
+MotionPlanningGrid<weightType>::MotionPlanningGrid(const MatCoords& coord)
     : maze(coord) {
   InfNum<weightType> nam;
   nam.MarkInfinite();
   maze.SetAll(nam);
 }
-  /*for (size_t i = 0; i < Size(); ++i) maze(i).Set();
-    }*/
+/*for (size_t i = 0; i < Size(); ++i) maze(i).Set();
+  }*/
 
 template <class weightType>
 MotionPlanningGrid<weightType>::MotionPlanningGrid(
     const MotionPlanningGrid& that)
-    : maze(that.maze){}
+    : maze(that.maze) {}
 
 /*
 template <class weightType>
@@ -65,22 +64,20 @@ long long MotionPlanningGrid<weightType>::CoordsToIndex(
 template <class weightType>
 const weightType& MotionPlanningGrid<weightType>::Get(
     const MatCoords& coord) const {
-  //return maze[CoordsToIndex(coord)].GetNum();
+  // return maze[CoordsToIndex(coord)].GetNum();
   return maze.Get(coord).CGetNum();
 }
 
 template <class weightType>
-weightType& MotionPlanningGrid<weightType>::Access(
-    const MatCoords& coord) {
-  //maze[CoordsToIndex(coord)].MarkFinite();
-  //return maze[CoordsToIndex(coord)].GetNum();
+weightType& MotionPlanningGrid<weightType>::Access(const MatCoords& coord) {
+  // maze[CoordsToIndex(coord)].MarkFinite();
+  // return maze[CoordsToIndex(coord)].GetNum();
   maze(coord).MarkFinite();
   return maze(coord).GetNum();
 }
 
 template <class weightType>
-weightType& MotionPlanningGrid<weightType>::operator()(
-    const MatCoords& coord) {
+weightType& MotionPlanningGrid<weightType>::operator()(const MatCoords& coord) {
   return Access(coord);
 }
 
@@ -92,9 +89,8 @@ weightType& MotionPlanningGrid<weightType>::operator()(long long row,
 }*/
 
 template <class weightType>
-bool MotionPlanningGrid<weightType>::ObstacleAt(
-    const MatCoords& coord) const {
-  //return maze[CoordsToIndex(coord)].IsInfinite();
+bool MotionPlanningGrid<weightType>::ObstacleAt(const MatCoords& coord) const {
+  // return maze[CoordsToIndex(coord)].IsInfinite();
   return maze.Get(coord).IsInfinite();
 }
 
@@ -109,7 +105,7 @@ MotionPlanningGrid<weightType>::begin(MatCoords coord) const {
 template <class weightType>
 typename MotionPlanningGrid<weightType>::iterator
 MotionPlanningGrid<weightType>::end(MatCoords coord) const {
-  return iterator(4, coord, this);
+  return iterator(2 * NumDims(), coord, this);
 }
 
 /*********/
@@ -125,19 +121,29 @@ void MotionPlanningGrid<weightType>::iterator::CalcIndexCoords(
   <2   = add
   >=2  = subtract
   */
-  bool even = index % 2 == 0;
+  // bool even = index % 2 == 0;
+  // int dim =
   // greater than or equal to 2
-  bool GEq2 = index >= 2;
+  // bool GEq2 = index >= 2;
 
   // explanation of the effect of these lines is just below function
   // signature for those unfamiliar with the ternary op
   // TODO: Make this clearer in the future
-  coord.Set(CRow() + (GEq2 ? -1 : 1) * even, CCol() + (GEq2 ? -1 : 1) * !even);
+  // coord.Set(CRow() + (GEq2 ? -1 : 1) * even, CCol() + (GEq2 ? -1 : 1) *
+  // !even);
+  coord = curCoord;
+  // std::cout << "undex: " << index << ' ' << 2*curCoord.Size() << std::endl;
+  if (index < 2 * curCoord.Size()) {
+    if (index % 2 == 0)
+      ++coord(index / 2);
+    else
+      --coord(index / 2);
+  }
+  // coord.Set()
 }
 
 template <class weightType>
-MatCoords MotionPlanningGrid<weightType>::iterator::Node()
-    const {
+MatCoords MotionPlanningGrid<weightType>::iterator::Node() const {
   MatCoords coord;
   CalcIndexCoords(coord);
   return coord;
@@ -194,11 +200,17 @@ bool MotionPlanningGrid<weightType>::iterator::operator!=(
 template <class weightType>
 bool MotionPlanningGrid<weightType>::iterator::ValidIterator() const {
   using namespace std;
-  //long long s = data->DimSize(0);
+  // long long s = data->DimSize(0);
   auto n = Node();
-  //TODO: change this function to not assume a signed data type
-  if (n.CRow() < 0 || n.CRow() >= data->DimSize(0) || n.CCol() < 0 || n.CCol() >= data->DimSize(1))
-    return false;
+  // TODO: change this function to not assume a signed data type
+  // if (n.CRow() < 0 || n.CRow() >= data->DimSize(0) || n.CCol() < 0 ||
+  // n.CCol() >= data->DimSize(1))
+  /*if(index >= 2*curCoord.Size())
+    return false;*/
+  // cout << "INDEXING: " << n << endl;
+  for (int i = 0; i < curCoord.Size(); ++i)
+    if (n(i) < 0 || n(i) >= data->DimSize(i)) return false;
+  // cout << "looks valid? " << endl;
   return !data->ObstacleAt(Node());
 }
 
@@ -209,7 +221,8 @@ MotionPlanningGrid<weightType>::iterator::operator++() {
   // and we should skip past
   do
     ++index;
-  while (!ValidIterator() && index < 4);
+  while (index < 2 * curCoord.Size() && !ValidIterator());
+  // std::cout << "INDEXING2: " << ValidIterator() << std::endl;
   return *this;
 }
 

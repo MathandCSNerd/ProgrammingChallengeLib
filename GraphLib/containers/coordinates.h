@@ -36,6 +36,7 @@ class Coordinates {
   Coordinates() { Set({0, 0}); }
   Coordinates(long long a, long long b) { Set({a, b}); }
   Coordinates(std::initializer_list<number> coordList) { Set(coordList); }
+  Coordinates(const Coordinates& that) { *this = that; }
 
   number& X() { return myCoords[1]; }
   number& Y() { return myCoords[0]; }
@@ -54,9 +55,7 @@ class Coordinates {
     if (place < Size()) return myCoords[place];
   }
 
-  void Resize(size_t i){
-    myCoords.resize(i);
-  }
+  void Resize(size_t i) { myCoords.resize(i); }
 
   size_t Size() const { return myCoords.size(); }
 
@@ -91,6 +90,12 @@ class Coordinates {
   }
   bool operator!=(const Coordinates<number>& b) const { return !(*this == b); }
 
+  Coordinates<number>& operator=(const Coordinates<number>& b) {
+    myCoords.clear();
+    myCoords.reserve(b.Size());
+    for (auto it : b.myCoords) myCoords.push_back(it);
+  }
+
   friend std::ostream& operator<<<number>(std::ostream& out,
                                           const Coordinates<number>& that);
 
@@ -110,12 +115,12 @@ std::ostream& operator<<(std::ostream& out, const Coordinates<number>& that) {
   return out;
 }
 
-
 template <class number>
-bool IterateCoords(Coordinates<number>& myarr, const Coordinates<number>& testarr){
+bool IterateCoords(Coordinates<number>& myarr,
+                   const Coordinates<number>& testarr) {
   size_t i;
 
-  for (i = 0; i < myarr.Size() && (myarr(i) == testarr.Get(i)-1); ++i)
+  for (i = 0; i < myarr.Size() && (myarr(i) == testarr.Get(i) - 1); ++i)
     ;
 
   if (i == myarr.Size())
@@ -123,13 +128,12 @@ bool IterateCoords(Coordinates<number>& myarr, const Coordinates<number>& testar
 
   else {
     ++myarr(i);
-    if(i != 0){
+    if (i != 0) {
       myarr(0) = 0;
       for (--i; i > 0; --i) (myarr(i)) = 0;
     }
   }
   return true;
 }
-
 
 #endif

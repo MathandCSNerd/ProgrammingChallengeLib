@@ -17,14 +17,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//This is an n-dimensional Matrix class for use the motion planning
-//grid class
+// This is an n-dimensional Matrix class for use the motion planning
+// grid class
 
 #ifndef MULTIDIMENSIONAL_MATRIX
 #define MULTIDIMENSIONAL_MATRIX
 #include "coordinates.h"
 
-//typedef Coordinates<size_t> MatCoords;
+// typedef Coordinates<size_t> MatCoords;
 typedef Coordinates<long long> MatCoords;
 
 template <class type>
@@ -33,7 +33,8 @@ class MultidimensionalMatrix {
   ~MultidimensionalMatrix();
   MultidimensionalMatrix(const MatCoords& coords);
   MultidimensionalMatrix(const MultidimensionalMatrix<type>& that);
-  const MultidimensionalMatrix& operator=(const MultidimensionalMatrix<type>& that);
+  const MultidimensionalMatrix& operator=(
+      const MultidimensionalMatrix<type>& that);
 
   const type& Get(const MatCoords& coords) const;
   void Set(const MatCoords& coords, const type& val);
@@ -41,8 +42,8 @@ class MultidimensionalMatrix {
   type& operator()(const MatCoords& coords);
 
  private:
-  //these are the current internal methods, not to be used
-  //outside the class
+  // these are the current internal methods, not to be used
+  // outside the class
   const type& GetIndex(int x) const;
   void SetIndex(size_t x, const type& val);
   type& AccessIndex(size_t x);
@@ -55,23 +56,22 @@ class MultidimensionalMatrix {
   size_t TotalSize() const;
   void SetAll(const type& that);
 
-  //printing:
+  // printing:
   size_t PrintRow(size_t startIndex, size_t count) const;
   size_t PrintSlice(size_t startIndex, size_t rowcount, size_t colCount) const;
   size_t Print3D() const;
   size_t Print() const;
 
-
  private:
   MultidimensionalMatrix();
-  //I'm setting this to private because I'm considering toying around
-  //with some template metaprogramming for this class in the future.
-  //I would rather not expose an interface only to take it away, so
-  //I'm avoiding doing do.
+  // I'm setting this to private because I'm considering toying around
+  // with some template metaprogramming for this class in the future.
+  // I would rather not expose an interface only to take it away, so
+  // I'm avoiding doing do.
   void AllocSize(MatCoords newDims);
   void ReCalculateIndexMultipliers();
   size_t CoordsToIndex(const MatCoords& coords) const;
-  //bool IterateCoords(MatCoords myarr);
+  // bool IterateCoords(MatCoords myarr);
 
   MatCoords dimensions;
   MatCoords indexMultipliers;

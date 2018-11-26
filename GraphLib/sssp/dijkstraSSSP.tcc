@@ -87,8 +87,7 @@ void DijkstraSSSPInstance<GraphLikeClass, weightType,
     graphPointer->LeastPossibleNode())
     return; //the node isn't in the graph, no sense in looking for it*/
 
-  if(!pq.size())
-    return;
+  if (!pq.size()) return;
   auto tmpnode = pq.top();
   nodeLabelType currIndex;
   bool exit = false;
