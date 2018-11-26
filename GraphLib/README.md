@@ -35,4 +35,6 @@ Potential Additions/Changes:
     These are unlikely to ever be useful to me in the context in
     which I use this library. If I ever decide to implement these,
     I'm probably just showing off.
+  Switch Dijkstra's priority queue data type to a set to save memory
+    during circumstances like motion planning.
 </pre>
