@@ -37,16 +37,15 @@ size_t Dijkstra(const GraphLikeClass<weightType>& g, const nodeLabelType start,
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 size_t Manhattan(const GraphLikeClass<weightType>& g, const nodeLabelType start,
-                const nodeLabelType end) {
+                 const nodeLabelType end) {
   return start.StepDistance(end);
 }
 
-};  // namespace AStarHeuristics
+};  // namespace AStarHeuristics_Functions
 
 namespace AStarHeuristics {
-  enum{Dijkstra, Manhattan};
+enum { Dijkstra, Manhattan };
 }
-
 
 template <class weightType, class nodeLabelType>
 class AStarNode {
@@ -114,24 +113,32 @@ class AStarInstance {
     source = newSource;
   }
 
-  void SetHeuristic(size_t (*NewHeuristic)(const GraphLikeClass<weightType>&, const nodeLabelType, const nodeLabelType)){
-    Heuristic = &AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType, nodeLabelType>;
+  void SetHeuristic(size_t (*NewHeuristic)(const GraphLikeClass<weightType>&,
+                                           const nodeLabelType,
+                                           const nodeLabelType)) {
+    Heuristic = &AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType,
+                                                     nodeLabelType>;
   }
 
-  //sets the heuristic to one builtin
-  void SetHeuristic(int choice){
-    if(choice == AStarHeuristics::Dijkstra)
-      SetHeuristic(&AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType, nodeLabelType>);
-    else if(choice == AStarHeuristics::Manhattan)
-      SetHeuristic(&AStarHeuristics_Functions::Manhattan<GraphLikeClass, weightType, nodeLabelType>);
+  // sets the heuristic to one builtin
+  void SetHeuristic(int choice) {
+    if (choice == AStarHeuristics::Dijkstra)
+      SetHeuristic(
+          &AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType,
+                                               nodeLabelType>);
+    else if (choice == AStarHeuristics::Manhattan)
+      SetHeuristic(
+          &AStarHeuristics_Functions::Manhattan<GraphLikeClass, weightType,
+                                                nodeLabelType>);
   }
 
  private:
   AStarInstance();
 
   size_t (*Heuristic)(const GraphLikeClass<weightType>&, const nodeLabelType,
-                    const nodeLabelType) =
-      &AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType, nodeLabelType>;
+                      const nodeLabelType) =
+      &AStarHeuristics_Functions::Dijkstra<GraphLikeClass, weightType,
+                                           nodeLabelType>;
   GraphLikeClass<weightType> const* graphPointer;
   nodeLabelType source;
   std::set<AStarNode<weightType, nodeLabelType>,

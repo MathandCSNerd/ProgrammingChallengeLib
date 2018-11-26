@@ -67,7 +67,7 @@ size_t CustomHeuristic(const MotionPlanningGrid<long long>& g,
 void DoCase() {
   long long x, y, z;
 
-  //make a motion planning grid which is the same dimemsions as the array
+  // make a motion planning grid which is the same dimemsions as the array
   MatCoords tmpCoord({sizes[0], sizes[1], sizes[2]});
   MotionPlanningGrid<long long> g(tmpCoord);
 
@@ -97,15 +97,15 @@ void DoCase() {
   MatCoords source({0, 0, 0});
   MatCoords dest;
 
-  //initializes new instance of AStar search
+  // initializes new instance of AStar search
   auto dostra = NewAStarInstance(g, source);
 
-  //this lines sets the heuristic to the custom function defined above
+  // this lines sets the heuristic to the custom function defined above
   dostra.SetHeuristic(CustomHeuristic);
 
-  //this line would set the heuristic to the builtin
-  //manhattan distance heuristic
-  //dostra.SetHeuristic(AStarHeuristics::Manhattan);
+  // this line would set the heuristic to the builtin
+  // manhattan distance heuristic
+  // dostra.SetHeuristic(AStarHeuristics::Manhattan);
 
   long long q;
   cout << "input number of queries: " << endl;

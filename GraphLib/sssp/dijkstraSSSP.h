@@ -22,7 +22,6 @@
 
 #include "astar.h"
 
-
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 class DijkstraSSSPInstance {
@@ -30,7 +29,8 @@ class DijkstraSSSPInstance {
   DijkstraSSSPInstance(const GraphLikeClass<weightType>& g) : dstra(g, 0) {
     ResetState();
   }
-  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g, nodeLabelType mysource)
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
+                       nodeLabelType mysource)
       : dstra(g, mysource) {
     ResetState();
   }
@@ -52,9 +52,11 @@ class DijkstraSSSPInstance {
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
-DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType> NewDijkstraSSSPInstance(
-    const GraphLikeClass<weightType>& g, nodeLabelType source) {
-  return DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>(g, source);
+DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>
+NewDijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
+                        nodeLabelType source) {
+  return DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>(
+      g, source);
 }
 
 #endif
