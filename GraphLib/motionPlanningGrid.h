@@ -24,13 +24,11 @@
 #include "containers/infNumClass.h"
 #include "containers/multiDimMatrix.h"
 
-// TODO: expand to have an arbitrary number of dimensions
 template <class weightType>
 class MotionPlanningGrid {
  public:
   class iterator;
 
-  //~MotionPlanningGrid();
   MotionPlanningGrid(const MatCoords& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
   long long Size() const;
@@ -62,20 +60,12 @@ class MotionPlanningGrid<weightType>::iterator {
   MatCoords curCoord;
   // index just holds the current iteration step
   // from the current node.
-  // It might be a good idea to change it to a
-  // size_t in the future, but I don't even have
-  // multidimensional Grids finished so it's
-  // pointless to think about now.
   int index;
   MotionPlanningGrid<weightType> const* data;
 
  public:
   const long long Dim(int i) { return curCoord.Get(i); }
   const long long CDim(int i) const { return curCoord.Get(i); }
-  /*const long long Row() { return curCoord.Row(); }
-  const long long Col() { return curCoord.Col(); }
-  const long long CRow() const { return curCoord.CRow(); }
-  const long long CCol() const { return curCoord.CCol(); }*/
 
   void CalcIndexCoords(MatCoords& coord) const;
 
