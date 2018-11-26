@@ -20,97 +20,41 @@
 #ifndef GRAPHLIB_DIJKSTRA_SSSP
 #define GRAPHLIB_DIJKSTRA_SSSP
 
-#include <list>
-#include <queue>
-#include <set>
-#include "../containers/infNumClass.h"
+#include "astar.h"
 
-template <class weightType, class nodeLabelType>
-class DijkstraSSSPNode {
- public:
-  DijkstraSSSPNode(const nodeLabelType& newNode) : node(newNode) {}
-
-  DijkstraSSSPNode(const nodeLabelType& newNode, const weightType& newWeight)
-      : node(newNode), weight(newWeight) {}
-
-  DijkstraSSSPNode(const nodeLabelType& newNode, const weightType& newWeight,
-                   const nodeLabelType& newPredecessor)
-      : node(newNode), weight(newWeight), predecessor(newPredecessor) {}
-
-  bool operator<(const DijkstraSSSPNode& that) const {
-    return that.weight < weight;
-  }
-
-  DijkstraSSSPNode& operator=(const DijkstraSSSPNode& that) {
-    node = that.node;
-    weight = that.weight;
-    predecessor = that.predecessor;
-    return *this;
-  }
-  nodeLabelType Node() const { return node; }
-  weightType Weight() const { return weight; }
-  nodeLabelType Predecessor() const { return predecessor; }
-
- private:
-  nodeLabelType node;
-  weightType weight;
-  nodeLabelType predecessor;
-};
-
-// Comparator used for causing the set of searched nodes to be sorted by node
-// rather than weight. This is to ensure the criterea for checking if a node
-// is in the set is simply whether or the Node label matches.
-template <class weightType, class nodeLabelType>
-struct cmpByNodeFunctor {
-  bool operator()(const DijkstraSSSPNode<weightType, nodeLabelType>& a,
-                  const DijkstraSSSPNode<weightType, nodeLabelType>& b) {
-    return a.Node() < b.Node();
-  }
-};
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 class DijkstraSSSPInstance {
  public:
-  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g)
-      : graphPointer(&g), source(0) {
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g) : dstra(g, 0) {
     ResetState();
   }
-  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
-                       nodeLabelType mysource)
-      : graphPointer(&g), source(mysource) {
+  DijkstraSSSPInstance(const GraphLikeClass<weightType>& g, nodeLabelType mysource)
+      : dstra(g, mysource) {
     ResetState();
   }
-  void CalcShortestPath(nodeLabelType end);
 
-  // todo: make const versions of the following
-  //      which make no calls to CalcShortestPath
-  InfNum<weightType> ShortestPathCost(nodeLabelType end);
-  std::list<nodeLabelType> ShortestPath(nodeLabelType end);
-
-  void ResetState();
-  void SetSource(nodeLabelType newSource) {
-    if (source != newSource) ResetState();
-    source = newSource;
+  InfNum<weightType> ShortestPathCost(nodeLabelType end) {
+    return dstra.ShortestPathCost(end);
   }
+  std::list<nodeLabelType> ShortestPath(nodeLabelType end) {
+    return dstra.ShortestPath(end);
+  }
+
+  void ResetState() { dstra.ResetState(); }
 
  private:
   DijkstraSSSPInstance();
 
-  GraphLikeClass<weightType> const* graphPointer;
-  nodeLabelType source;
-  std::set<DijkstraSSSPNode<weightType, nodeLabelType>,
-           cmpByNodeFunctor<weightType, nodeLabelType>>
-      myset;
-  std::priority_queue<DijkstraSSSPNode<weightType, nodeLabelType>> pq;
+  AStarInstance<GraphLikeClass, weightType, nodeLabelType> dstra;
 };
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
-DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>
-NewDijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
-                        nodeLabelType source);
-
-#include "dijkstraSSSP.tcc"
+DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType> NewDijkstraSSSPInstance(
+    const GraphLikeClass<weightType>& g, nodeLabelType source) {
+  return DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>(g, source);
+}
 
 #endif

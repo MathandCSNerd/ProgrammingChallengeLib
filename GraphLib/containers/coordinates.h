@@ -96,6 +96,18 @@ class Coordinates {
     for (auto it : b.myCoords) myCoords.push_back(it);
   }
 
+  size_t StepDistance(const Coordinates<number>& that) const{
+    size_t sum = 0;
+    for(size_t i = 0; i < Size(); ++i){
+      size_t a = Get(i);
+      size_t b = that.Get(i);
+      if(a < b)
+        std::swap(a,b);
+      sum += a - b;
+    }
+    return sum;
+  }
+
   friend std::ostream& operator<<<number>(std::ostream& out,
                                           const Coordinates<number>& that);
 

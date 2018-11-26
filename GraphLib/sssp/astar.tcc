@@ -17,13 +17,13 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifdef GRAPHLIB_DIJKSTRA_SSSP
+#ifdef GRAPHLIB_ASTAR_SSSP
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 InfNum<weightType>
-DijkstraSSSPInstance<GraphLikeClass, weightType,
-                     nodeLabelType>::ShortestPathCost(nodeLabelType end) {
+AStarInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPathCost(
+    nodeLabelType end) {
   CalcShortestPath(end);
 
   InfNum<weightType> retVal;
@@ -38,7 +38,7 @@ DijkstraSSSPInstance<GraphLikeClass, weightType,
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 std::list<nodeLabelType>
-DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPath(
+AStarInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPath(
     nodeLabelType end) {
   std::list<nodeLabelType> nodeList;
 
@@ -50,7 +50,7 @@ DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPath(
 
   nodeList.push_front(node->Node());
 
-  DijkstraSSSPNode<weightType, nodeLabelType> curnode =
+  AStarNode<weightType, nodeLabelType> curnode =
       *myset.find(node->Predecessor());
 
   while (curnode.Predecessor() != curnode.Node()) {
@@ -63,18 +63,16 @@ DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>::ShortestPath(
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
-void DijkstraSSSPInstance<GraphLikeClass, weightType,
-                          nodeLabelType>::ResetState() {
+void AStarInstance<GraphLikeClass, weightType, nodeLabelType>::ResetState() {
   myset.clear();
   while (pq.size()) pq.pop();
-  pq.push(DijkstraSSSPNode<weightType, nodeLabelType>(source, weightType(0),
-                                                      source));
+  pq.push(AStarNode<weightType, nodeLabelType>(source, weightType(0), source));
 }
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
-void DijkstraSSSPInstance<GraphLikeClass, weightType,
-                          nodeLabelType>::CalcShortestPath(nodeLabelType end) {
+void AStarInstance<GraphLikeClass, weightType, nodeLabelType>::CalcShortestPath(
+    nodeLabelType end) {
   weightType currWeight;
 
   auto tmpit = myset.find(end);
@@ -102,8 +100,11 @@ void DijkstraSSSPInstance<GraphLikeClass, weightType,
       for (auto it = graphPointer->begin(currIndex);
            it != graphPointer->end(currIndex); ++it) {
         if ((myset.find(it->Node()) == myset.end())) {
-          DijkstraSSSPNode<weightType, nodeLabelType> newNode(
-              it->Node(), it->Weight() + currWeight, tmpnode.Node());
+          AStarNode<weightType, nodeLabelType> newNode(
+              it->Node(),
+              it->Weight() + currWeight +
+                  Heuristic(*graphPointer, it->Node(), end),
+              tmpnode.Node());
           pq.push(newNode);
         }
       }
@@ -113,11 +114,9 @@ void DijkstraSSSPInstance<GraphLikeClass, weightType,
 
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
-DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>
-NewDijkstraSSSPInstance(const GraphLikeClass<weightType>& g,
-                        nodeLabelType source) {
-  return DijkstraSSSPInstance<GraphLikeClass, weightType, nodeLabelType>(
-      g, source);
+AStarInstance<GraphLikeClass, weightType, nodeLabelType> NewAStarInstance(
+    const GraphLikeClass<weightType>& g, nodeLabelType source) {
+  return AStarInstance<GraphLikeClass, weightType, nodeLabelType>(g, source);
 }
 
 #endif

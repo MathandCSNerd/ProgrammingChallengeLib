@@ -18,7 +18,6 @@ the way it is.
 Future addition plans:
   Floyd Warshall
   Prims
-  A\*
 
 Future Modifications:
   Create namespace either for entire graph library or seperate
