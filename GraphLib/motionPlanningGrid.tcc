@@ -20,86 +20,87 @@
 #ifdef MOTION_PLANNING_GRID
 
 template <class weightType>
-MotionPlanningGrid<weightType>::MotionPlanningGrid()
-    : rowsize(0), colsize(0), maze(nullptr) {}
-
-template <class weightType>
 MotionPlanningGrid<weightType>::~MotionPlanningGrid() {
-  delete[] maze;
+  //delete[] maze;
 }
 
 template <class weightType>
 MotionPlanningGrid<weightType>::MotionPlanningGrid(
-    const Coordinates<long long>& coord)
-    : maze(NULL) {
-  ChangeSize(coord);
+    const MatCoords& coord)
+    : maze(coord) {
+  InfNum<weightType> nam;
+  nam.MarkInfinite();
+  maze.SetAll(nam);
 }
+  /*for (size_t i = 0; i < Size(); ++i) maze(i).Set();
+    }*/
 
 template <class weightType>
 MotionPlanningGrid<weightType>::MotionPlanningGrid(
     const MotionPlanningGrid& that)
-    : rowsize(that.rowsize),
-      colsize(that.colsize),
-      maze(new InfNum<weightType>[that.size * that.size]) {
-  for (long long i = 0; i < Size(); ++i) maze[i] = that.maze[i];
-}
+    : maze(that.maze){}
 
+/*
 template <class weightType>
 void MotionPlanningGrid<weightType>::ChangeSize(
-    const Coordinates<long long>& coord) {
+    const MatCoords& coord) {
   delete[] maze;
   rowsize = coord.CRow();
   colsize = coord.CCol();
   maze = new InfNum<weightType>[Size()];
   for (size_t i = 0; i < Size(); ++i) maze[i].MarkInfinite();
-}
+}*/
 
 template <class weightType>
 long long MotionPlanningGrid<weightType>::Size() const {
-  return rowsize * colsize;
+  return maze.TotalSize();
 }
 
-template <class weightType>
+/*template <class weightType>
 long long MotionPlanningGrid<weightType>::CoordsToIndex(
-    const Coordinates<long long>& coord) const {
+    const MatCoords& coord) const {
   return coord.CRow() * ColSize() + coord.CCol();
-}
+}*/
 
 template <class weightType>
-weightType& MotionPlanningGrid<weightType>::Get(
-    const Coordinates<long long>& coord) const {
-  return maze[CoordsToIndex(coord)].GetNum();
+const weightType& MotionPlanningGrid<weightType>::Get(
+    const MatCoords& coord) const {
+  //return maze[CoordsToIndex(coord)].GetNum();
+  return maze.Get(coord).CGetNum();
 }
 
 template <class weightType>
 weightType& MotionPlanningGrid<weightType>::Access(
-    const Coordinates<long long>& coord) {
-  maze[CoordsToIndex(coord)].MarkFinite();
-  return maze[CoordsToIndex(coord)].GetNum();
+    const MatCoords& coord) {
+  //maze[CoordsToIndex(coord)].MarkFinite();
+  //return maze[CoordsToIndex(coord)].GetNum();
+  maze(coord).MarkFinite();
+  return maze(coord).GetNum();
 }
 
 template <class weightType>
 weightType& MotionPlanningGrid<weightType>::operator()(
-    const Coordinates<long long>& coord) {
+    const MatCoords& coord) {
   return Access(coord);
 }
 
 /*template <class weightType>
 weightType& MotionPlanningGrid<weightType>::operator()(long long row,
                                                        long long col) {
-  Coordinates<long long> coord(row, col);
+  MatCoords coord(row, col);
   return Access(coord);
 }*/
 
 template <class weightType>
 bool MotionPlanningGrid<weightType>::ObstacleAt(
-    const Coordinates<long long>& coord) const {
-  return maze[CoordsToIndex(coord)].IsInfinite();
+    const MatCoords& coord) const {
+  //return maze[CoordsToIndex(coord)].IsInfinite();
+  return maze.Get(coord).IsInfinite();
 }
 
 template <class weightType>
 typename MotionPlanningGrid<weightType>::iterator
-MotionPlanningGrid<weightType>::begin(Coordinates<long long> coord) const {
+MotionPlanningGrid<weightType>::begin(MatCoords coord) const {
   iterator it(0, coord, this);
   if (!it->ValidIterator()) ++it;
   return it;
@@ -107,7 +108,7 @@ MotionPlanningGrid<weightType>::begin(Coordinates<long long> coord) const {
 
 template <class weightType>
 typename MotionPlanningGrid<weightType>::iterator
-MotionPlanningGrid<weightType>::end(Coordinates<long long> coord) const {
+MotionPlanningGrid<weightType>::end(MatCoords coord) const {
   return iterator(4, coord, this);
 }
 
@@ -116,7 +117,7 @@ MotionPlanningGrid<weightType>::end(Coordinates<long long> coord) const {
 /*********/
 template <class weightType>
 void MotionPlanningGrid<weightType>::iterator::CalcIndexCoords(
-    Coordinates<long long>& coord) const {
+    MatCoords& coord) const {
   /*
   down, right, up, left
   even = row
@@ -135,16 +136,16 @@ void MotionPlanningGrid<weightType>::iterator::CalcIndexCoords(
 }
 
 template <class weightType>
-Coordinates<long long> MotionPlanningGrid<weightType>::iterator::Node()
+MatCoords MotionPlanningGrid<weightType>::iterator::Node()
     const {
-  Coordinates<long long> coord;
+  MatCoords coord;
   CalcIndexCoords(coord);
   return coord;
 }
 
 template <class weightType>
 const weightType& MotionPlanningGrid<weightType>::iterator::Weight() const {
-  Coordinates<long long> coord;
+  MatCoords coord;
   CalcIndexCoords(coord);
   return data->Get(coord);  //.CGetNum();
 }
@@ -154,7 +155,7 @@ MotionPlanningGrid<weightType>::iterator::iterator()
     : curCoord(0, 0), index(0), data(nullptr) {}
 template <class weightType>
 MotionPlanningGrid<weightType>::iterator::iterator(
-    int newIndex, Coordinates<long long> newNode,
+    int newIndex, MatCoords newNode,
     const MotionPlanningGrid<weightType>* dataPtr)
     : curCoord(newNode), index(newIndex), data(dataPtr) {}
 
@@ -192,10 +193,11 @@ bool MotionPlanningGrid<weightType>::iterator::operator!=(
 
 template <class weightType>
 bool MotionPlanningGrid<weightType>::iterator::ValidIterator() const {
-  long long s = data->ColSize();
-
+  using namespace std;
+  //long long s = data->DimSize(0);
   auto n = Node();
-  if (n.CRow() < 0 || n.CRow() >= s || n.CCol() < 0 || n.CCol() >= s)
+  //TODO: change this function to not assume a signed data type
+  if (n.CRow() < 0 || n.CRow() >= data->DimSize(0) || n.CCol() < 0 || n.CCol() >= data->DimSize(1))
     return false;
   return !data->ObstacleAt(Node());
 }

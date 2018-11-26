@@ -110,4 +110,26 @@ std::ostream& operator<<(std::ostream& out, const Coordinates<number>& that) {
   return out;
 }
 
+
+template <class number>
+bool IterateCoords(Coordinates<number>& myarr, const Coordinates<number>& testarr){
+  size_t i;
+
+  for (i = 0; i < myarr.Size() && (myarr(i) == testarr.Get(i)-1); ++i)
+    ;
+
+  if (i == myarr.Size())
+    return false;
+
+  else {
+    ++myarr(i);
+    if(i != 0){
+      myarr(0) = 0;
+      for (--i; i > 0; --i) (myarr(i)) = 0;
+    }
+  }
+  return true;
+}
+
+
 #endif

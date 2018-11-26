@@ -22,6 +22,7 @@
 
 #include "containers/infNumClass.h"
 #include "coords.h"
+#include "containers/multiDimMatrix.h"
 
 // TODO: expand to have an arbitrary number of dimensions
 template <class weightType>
@@ -31,27 +32,34 @@ class MotionPlanningGrid {
 
   MotionPlanningGrid();
   ~MotionPlanningGrid();
-  MotionPlanningGrid(const Coordinates<long long>& coord);
+  MotionPlanningGrid(const MatCoords& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  void ChangeSize(const Coordinates<long long>& coord);
+  //void ChangeSize(const MatCoords& coord);
   long long Size() const;
-  long long RowSize() const { return rowsize; };
-  long long ColSize() const { return colsize; };
-  // long long DimSize(int dim) const;
+  //long long RowSize() const { return rowsize; };
+  //long long ColSize() const { return colsize; };
+  long long DimSize(int dim) const {return maze.DimSize(dim);}
 
-  long long CoordsToIndex(const Coordinates<long long>& coord) const;
-  weightType& Access(const Coordinates<long long>& coord);
-  weightType& Get(const Coordinates<long long>& coord) const;
-  weightType& operator()(const Coordinates<long long>& coord);
-  bool ObstacleAt(const Coordinates<long long>& coord) const;
+  //long long CoordsToIndex(const MatCoordsInfNum<weightType>& coord) const;
+  weightType& Access(const MatCoords& coord);
+  const weightType& Get(const MatCoords& coord) const;
+  weightType& operator()(const MatCoords& coord);
+  bool ObstacleAt(const MatCoords& coord) const;
 
-  iterator begin(Coordinates<long long> coord) const;
-  iterator end(Coordinates<long long> coord) const;
+  iterator begin(MatCoords coord) const;
+  iterator end(MatCoords coord) const;
+
+  void Special(){
+    using namespace std;
+    cout << maze.GetDims() << endl;
+    maze.Print();
+  }
 
  private:
-  long long rowsize;
-  long long colsize;
-  InfNum<weightType>* maze;
+  /*long long rowsize;
+  long long colsize;*/
+  //InfNum<weightType>* maze;
+  MultidimensionalMatrix<InfNum<weightType>> maze;
 };
 
 // TODO: expand this to allow diagonal directions as well
@@ -61,7 +69,7 @@ class MotionPlanningGrid {
 template <class weightType>
 class MotionPlanningGrid<weightType>::iterator {
  private:
-  Coordinates<long long> curCoord;
+  MatCoords curCoord;
   // index just holds the current iteration step
   // from the current node.
   // It might be a good idea to change it to a
@@ -77,12 +85,12 @@ class MotionPlanningGrid<weightType>::iterator {
   const long long CRow() const { return curCoord.CRow(); }
   const long long CCol() const { return curCoord.CCol(); }
 
-  void CalcIndexCoords(Coordinates<long long>& coord) const;
+  void CalcIndexCoords(MatCoords& coord) const;
 
-  Coordinates<long long> Node() const;
+  MatCoords Node() const;
   const weightType& Weight() const;
   iterator();
-  iterator(int newIndex, Coordinates<long long> newNode,
+  iterator(int newIndex, MatCoords newNode,
            const MotionPlanningGrid<weightType>* dataPtr);
 
   iterator& operator=(const iterator& that);

@@ -24,7 +24,8 @@
 #define MULTIDIMENSIONAL_MATRIX
 #include "../coords.h"
 
-typedef Coordinates<size_t> MatCoords;
+//typedef Coordinates<size_t> MatCoords;
+typedef Coordinates<long long> MatCoords;
 
 template <class type>
 class MultidimensionalMatrix {
@@ -48,15 +49,18 @@ class MultidimensionalMatrix {
   type& operator()(size_t x);
 
  public:
+  MatCoords GetDims() const { return dimensions; }
   size_t NumDimensions() const;
   size_t DimSize(size_t x) const;
   size_t TotalSize() const;
+  void SetAll(const type& that);
 
   //printing:
   size_t PrintRow(size_t startIndex, size_t count) const;
   size_t PrintSlice(size_t startIndex, size_t rowcount, size_t colCount) const;
   size_t Print3D() const;
   size_t Print() const;
+
 
  private:
   MultidimensionalMatrix();
@@ -67,6 +71,7 @@ class MultidimensionalMatrix {
   void AllocSize(MatCoords newDims);
   void ReCalculateIndexMultipliers();
   size_t CoordsToIndex(const MatCoords& coords) const;
+  //bool IterateCoords(MatCoords myarr);
 
   MatCoords dimensions;
   MatCoords indexMultipliers;

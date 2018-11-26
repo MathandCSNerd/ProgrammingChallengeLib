@@ -87,6 +87,15 @@ size_t MultidimensionalMatrix<type>::TotalSize() const{
 }
 
 template <class type>
+void MultidimensionalMatrix<type>::SetAll(const type& that) {
+  MatCoords tmp(dimensions);
+  for(size_t i = 0; i < tmp.Size(); ++i)
+    tmp(i) = 0;
+
+  do Set(tmp, that); while(IterateCoords(tmp, dimensions));
+}
+
+template <class type>
 size_t MultidimensionalMatrix<type>::PrintRow(size_t startIndex, size_t count) const{
   using namespace std;
   for(size_t i = 0; i < count; ++i){
