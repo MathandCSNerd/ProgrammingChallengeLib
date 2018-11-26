@@ -30,18 +30,13 @@ class MotionPlanningGrid {
  public:
   class iterator;
 
-  MotionPlanningGrid();
-  ~MotionPlanningGrid();
+  //~MotionPlanningGrid();
   MotionPlanningGrid(const MatCoords& coord);
   MotionPlanningGrid(const MotionPlanningGrid& that);
-  // void ChangeSize(const MatCoords& coord);
   long long Size() const;
-  // long long RowSize() const { return rowsize; };
-  // long long ColSize() const { return colsize; };
   long long NumDims() const { return maze.NumDimensions(); }
   long long DimSize(int dim) const { return maze.DimSize(dim); }
 
-  // long long CoordsToIndex(const MatCoordsInfNum<weightType>& coord) const;
   weightType& Access(const MatCoords& coord);
   const weightType& Get(const MatCoords& coord) const;
   weightType& operator()(const MatCoords& coord);
@@ -53,9 +48,7 @@ class MotionPlanningGrid {
   void Print() { maze.Print(); }
 
  private:
-  /*long long rowsize;
-  long long colsize;*/
-  // InfNum<weightType>* maze;
+  MotionPlanningGrid();
   MultidimensionalMatrix<InfNum<weightType>> maze;
 };
 
@@ -79,10 +72,10 @@ class MotionPlanningGrid<weightType>::iterator {
  public:
   const long long Dim(int i) { return curCoord.Get(i); }
   const long long CDim(int i) const { return curCoord.Get(i); }
-  const long long Row() { return curCoord.Row(); }
+  /*const long long Row() { return curCoord.Row(); }
   const long long Col() { return curCoord.Col(); }
   const long long CRow() const { return curCoord.CRow(); }
-  const long long CCol() const { return curCoord.CCol(); }
+  const long long CCol() const { return curCoord.CCol(); }*/
 
   void CalcIndexCoords(MatCoords& coord) const;
 

@@ -17,7 +17,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//This is a meta file for including all of the mstdlib.
+// This is a meta file for including all of the mstdlib.
 
 #ifndef MATTSTDLIB_META
 #define MATTSTDLIB_META

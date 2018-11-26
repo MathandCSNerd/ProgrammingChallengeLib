@@ -24,7 +24,6 @@ template <template <class weightType> class GraphLikeClass, class weightType,
 InfNum<weightType>
 DijkstraSSSPInstance<GraphLikeClass, weightType,
                      nodeLabelType>::ShortestPathCost(nodeLabelType end) {
-  using namespace std;
   CalcShortestPath(end);
 
   InfNum<weightType> retVal;

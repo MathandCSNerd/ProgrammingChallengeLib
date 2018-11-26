@@ -93,13 +93,10 @@ class SSSPInstance {
 
   InfNum<weightType> ShortestPathCost(nodeLabelType end) {
     ChooseSearch();
-    if (choose == 1) {
-      // std::cout << "calling dstra\n";
+    if (choose == 1)
       return dstra.ShortestPathCost(end);
-    } else {
-      // std::cout << "calling bellman\n";
+    else
       return bellman.ShortestPathCost(end);
-    }
   }
   std::list<nodeLabelType> ShortestPath(nodeLabelType end) {
     ChooseSearch();
@@ -110,10 +107,7 @@ class SSSPInstance {
   }
 
   void ResetState() {
-    // ChooseSearch();
-    // if(choose == 1)
     dstra.ResetState();
-    // else
     bellman.ResetState();
   }
 

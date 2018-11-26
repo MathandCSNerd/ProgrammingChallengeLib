@@ -96,8 +96,6 @@ template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 BellmanResults<weightType, nodeLabelType> Bellman(
     nodeLabelType source, const GraphLikeClass<weightType>& g) {
-  using namespace std;
-
   BellmanResults<weightType, nodeLabelType> vertices;
   vertices.resize(g.Size());
 
@@ -158,13 +156,6 @@ class BellmanFordSSSPInstance {
     CalcShortestPath();
     return (*myresults)[end].Distance();
   }
-
-  /*
-  bool HasNegCyc(nodeLabelType end) {
-    CalcShortestPath();
-    return (*myresults)[end].NegativeCycle();
-  }
-  */
 
   std::list<nodeLabelType> ShortestPath(nodeLabelType end);
 

@@ -74,7 +74,7 @@ void DoCase(long q) {
     }
   }
 
-  g.Special();
+  g.Print();
   // set the source to be 0,0
   MatCoords source(0, 0);
   auto dostra = NewDijkstraSSSPInstance(g, source);

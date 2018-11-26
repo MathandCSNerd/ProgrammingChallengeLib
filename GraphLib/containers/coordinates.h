@@ -37,16 +37,16 @@ class Coordinates {
   Coordinates(long long a, long long b) { Set({a, b}); }
   Coordinates(std::initializer_list<number> coordList) { Set(coordList); }
   Coordinates(const Coordinates& that) { *this = that; }
+  /*
+    number& X() { return myCoords[1]; }
+    number& Y() { return myCoords[0]; }
 
-  number& X() { return myCoords[1]; }
-  number& Y() { return myCoords[0]; }
+    number& Row() { return myCoords[0]; }
+    number& Col() { return myCoords[1]; }
 
-  number& Row() { return myCoords[0]; }
-  number& Col() { return myCoords[1]; }
-
-  const number& CRow() const { return myCoords[0]; }
-  const number& CCol() const { return myCoords[1]; }
-
+    const number& CRow() const { return myCoords[0]; }
+    const number& CCol() const { return myCoords[1]; }
+  */
   number Get(size_t place) const {
     if (place < Size()) return myCoords[place];
   }
