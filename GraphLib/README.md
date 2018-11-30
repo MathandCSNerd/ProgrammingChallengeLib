@@ -18,6 +18,7 @@ the way it is.
 Future addition plans:
   Floyd Warshall
   Prims
+  Travelling Salesman Problem Solver
 
 Future Modifications:
   Create namespace either for entire graph library or seperate

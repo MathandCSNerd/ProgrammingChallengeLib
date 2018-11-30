@@ -41,11 +41,11 @@ size_t Manhattan(const GraphLikeClass<weightType>& g, const nodeLabelType start,
   return start.StepDistance(end);
 }
 
-};  // namespace AStarHeuristics_Functions
+}  // namespace AStarHeuristics_Functions
 
 namespace AStarHeuristics {
 enum { Dijkstra, Manhattan };
-}
+}  // namespace AStarHeuristics
 
 template <class weightType, class nodeLabelType>
 class AStarNode {

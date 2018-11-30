@@ -116,12 +116,11 @@ BellmanResults<weightType, nodeLabelType> Bellman(
   }
 
   // find all nodes which are part of negative cycles
-  for (long long i = 1; i < g.Size(); ++i) {
+  for (long long i = 0; i <= g.Size(); ++i) {
     for (nodeLabelType u(0); u < g.Size(); ++u) {
       for (auto v = g.begin(u); v != g.end(u); ++v) {
         if (/*v->Node() != u && */ (vertices[u].Distance() + v->Weight()) <
             vertices[v->Node()].Distance()) {
-          vertices[v->Node()].Distance() = vertices[u].Distance() + v->Weight();
           vertices[v->Node()].Predecessor() = u;
           vertices[v->Node()].MarkNegativeCycle();
           vertices[u].MarkNegativeCycle();
