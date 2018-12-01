@@ -59,7 +59,11 @@ class InfNum {
   }
 
   InfNum operator+(const type& that) const {
-    return InfNum(num + that, infinite);
+    // note: the behaviour of addition is undefined for adding
+    // infinity to negative infinity
+    return InfNum(num + that,
+                  (IsInfinite() || that.IsInfinite()) +
+                      (IsNegInfinite() || that.IsNegInfinite()) * -1);
   }
 
   bool operator<(const InfNum<type>& that) const {
