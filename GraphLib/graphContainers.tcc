@@ -78,7 +78,6 @@ template <template <class weightType> class containerType, class weightType>
 weightType& DirectedGraph<containerType, weightType>::Access(int x, int y) {
   if (x >= 0 and x < Size() and y >= 0 and y < Size())
     return myContainer.Access(x, y);
-  return weightType();
 }
 
 template <template <class weightType> class containerType, class weightType>

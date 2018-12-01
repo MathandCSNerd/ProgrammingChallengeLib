@@ -24,38 +24,15 @@
 #include <set>
 #include "../graphContainers.h"
 #include "union.h"
-
-// I just noticed I haven't implemented any BFS function so this is a
-// temporary BFS while that is the case
-template <template <class weightType> class containerType, class weightType>
-std::set<int> ConnectedNodes(const DirectedGraph<containerType, weightType>& g,
-                             int index) {
-  std::queue<int> nodeQ;
-  std::set<int> visited;
-  int cur;
-
-  using namespace std;
-  nodeQ.push(index);
-
-  while (nodeQ.size()) {
-    cur = nodeQ.front();
-    nodeQ.pop();
-    if (visited.find(cur) == visited.end()) {
-      visited.insert(cur);
-
-      for (auto it = g.begin(cur); it != g.end(cur); ++it)
-        if (visited.find(it->Node()) == visited.end()) nodeQ.push(it->Node());
-    }
-  }
-
-  return visited;
-}
+#include "../Other_Functions/bfs.h"
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType> GetTree(
     DirectedGraph<containerType, weightType>& g, int index) {
+
   DirectedGraph<containerType, weightType> mst;
-  std::set<int> nodes(ConnectedNodes(g, index));
+  //does bfs to get all nodes connected to index
+  std::vector<int> nodes(std::move(BFSOrder(g, index)));
 
   mst.ChangeSize(g.Size());
 
