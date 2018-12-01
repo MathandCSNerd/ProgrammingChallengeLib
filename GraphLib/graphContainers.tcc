@@ -85,6 +85,7 @@ template <template <class weightType> class containerType, class weightType>
 typename DirectedGraph<containerType, weightType>::iterator
 DirectedGraph<containerType, weightType>::begin(int x) const {
   if (x >= 0 and x < Size()) return iterator(myContainer.begin(x));
+  std::cout << "BEING: " << x << "\n";
   return iterator(myContainer.begin(0));
 }
 
@@ -92,12 +93,28 @@ template <template <class weightType> class containerType, class weightType>
 typename DirectedGraph<containerType, weightType>::iterator
 DirectedGraph<containerType, weightType>::end(int x) const {
   if (x >= 0 and x < Size()) return iterator(myContainer.end(x));
+  std::cout << "END: " << x << "\n";
   return iterator(myContainer.begin(0));
 }
 
 template <template <class weightType> class containerType, class weightType>
 void DirectedGraph<containerType, weightType>::PrintGraph() const {
   myContainer.Output();
+}
+
+template <template <class weightType> class containerType, class weightType>
+std::vector<CompleteEdge<weightType>>
+DirectedGraph<containerType, weightType>::GetAllEdges() const {
+  std::vector<CompleteEdge<weightType>> Edges;
+  // consider keeping a list of edges in the future to reserve space
+  // in this vector
+
+  // iterates over all edges in graph, putting them into Edges
+  for (int u = 0; u < Size(); ++u)
+    for (auto v = begin(u); v != end(u); ++v)
+      Edges.push_back(CompleteEdge<weightType>(u, v->Node(), v->Weight()));
+
+  return Edges;
 }
 
 template <template <class weightType> class containerType, class weightType>

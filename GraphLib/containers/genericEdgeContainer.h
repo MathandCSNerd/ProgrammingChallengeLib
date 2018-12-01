@@ -69,21 +69,21 @@ EdgeContainer<STLContainerType, weightType>::EdgeContainer()
 
 template <class STLContainerType, class weightType>
 EdgeContainer<STLContainerType, weightType>::EdgeContainer(int newsize)
-    : size(newsize), myContainer(new STLContainerType[size]) {}
+    : size(newsize), myContainer(new STLContainerType[newsize]) {}
 
 template <class STLContainerType, class weightType>
 EdgeContainer<STLContainerType, weightType>::EdgeContainer(
     const EdgeContainer<STLContainerType, weightType>& that)
-    : size(that.size) {
-  for (int i = 0; i < size; ++i) myContainer[i] = that.myContainer[i];
+    : myContainer(NULL) {
+  *this = that;
 }
 
 template <class STLContainerType, class weightType>
 const EdgeContainer<STLContainerType, weightType>&
 EdgeContainer<STLContainerType, weightType>::operator=(
     const EdgeContainer<STLContainerType, weightType>& that) {
-  size = that.size;
-  myContainer = that;
+  ChangeSize(that.size);
+  for (int i = 0; i < size; ++i) myContainer[i] = that.myContainer[i];
 }
 
 template <class STLContainerType, class weightType>

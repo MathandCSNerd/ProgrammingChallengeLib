@@ -17,7 +17,6 @@ the way it is.
 <pre>
 Future addition plans:
   Floyd Warshall
-  Prims
   Travelling Salesman Problem Solver
 
 Future Modifications:

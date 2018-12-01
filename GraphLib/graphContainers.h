@@ -30,6 +30,27 @@
 // used for unweighted graphs
 class EmptyClass {};
 
+// used for returning edges for kruskals
+template <class weightType>
+class CompleteEdge {
+ public:
+  CompleteEdge(int a, int b, weightType newWeight)
+      : nodeFrom(a), nodeTo(b), weight(newWeight) {}
+
+  bool operator<(const CompleteEdge& that) { return weight < that.weight; }
+
+  int To() const { return nodeTo; }
+
+  int From() const { return nodeFrom; }
+
+  int Weight() const { return weight; }
+
+ private:
+  int nodeFrom;
+  int nodeTo;
+  weightType weight;
+};
+
 template <template <class weightType> class containerType, class weightType>
 class DirectedGraph {
  public:
@@ -48,8 +69,9 @@ class DirectedGraph {
   weightType& Access(int x, int y);
   DirectedGraph<containerType, weightType>::iterator begin(int x) const;
   DirectedGraph<containerType, weightType>::iterator end(int x) const;
-  void SortEdge(int x);  // do nothing if array
-  void SortAllEdges();   // do nothing if array
+  std::vector<CompleteEdge<weightType>> GetAllEdges() const;
+  // virtual void SortEdge(int x);  // do nothing if array
+  // virtual void SortAllEdges();   // do nothing if array
   void SetDirected(bool x);
   virtual bool Directed() const { return true; };
   void PrintGraph() const;
