@@ -45,7 +45,7 @@ class InfNum {
   }
 
   InfNum operator+(const InfNum<type>& that) const {
-    int answer = true;
+    /*int answer = true;
     if (infinite == that.infinite)  // both are finite or infinite
       answer = infinite;
 
@@ -55,15 +55,17 @@ class InfNum {
     else                  // either the second is finite
       answer = infinite;  // or both are opposite finite
 
-    return InfNum(num + that.num, answer);
+    return InfNum(num + that.num, answer);*/
+
+    // note: the behaviour of addition is undefined for adding
+    // infinity to negative infinity
+    return InfNum(num + that.num,
+                  (IsInfinite() || that.IsInfinite()) +
+                      (IsNegInfinite() || that.IsNegInfinite()) * -1);
   }
 
   InfNum operator+(const type& that) const {
-    // note: the behaviour of addition is undefined for adding
-    // infinity to negative infinity
-    return InfNum(num + that,
-                  (IsInfinite() || that.IsInfinite()) +
-                      (IsNegInfinite() || that.IsNegInfinite()) * -1);
+    return InfNum(num + that, infinite);
   }
 
   bool operator<(const InfNum<type>& that) const {
