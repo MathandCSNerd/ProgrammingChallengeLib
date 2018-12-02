@@ -24,7 +24,7 @@
 #include <set>
 #include "../graphContainers.h"
 #include "union.h"
-#include "../Other_Functions/bfs.h"
+#include "../Other_Functions/simpleGraphTraversal.h"
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType> GetTree(
