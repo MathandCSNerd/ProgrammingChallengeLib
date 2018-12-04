@@ -20,25 +20,19 @@
 #ifdef MULTIDIMENSIONAL_MATRIX
 
 template <class type>
-MultidimensionalMatrix<type>::~MultidimensionalMatrix() {
-  delete[] arr;
-}
-template <class type>
-MultidimensionalMatrix<type>::MultidimensionalMatrix(const MatCoords& coords)
-    : arr(NULL) {
+MultidimensionalMatrix<type>::MultidimensionalMatrix(const MatCoords& coords) {
   AllocSize(coords);
 }
 template <class type>
 MultidimensionalMatrix<type>::MultidimensionalMatrix(
-    const MultidimensionalMatrix<type>& that)
-    : arr(NULL) {
+    const MultidimensionalMatrix<type>& that) {
   *this = that;
 }
 template <class type>
 const MultidimensionalMatrix<type>& MultidimensionalMatrix<type>::operator=(
     const MultidimensionalMatrix<type>& that) {
   AllocSize(that.dimensions);
-  memcpy(arr, that.arr, sizeof(type) * TotalSize());
+  for (size_t i = 0; i < arr.size(); ++i) arr[i] = that.arr[i];
 }
 
 template <class type>
@@ -73,7 +67,7 @@ type& MultidimensionalMatrix<type>::AccessIndex(size_t x) {
 }
 template <class type>
 type& MultidimensionalMatrix<type>::operator()(size_t x) {
-  return arr[x];
+  return AccessIndex(x);
 }
 
 template <class type>
@@ -151,8 +145,7 @@ void MultidimensionalMatrix<type>::AllocSize(MatCoords newDims) {
   indexMultipliers.Resize(dimensions.Size());
 
   ReCalculateIndexMultipliers();
-  delete[] arr;
-  arr = new type[TotalSize()];
+  arr.resize(TotalSize());
 }
 
 template <class type>

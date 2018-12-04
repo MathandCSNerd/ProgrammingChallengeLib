@@ -30,8 +30,9 @@ typedef Coordinates<long long> MatCoords;
 template <class type>
 class MultidimensionalMatrix {
  public:
-  ~MultidimensionalMatrix();
   MultidimensionalMatrix(const MatCoords& coords);
+  MultidimensionalMatrix(std::initializer_list<long long> coordList)
+      : MultidimensionalMatrix(MatCoords(coordList)){};
   MultidimensionalMatrix(const MultidimensionalMatrix<type>& that);
   const MultidimensionalMatrix& operator=(
       const MultidimensionalMatrix<type>& that);
@@ -40,6 +41,9 @@ class MultidimensionalMatrix {
   void Set(const MatCoords& coords, const type& val);
   type& Access(const MatCoords& coords);
   type& operator()(const MatCoords& coords);
+  type& operator()(std::initializer_list<long long> coordList) {
+    return this->Access(MatCoords(coordList));
+  }
 
  private:
   // these are the current internal methods, not to be used
@@ -75,7 +79,7 @@ class MultidimensionalMatrix {
 
   MatCoords dimensions;
   MatCoords indexMultipliers;
-  type* arr;
+  std::vector<type> arr;
 };
 
 #include "multiDimMatrix.tcc"
