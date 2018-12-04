@@ -57,7 +57,7 @@ class DirectedGraph {
   class iterator;
 
   DirectedGraph();
-  ~DirectedGraph();
+  virtual ~DirectedGraph();
   DirectedGraph(const DirectedGraph& that);
   DirectedGraph& operator=(const DirectedGraph& that);
   void ChangeSize(int s);
