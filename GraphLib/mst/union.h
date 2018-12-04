@@ -20,10 +20,11 @@
 #ifndef UNION_FIND
 #define UNION_FIND
 
+#include <vector>
+
 class UnionFind {
  public:
   UnionFind(int x);
-  ~UnionFind();
   void MakeSet(int x);
   void Link(int x, int y);
   int FindSet(int x);
@@ -31,9 +32,8 @@ class UnionFind {
   void Print();  // for debugging
 
  private:
-  // TODO: change these pointers to vectors instead
-  int* p;
-  int* rank;
+  std::vector<int> p;
+  std::vector<int> rank;
   int size;
 };
 

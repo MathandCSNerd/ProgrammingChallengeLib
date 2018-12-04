@@ -22,16 +22,15 @@
 
 #include <queue>
 #include <set>
+#include "../Other_Functions/simpleGraphTraversal.h"
 #include "../graphContainers.h"
 #include "union.h"
-#include "../Other_Functions/simpleGraphTraversal.h"
 
 template <template <class weightType> class containerType, class weightType>
 DirectedGraph<containerType, weightType> GetTree(
     DirectedGraph<containerType, weightType>& g, int index) {
-
   DirectedGraph<containerType, weightType> mst;
-  //does bfs to get all nodes connected to index
+  // does bfs to get all nodes connected to index
   std::vector<int> nodes(std::move(BFSOrder(g, index)));
 
   mst.ChangeSize(g.Size());

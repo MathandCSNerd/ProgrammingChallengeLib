@@ -18,15 +18,10 @@
  */
 
 UnionFind::UnionFind(int x) {
-  p = new int[x];
-  rank = new int[x];
+  p.resize(x);
+  rank.resize(x);
   size = x;
   for (int i = 0; i < size; ++i) MakeSet(i);
-}
-
-UnionFind::~UnionFind() {
-  delete[] p;
-  delete[] rank;
 }
 
 void UnionFind::MakeSet(int x) {
