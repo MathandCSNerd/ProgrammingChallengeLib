@@ -29,7 +29,7 @@ class GenericArray {
  protected:
   int size;
   int rsize;
-  type** arr;
+  std::vector<type*> arr;
   type dummy;
 
   virtual int CalcRSize(int n) const = 0;
@@ -106,20 +106,17 @@ class GenericArray<type>::iterator : public std::forward_iterator_tag {
 
 template <class type>
 GenericArray<type>::GenericArray() {
-  arr = NULL;
   size = 0;
   rsize = 0;
 }
 
 template <class type>
 GenericArray<type>::GenericArray(int newsize) {
-  arr = NULL;
   ChangeSize(newsize);
 }
 
 template <class type>
 GenericArray<type>::GenericArray(const GenericArray<type>& that) {
-  arr = NULL;
   (*this) = that;
 }
 
@@ -134,15 +131,13 @@ const GenericArray<type>& GenericArray<type>::operator=(
 template <class type>
 GenericArray<type>::~GenericArray() {
   for (int i = 0; i < rsize; ++i) delete arr[i];
-  delete[] arr;
 }
 
 template <class type>
 void GenericArray<type>::ChangeSize(int newsize) {
-  delete[] arr;
   size = newsize;
   rsize = CalcRSize(size);
-  arr = new type*[rsize];
+  arr.resize(rsize);
   for (int i = 0; i < rsize; ++i) arr[i] = nullptr;
 }
 
@@ -190,7 +185,11 @@ void GenericArray<type>::Unset(int x, int y) {
 
 template <class type>
 bool GenericArray<type>::Exists(int x, int y) const {
-  return arr[CoordsToIndex(x, y)] != nullptr;
+  auto index = CoordsToIndex(x, y);
+  if(index < 0 or index >= rsize)
+    return false;
+  return arr[index] != nullptr;
+  //return arr[CoordsToIndex(x, y)] != nullptr;
 }
 
 template <class type>

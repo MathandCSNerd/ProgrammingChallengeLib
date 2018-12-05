@@ -17,8 +17,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-//this file demonstrates getting an minimum spanning forest from a
-//given graph
+// this file demonstrates getting an minimum spanning forest from a
+// given graph
 
 /*INPUT FORMAT:
  *

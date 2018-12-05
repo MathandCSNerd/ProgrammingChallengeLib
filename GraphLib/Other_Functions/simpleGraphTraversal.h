@@ -57,14 +57,13 @@ type QFront(const std::queue<type>& myq) {
   return myq.front();
 }
 
-
 // TODO: figure out a way to allow switching between leftwise and
 //       rigthwise node order
 template <class GraphClass, class ContainerType>
 void AsteriskFirstSearch(const GraphClass& graph, int source,
                          std::vector<int>& order, std::vector<int>& predecessor,
                          std::vector<int>& distance) {
-  enum colours { WHITE, GRAY, BLACK};
+  enum colours { WHITE, GRAY, BLACK };
   ContainerType myq;
   std::vector<bool> colour;
 
@@ -100,7 +99,7 @@ void AsteriskFirstSearch(const GraphClass& graph, int source,
       }
     }
     order.push_back(u);
-    //colour[u] = BLACK;
+    // colour[u] = BLACK;
   }
 }
 

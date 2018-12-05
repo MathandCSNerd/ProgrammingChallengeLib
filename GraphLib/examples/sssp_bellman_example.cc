@@ -50,7 +50,7 @@
 using namespace std;
 
 void DoCase(long long n, long long m, long q, long long s) {
-  DirectedListGraph<long long> g;
+  DirectedArrGraph<long long> g;
 
   // dostra is type BellmanFordInstance<DirectedListGraph, long long, long
   // long>;
