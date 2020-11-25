@@ -74,24 +74,6 @@ class BellmanNode {
 template <class weightType, class nodeLabelType>
 using BellmanResults = std::vector<BellmanNode<weightType, nodeLabelType>>;
 
-// this is a hacky, not yet finished function for marking negative cycles
-// this will be either removed or fixed in a future update
-template <class weightType, class nodeLabelType>
-void MarkNegativeCycles(nodeLabelType start,
-                        BellmanResults<weightType, nodeLabelType>& vertices) {
-  std::set<nodeLabelType> preds;
-  nodeLabelType cur = vertices[start].Predecessor();
-
-  vertices[start].MarkNegativeCycle();
-  // while(cur != start){
-  while (cur != -1 && preds.find(cur) == preds.end() &&
-         !vertices[cur].NegativeCycle()) {
-    // std::cout << "c: " << cur << std::endl;
-    vertices[cur].MarkNegativeCycle();
-    cur = vertices[cur].Predecessor();
-  }
-}
-
 template <template <class weightType> class GraphLikeClass, class weightType,
           class nodeLabelType>
 BellmanResults<weightType, nodeLabelType> Bellman(
@@ -116,7 +98,9 @@ BellmanResults<weightType, nodeLabelType> Bellman(
   }
 
   // find all nodes which are part of negative cycles
-  for (long long i = 0; i <= g.Size(); ++i) {
+  bool changed = true;
+  for (long long i = 0; i <= g.Size() && changed; ++i) {
+    changed = false;
     for (nodeLabelType u(0); u < g.Size(); ++u) {
       for (auto v = g.begin(u); v != g.end(u); ++v) {
         if (/*v->Node() != u && */ (vertices[u].Distance() + v->Weight()) <
@@ -124,6 +108,7 @@ BellmanResults<weightType, nodeLabelType> Bellman(
           vertices[v->Node()].Predecessor() = u;
           vertices[v->Node()].MarkNegativeCycle();
           vertices[u].MarkNegativeCycle();
+          changed = true;
         }
       }
     }
