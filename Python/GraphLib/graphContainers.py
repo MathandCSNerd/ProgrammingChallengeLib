@@ -56,13 +56,13 @@ class DirectedGraph:
 
 
 class UndirectedGraph(DirectedGraph):
-  def addConnection(self, x, y, val=1):
-    super.add_connection(self, x, y, val)
-    super.add_connection(self, y, x, val)
+  def add_connection(self, x, y, val=1):
+    super().add_connection(x, y, val)
+    super().add_connection(y, x, val)
 
-  def rmConnection(self, x, y):
-    super.rm_connection(self, x, y)
-    super.rm_connection(self, y, x)
+  def rm_connection(self, x, y):
+    super().rm_connection(x, y)
+    super().rm_connection(y, x)
 
 
 class SparseDirectedGraph:
@@ -105,10 +105,10 @@ class SparseDirectedGraph:
 
 
 class SparseUndirectedGraph(SparseDirectedGraph):
-  def addConnection(self, x, y, val=1):
-    super.add_connection(self, x, y, val)
-    super.add_connection(self, y, x, val)
+  def add_connection(self, x, y, val=1):
+    super().add_connection(x, y, val)
+    super().add_connection(y, x, val)
 
-  def rmConnection(self, x, y):
-    super.rm_connection(self, x, y)
-    super.rm_connection(self, y, x)
+  def rm_connection(self, x, y):
+    super().rm_connection(x, y)
+    super().rm_connection(y, x)
